@@ -14,18 +14,28 @@ Add a member variable for each manager. Drag the prefab of that manager onto the
 There are two ways to utilize RhythmRecorder, fixed and non-fixed.
 
 Fixed: Used in cases where automatic call at beats is desirable. For example, the flash of the floor.
+
 How to use RhythmRecorder in fixed way: 
+
 1. implements RhythmObservable interface
+
 2. add self to observed subjects.
+
 3. implements actionOnBeats() method. This will be called every beats.
 
+
 Non-fixed: Used to check whether some action is on beats. For example, the movement of player.
+
 How to use RhythmRecorder in non-fixed way: 
+
 1. use isOnBeat() to check.
 
 Methods in RhythmRecorder:
+
 setRhythm()
+
 startRhythm()
+
 resetRhythm()
 
 #RhythmList
