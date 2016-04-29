@@ -25,6 +25,10 @@ public class PlayerMovement : MonoBehaviour {
 		}
 	}
 
+	void FixedUpdate(){
+
+	}
+
 	void CheckMovement()
 	{
 		if (Input.GetKeyDown ("up")) {
