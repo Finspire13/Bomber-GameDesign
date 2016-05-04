@@ -6,6 +6,10 @@ public interface RhythmObservable{
 	void actionOnBeat ();
 }
 
+public interface RhythmFlagOwner{
+	bool rhythmFlag{ get; set;}
+}
+
 public class RhythmRecorder: MonoBehaviour{
 
 	public static RhythmRecorder instance = null;
@@ -16,8 +20,9 @@ public class RhythmRecorder: MonoBehaviour{
 	private ArrayList beats;
 	private bool isPlaying;
 	private int currentBeatIndex;
-	private int currentFixedBeatIndex;
 	private ArrayList observedSubjects;
+	private ArrayList rhythmFlagOwners;
+	private ArrayList isFlagsChangable;
 
 	void Awake()
 	{
@@ -35,8 +40,9 @@ public class RhythmRecorder: MonoBehaviour{
 		beats = new ArrayList ();
 		isPlaying = false;
 		currentBeatIndex = 0;
-		currentFixedBeatIndex = 0;
 		observedSubjects = new ArrayList ();
+		rhythmFlagOwners = new ArrayList ();
+		isFlagsChangable = new ArrayList ();
 	}
 
 	void Start(){
@@ -47,14 +53,42 @@ public class RhythmRecorder: MonoBehaviour{
 		observedSubjects.Clear ();
 	}
 
-	public void addObservedSubjects(RhythmObservable newSubjects){
-		observedSubjects.Add (newSubjects);
+	public void addObservedSubject(RhythmObservable newSubject){
+		observedSubjects.Add (newSubject);
 	}
 
-	private void notify(){
+	public void removeAllRhythmFlagOwners(){
+		rhythmFlagOwners.Clear ();
+		isFlagsChangable.Clear ();
+	}
+
+	public void addRhythmFlagOwner(RhythmFlagOwner newOwner){
+		rhythmFlagOwners.Add (newOwner);
+		isFlagsChangable.Add (true);
+	}
+
+	private void notifyAllObservedSubjects(){
 		for (int i = 0; i < observedSubjects.Count; i++) {
 			RhythmObservable subject = (RhythmObservable)observedSubjects [i];
 			subject.actionOnBeat ();
+		}
+	}
+
+	private void updateFlagInOwners(){
+		if (isOnBeat ()) {
+			for (int i = 0; i < rhythmFlagOwners.Count; i++) {
+				if ((bool)isFlagsChangable [i]) {
+					RhythmFlagOwner owner = (RhythmFlagOwner)rhythmFlagOwners [i];
+					owner.rhythmFlag = true;
+					isFlagsChangable [i] = false;
+				}
+			}
+		} 
+		else {
+			for (int i = 0; i < rhythmFlagOwners.Count; i++) {
+				RhythmFlagOwner owner = (RhythmFlagOwner)rhythmFlagOwners [i];
+				owner.rhythmFlag = false;
+			}
 		}
 	}
 
@@ -85,7 +119,6 @@ public class RhythmRecorder: MonoBehaviour{
 		startTime = Time.time;
 		isPlaying = true;
 		currentBeatIndex = 0;
-		currentFixedBeatIndex = 0;
 
 		return true;
 	}
@@ -104,44 +137,41 @@ public class RhythmRecorder: MonoBehaviour{
 		startTime = 0;
 		isPlaying = false;
 		currentBeatIndex = 0;
-		currentFixedBeatIndex = 0;
 	}
 
-	public bool isOnBeat()   //call by non-fixed subjects, such as player movement
+	private bool isOnBeat()   
 	{
 		if (isFinished()||!isPlaying)
 			return false;
 		float currentBeat = (float)beats [currentBeatIndex];
-		if (System.Math.Abs (currentBeat - (Time.time - startTime)) < 0.2) {
-			currentBeatIndex++;
-			return true;
-		} else
-			return false;
+		return System.Math.Abs (currentBeat - (Time.time - startTime)) < 0.2;
 	}
 		
 	void Update(){
+
+		updateFlagInOwners ();
+
 		if (isPlaying&&!isFinished()) {
 			float currentBeat = (float)beats [currentBeatIndex];
-			if ((Time.time - startTime) - currentBeat > 0.2)
+			if ((Time.time - startTime) - currentBeat > 0.2) {
 				currentBeatIndex++;
-		}
-		if (isPlaying&&!isFinished()) {
-			float currentFixedBeat = (float)beats [currentFixedBeatIndex];
-			if ((Time.time - startTime) - currentFixedBeat > 0.2) {
-				currentFixedBeatIndex++;
-				notify ();
+				notifyAllObservedSubjects ();
+
+				for (int i = 0; i < isFlagsChangable.Count; i++) {
+					isFlagsChangable [i] = true;
+				}
 			}
 		}
 	}
 		
 
 	public bool isFinished(){
-		return currentBeatIndex >= beats.Count||currentFixedBeatIndex >=beats.Count;
+		return currentBeatIndex >= beats.Count;
 	}
 
-	public void testPrint()
+	/*public void testPrint()
 	{
 		Debug.Log (beats);
-	}
+	}*/
 
 }

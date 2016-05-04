@@ -6,7 +6,7 @@ public class FixedRhythmTest : MonoBehaviour,RhythmObservable {
 	// Use this for initialization
 	void Start () {
 
-		RhythmRecorder.instance.addObservedSubjects (this);
+		RhythmRecorder.instance.addObservedSubject (this);
 
 	}
 	
