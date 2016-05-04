@@ -2,6 +2,8 @@
 using System.Collections;
 
 public class PlayerMovement : MonoBehaviour {
+	private int speed = 1; //move speed per ryhtm
+	private int bomblifeTime = 25;  //bomb lifetime
 
 	private int idleMovementPosition;
 	public GameObject m_ArmLeft;
@@ -31,17 +33,35 @@ public class PlayerMovement : MonoBehaviour {
 
 	void CheckMovement()
 	{
-		if (Input.GetKeyDown ("up")) {
+		if (Input.GetKeyDown ("up") || Input.GetKeyDown (KeyCode.W)) {
 			StartCoroutine(Move (moveDirection.forward));
 		}
-		if (Input.GetKeyDown ("down")) {
+		if (Input.GetKeyDown ("down") || Input.GetKeyDown (KeyCode.S)) {
 			StartCoroutine(Move (moveDirection.back));
 		}
-		if (Input.GetKeyDown ("right")) {
+		if (Input.GetKeyDown ("right") || Input.GetKeyDown (KeyCode.D)) {
 			StartCoroutine(Move (moveDirection.right));
 		}
-		if (Input.GetKeyDown ("left")) {
+		if (Input.GetKeyDown ("left") || Input.GetKeyDown (KeyCode.A)) {
 			StartCoroutine(Move (moveDirection.left));
+		}
+		if (Input.GetKeyDown (KeyCode.Space)) {
+			Debug.Log("press down space");
+			GameObject bomb = Resources.Load("bomb") as GameObject;
+			if(bomb == null){
+				Debug.Log("not bomb");
+			}else{
+				GameObject go = (GameObject)Instantiate(bomb,this.gameObject.transform.position,this.gameObject.transform.rotation);
+				Explosion script = (Explosion)go.GetComponent("Explosion");
+				if(script == null){
+					Debug.Log("not script");
+				}else{
+					Debug.Log("find script");
+					//script.LifeTime = bomblifeTime;
+					script.Active = true;
+					script.LifeTime = bomblifeTime;
+				}
+			}
 		}
 	}
 
