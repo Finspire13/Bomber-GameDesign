@@ -4,10 +4,14 @@ using System.Collections;
 public class LoadGame : MonoBehaviour {
 
 	public GameObject rhythmRecorder;
+	public GameObject mapDataHelper;
 
 	void Awake(){
 		if (RhythmRecorder.instance == null) {
 			Instantiate (rhythmRecorder);
+		}
+		if (MapDataHelper.instance == null) {
+			Instantiate (mapDataHelper);
 		}
 	}
 

@@ -12,7 +12,7 @@ public class MapDataHelper : MonoBehaviour {
     public GameObject PLAYER_2;
 
     [HideInInspector]
-    public static MapDataHelper mHelper;
+	public static MapDataHelper instance = null;
     public static string MAP_COMPONET_TAG = "MapComponent";
 
     //Const Char represent MapData componet
@@ -33,17 +33,29 @@ public class MapDataHelper : MonoBehaviour {
 
     private GameObject mMapModel;
 
+	void Awake()
+	{
+		if (instance == null)
+			instance = this;
+		else if (instance != this)
+			Destroy (gameObject);    
+
+		DontDestroyOnLoad (gameObject);
+
+
+		mMapData.isCreatable = false;
+	}
 
     void Start()
     {
-        mMapData.isCreatable = false;
-        mHelper = this;
+        
     }
 
+	/*
     public static MapDataHelper GetInstance()
     {
         return mHelper;
-    }
+    }*/
 
     public void loadFromAsset(TextAsset textAsset)
     {

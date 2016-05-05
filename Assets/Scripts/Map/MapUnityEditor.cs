@@ -7,7 +7,7 @@ public class MapUnityEditor : MonoBehaviour {
 
     public void createMapModel()
     {
-        MapDataHelper mHelper = MapDataHelper.GetInstance();
+		MapDataHelper mHelper = MapDataHelper.instance;
         mHelper.loadFromAsset(DEFAULT_DATA);
         mHelper.createMap();
     }
