@@ -8,25 +8,25 @@ public class MapDataHelper : MonoBehaviour {
     public GameObject NORMAL_CUBE;
     public GameObject WALL_CUBE;
     public GameObject PLANE;
-    public GameObject PLAYER_1;
-    public GameObject PLAYER_2;
+    public GameObject PLAYER;
+    public GameObject ENEMY;
 
     [HideInInspector]
 	public static MapDataHelper instance = null;
-    public static string MAP_COMPONET_TAG = "MapComponent";
+    //public static string MAP_COMPONET_TAG = "MapComponent";
 
     //Const Char represent MapData componet
-    private const char C_NORMAL_CUBE = '*';
-    private const char C_WALL_CUBE = '#';
-    private const char C_EMPTY = '-';
-    private const char C_PLAYER_1 = '1';
-    private const char C_PLAYER_2 = '2';
+    private const int C_NORMAL_CUBE = 3;
+    private const int C_WALL_CUBE = 4;
+    private const int C_EMPTY = 0;
+    private const int C_PLAYER = 1;
+    private const int C_ENEMY = 2;
 
     struct MapData
     {
         public int row;
         public int column;
-        public char[,] data;
+        public int[,] data;
         public bool isCreatable;
     };
     private MapData mMapData;
@@ -79,7 +79,7 @@ public class MapDataHelper : MonoBehaviour {
             mMapData.row = int.Parse(sizewh[0]);
             mMapData.column = int.Parse(sizewh[1]);
 
-            char[,] mapdata = new char[mMapData.row, mMapData.column];
+            int[,] mapdata = new int[mMapData.row, mMapData.column];
 
             for (int lineNum = 1; lineNum <= mMapData.row; lineNum++)
             {
@@ -87,7 +87,7 @@ public class MapDataHelper : MonoBehaviour {
 
                 for (int col = 0; col < mMapData.column; col++)
                 {
-                    mapdata[lineNum-1, col] = data[col][0];
+                    mapdata[lineNum-1, col] = int.Parse(data[col]);
                 }
             }
             mMapData.data = mapdata;
@@ -132,7 +132,7 @@ public class MapDataHelper : MonoBehaviour {
 
     }
 
-    public void createMapComponent(char componetChar, Vector3 position)
+    public void createMapComponent(int componetChar, Vector3 position)
     {
         GameObject mapComponent;
         switch (componetChar)
@@ -147,12 +147,12 @@ public class MapDataHelper : MonoBehaviour {
                 mapComponent = (GameObject)Instantiate(WALL_CUBE, position, Quaternion.identity);
                 mapComponent.transform.parent = mMapModel.transform;
                 break;
-            case C_PLAYER_1:
-                mapComponent = (GameObject)Instantiate(PLAYER_1, position, Quaternion.identity);
+            case C_PLAYER:
+                mapComponent = (GameObject)Instantiate(PLAYER, position, Quaternion.identity);
                 mapComponent.transform.parent = mMapModel.transform;
                 break;
-            case C_PLAYER_2:
-                mapComponent = (GameObject)Instantiate(PLAYER_2, position, Quaternion.identity);
+            case C_ENEMY:
+                mapComponent = (GameObject)Instantiate(ENEMY, position, Quaternion.identity);
                 mapComponent.transform.parent = mMapModel.transform;
                 break;
             default:
@@ -175,5 +175,14 @@ public class MapDataHelper : MonoBehaviour {
     {
         if (mMapModel != null) { }
         DestroyImmediate(mMapModel);
+    }
+
+    public int[,] getMapData()
+    {
+        if (mMapData.isCreatable)
+        {
+            return mMapData.data;
+        }
+        return null;
     }
 }
