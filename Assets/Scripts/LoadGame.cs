@@ -5,6 +5,7 @@ public class LoadGame : MonoBehaviour {
 
 	public GameObject rhythmRecorder;
 	public GameObject mapDataHelper;
+	public GameObject gameDataProcessor;
 
 	void Awake(){
 		if (RhythmRecorder.instance == null) {
@@ -12,6 +13,9 @@ public class LoadGame : MonoBehaviour {
 		}
 		if (MapDataHelper.instance == null) {
 			Instantiate (mapDataHelper);
+		}
+		if (GameDataProcessor.instance == null) {
+			Instantiate (gameDataProcessor);
 		}
 	}
 

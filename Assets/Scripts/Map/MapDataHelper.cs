@@ -118,7 +118,7 @@ public class MapDataHelper : MonoBehaviour {
                     }
                 }
                 //Rotate map to fix x, z axis, but player will be rotated too
-                //mMapModel.transform.Rotate(0, 90, 0);
+                mMapModel.transform.Rotate(0, 90, 0);
             }
             else
             {
@@ -150,10 +150,12 @@ public class MapDataHelper : MonoBehaviour {
             case C_PLAYER:
                 mapComponent = (GameObject)Instantiate(PLAYER, position, Quaternion.identity);
                 mapComponent.transform.parent = mMapModel.transform;
+			    mapComponent.transform.Rotate(0, -90, 0);
                 break;
             case C_ENEMY:
                 mapComponent = (GameObject)Instantiate(ENEMY, position, Quaternion.identity);
                 mapComponent.transform.parent = mMapModel.transform;
+			    mapComponent.transform.Rotate(0, -90, 0);
                 break;
             default:
                 break;
