@@ -2,12 +2,37 @@
 using System.Collections;
 
 public struct Position{
-	public int x;  //left-bottom tp right-top, from 0 to mapSize-1
-	public int y;
+	public int _x;  //left-bottom tp right-top, from 0 to mapSize-1
+	public int _y;
+
+	public Position(int newX,int newY){
+		_x = newX;
+		_y = newY;
+	}
+	public int x
+	{
+		get{ return _x; }
+		set{ _x = value; }
+	}
+	public int y
+	{
+		get{ return _y; }
+		set{ _y = value; }
+	}
 }
 
 public interface Locatable{
 	Position pos{ get; set;}
+}
+
+public class Test:Locatable{
+	private Position _pos;
+
+	public Position pos
+	{ 
+		get{return _pos;}
+		set{_pos=value;}
+	}
 }
 
 public class GameDataProcessor : MonoBehaviour {
@@ -30,11 +55,20 @@ public class GameDataProcessor : MonoBehaviour {
 		DontDestroyOnLoad (gameObject);
 
 		gameObjects = new ArrayList ();
-		mapSizeX = 0;
-		mapSizeY = 0;
+		mapSizeX = 5;
+		mapSizeY = 5;
 	}
 
 	void Start () {
+		Locatable test1 = new Test ();
+		test1.pos = new Position (2, 3);
+		Locatable test2 = new Test ();
+		test2.pos = new Position (2, 4);
+		GameDataProcessor.instance.addObject (test1);
+		GameDataProcessor.instance.addObject (test2);
+
+		Debug.Log(GameDataProcessor.instance.getFrontalObjects (test1, 1).Count);
+		Debug.Log (GameDataProcessor.instance.getFrontalObjects (test1, 1)[0].GetType());
 
 	}
 	
@@ -55,6 +89,10 @@ public class GameDataProcessor : MonoBehaviour {
 		gameObjects.Remove (item);
 	}
 
+	public void clearObjects(){
+		gameObjects.Clear ();
+	}
+
 	public bool updatePosition(Locatable target, Position pos){
 		if (gameObjects.IndexOf (target) == -1)
 			return false;
@@ -70,6 +108,7 @@ public class GameDataProcessor : MonoBehaviour {
 		if (gameObjects.IndexOf (item) == -1)
 			return null;
 
+
 		int itemY = item.pos.y;
 		int itemX = item.pos.x;
 		ArrayList result = new ArrayList ();
@@ -79,6 +118,7 @@ public class GameDataProcessor : MonoBehaviour {
 			if (temp.pos.x == itemX && temp.pos.y > itemY && temp.pos.y <= itemY + range) {
 				result.Add (temp);
 			}
+
 		}
 		return result;
 	}
