@@ -1,0 +1,4 @@
+push test...
+
+@wentao
+we have designed a more sutiable architecture of our game.
