@@ -12,7 +12,7 @@ using UnityEngine;
 
 public interface Bomb
 {
-	GameObject Owner {
+	SetBomb Owner {
 		get;
 		set;
 	}
@@ -29,7 +29,7 @@ public interface Bomb
 		get;
 		set;
 	}
-	void setProperties(GameObject owner,BombFire fire,int power,int lifeTime);
+	void setProperties(SetBomb owner,BombFire fire,int power,int lifeTime);
 }
 
 

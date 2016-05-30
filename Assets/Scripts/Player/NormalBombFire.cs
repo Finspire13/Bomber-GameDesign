@@ -5,7 +5,11 @@ public class NormalBombFire : MonoBehaviour,Distroyable,BombFire,Locatable
 {
 	private int lifeTime;
 	private int damge;
-	private GameObject onwer;
+	private SetBomb owner;
+	public SetBomb Owner {
+		get{return this.owner;}
+		set{this.owner = value;}
+	}
 	private Position position;
 
 	public Position pos{ 
@@ -13,14 +17,15 @@ public class NormalBombFire : MonoBehaviour,Distroyable,BombFire,Locatable
 		set{ position=value; }
 	}
 
-	public void setProperties(GameObject onwer,int lifeTime){
-		this.onwer = onwer;
+	public void setProperties(SetBomb owner,int lifeTime){
+		this.owner = owner;
 		this.lifeTime = lifeTime;
 	}
 
 	// Use this for initialization
 	void Start ()
 	{
+		GameDataProcessor.instance.addObject (this);
 		lifeTime = 1;
 	}
 	
@@ -29,10 +34,7 @@ public class NormalBombFire : MonoBehaviour,Distroyable,BombFire,Locatable
 	{
 	
 	}
-	public GameObject Onwer {
-		get;
-		set;
-	}
+
 	public int Damage{
 		get{return this.damge;}
 		set{this.damge=value;}
@@ -53,16 +55,21 @@ public class NormalBombFire : MonoBehaviour,Distroyable,BombFire,Locatable
 	public void attackBy(Attackable source){
 
 	}
-	public void distroy(){
+
+	public void actionOnBeat (){
 		--lifeTime;
 		if (lifeTime <= 0) {
-			Destroy(this.gameObject,2);
+			distroy();
 		}
 	}
-	public void attack(){
+
+	public void distroy(){
+
+		GameDataProcessor.instance.removeObject (this);
+		Destroy(this.gameObject,2);
 	}
 
-	void attack(){
+	public void attack(){
 
 	}
 }

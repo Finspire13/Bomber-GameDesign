@@ -12,7 +12,7 @@ using UnityEngine;
 
 public interface BombFire: Attackable
 {
-	GameObject Onwer {
+	SetBomb Owner {
 		get;
 		set;
 	}
@@ -21,7 +21,7 @@ public interface BombFire: Attackable
 		set;
 	}
 
-	void setProperties(GameObject onwer,int lifeTime);
+	void setProperties(SetBomb onwer,int lifeTime);
 }
 
 
