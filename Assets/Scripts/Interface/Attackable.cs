@@ -11,7 +11,7 @@ using System;
 
 public interface Attackable:RhythmObservable
 {
-	int damage 
+	int Damage 
 	{
 		get;
 		set;

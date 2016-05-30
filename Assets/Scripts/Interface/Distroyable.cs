@@ -11,7 +11,13 @@ using System;
 
 public interface Distroyable:RhythmObservable
 {
-
+	int Blood 
+	{
+		get;
+		set;
+	}
+	void attackBy(Attackable source);
+	void distroy();
 }
 
 

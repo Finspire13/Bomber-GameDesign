@@ -20,6 +20,16 @@ public interface Bomb
 		get;
 		set;
 	}
+	BombFire Fire {
+		get;
+		set;
+	}
+
+	int Power {
+		get;
+		set;
+	}
+	void setProperties(GameObject owner,BombFire fire,int power,int lifeTime);
 }
 
 
