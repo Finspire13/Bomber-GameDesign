@@ -5,7 +5,7 @@ public class NormalBomb :MonoBehaviour,Bomb,Distroyable,Locatable
 {
 	private SetBomb owner = null;
 	private BombFire fire = null;
-	private int lifeTime = 5;
+	private int lifeTime = 3;
 	private int power = 4;
 	private Position position;
 	public Position pos{ 
@@ -34,6 +34,7 @@ public class NormalBomb :MonoBehaviour,Bomb,Distroyable,Locatable
 	{
 		Debug.Log ("NormalBomb :MonoBehaviour,Bomb,Distroyable,Locatable");
 		GameDataProcessor.instance.addObject (this);
+		RhythmRecorder.instance.addObservedSubject (this);
 	}
 	
 	// Update is called once per frame
@@ -78,10 +79,12 @@ public class NormalBomb :MonoBehaviour,Bomb,Distroyable,Locatable
 	}
 	public void distroy(){
 		GameDataProcessor.instance.removeObject (this);
+		RhythmRecorder.instance.removeObserver (this);
 		Destroy(this.gameObject,0);
 	}
 
 	public void actionOnBeat(){
+		Debug.Log ("lifeTime:" + lifeTime.ToString());
 		--lifeTime;
 		if (lifeTime <= 0 && isActive) {
 			this.createFire();
@@ -90,7 +93,6 @@ public class NormalBomb :MonoBehaviour,Bomb,Distroyable,Locatable
 		}
 	}
 	private void createFire(){
-		Debug.Log ("lifeTime:" + lifeTime.ToString());
 		
 		GameObject fire = Resources.Load("firebase") as GameObject;
 		GameObject[] fires = new GameObject[power*4+1];

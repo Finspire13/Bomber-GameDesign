@@ -67,7 +67,19 @@ public class RhythmRecorder: MonoBehaviour{
 		isFlagsChangable.Add (true);
 	}
 
+	public void removeObserver(RhythmObservable subject){
+		observedSubjects.Remove (subject);
+	}
+
+	public void removeFlagOwner(RhythmFlagOwner owner){
+		int indx = rhythmFlagOwners.IndexOf (owner);
+		isFlagsChangable.RemoveAt (indx);
+		rhythmFlagOwners.Remove (owner);
+
+	}
+
 	private void notifyAllObservedSubjects(){
+		Debug.Log ("number of observers:" + observedSubjects.Count);
 		for (int i = 0; i < observedSubjects.Count; i++) {
 			RhythmObservable subject = (RhythmObservable)observedSubjects [i];
 			subject.actionOnBeat ();

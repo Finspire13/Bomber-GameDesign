@@ -37,7 +37,7 @@ public class Explosion : MonoBehaviour {
 			lifeTime--;
 		}
 
-		Debug.Log ("lifeTime:" + lifeTime.ToString());
+//		Debug.Log ("lifeTime:" + lifeTime.ToString());
 		if (lifeTime <= 0 && active) {
 			GameObject fire = Resources.Load("firebase") as GameObject;
 			GameObject[] fires = new GameObject[power*4+1];

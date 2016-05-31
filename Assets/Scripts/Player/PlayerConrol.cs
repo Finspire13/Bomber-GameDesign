@@ -76,9 +76,17 @@ public class PlayerConrol : MonoBehaviour,Controlable,Locatable,SetBomb
 		//should initize position of player 
 		this.position = new Position (0, 0);
 
-		this.bombType = Resources.Load("bomb") as GameObject;
+		this.bombType = Resources.Load("NormalBomb") as GameObject;
 		GameDataProcessor.instance.addObject (this);
+		rhmFlag = false;
+		RhythmRecorder.instance.addRhythmFlagOwner (this);
+
 		idleMovementPosition = 0;
+
+		this.maxNum = 3;
+		this.currNum = 0;
+
+		Debug.Log("PlayerControl Done..");
 	}
 
 	// Update is called once per frame
@@ -103,15 +111,19 @@ public class PlayerConrol : MonoBehaviour,Controlable,Locatable,SetBomb
 	void CheckMovement()
 	{
 		if (Input.GetKeyDown ("up") || Input.GetKeyDown (KeyCode.W)) {
+			Debug.Log("up..");
 			StartCoroutine(Move (moveDirection.forward));
 		}
 		if (Input.GetKeyDown ("down") || Input.GetKeyDown (KeyCode.S)) {
+			Debug.Log("down..");
 			StartCoroutine(Move (moveDirection.back));
 		}
 		if (Input.GetKeyDown ("right") || Input.GetKeyDown (KeyCode.D)) {
+			Debug.Log("right..");
 			StartCoroutine(Move (moveDirection.right));
 		}
 		if (Input.GetKeyDown ("left") || Input.GetKeyDown (KeyCode.A)) {
+			Debug.Log("left..");
 			StartCoroutine(Move (moveDirection.left));
 		}
 		if (Input.GetKeyDown (KeyCode.Space)) {

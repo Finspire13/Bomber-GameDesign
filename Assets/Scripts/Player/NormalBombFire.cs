@@ -26,6 +26,7 @@ public class NormalBombFire : MonoBehaviour,Distroyable,BombFire,Locatable
 	void Start ()
 	{
 		GameDataProcessor.instance.addObject (this);
+		RhythmRecorder.instance.addObservedSubject (this);
 		lifeTime = 1;
 	}
 	
@@ -66,7 +67,8 @@ public class NormalBombFire : MonoBehaviour,Distroyable,BombFire,Locatable
 	public void distroy(){
 
 		GameDataProcessor.instance.removeObject (this);
-		Destroy(this.gameObject,2);
+		RhythmRecorder.instance.removeObserver (this);
+		Destroy(this.gameObject,0);
 	}
 
 	public void attack(){

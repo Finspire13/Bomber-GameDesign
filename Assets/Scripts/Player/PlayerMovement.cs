@@ -58,9 +58,9 @@ public class PlayerMovement : MonoBehaviour {
 				GameObject go = (GameObject)Instantiate(bomb,this.gameObject.transform.position,this.gameObject.transform.rotation);
 				Explosion script = (Explosion)go.GetComponent("Explosion");
 				if(script == null){
-					Debug.Log("not script");
+					Debug.Log("not script...");
 				}else{
-					Debug.Log("find script");
+					Debug.Log("find script...");
 					//script.LifeTime = bomblifeTime;
 					script.Active = true;
 					script.LifeTime = bomblifeTime;
