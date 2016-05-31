@@ -174,6 +174,7 @@ public class RhythmRecorder: MonoBehaviour{
 			if ((Time.time - startTime) - currentBeat > 0.2) {
 
 //				Debug.Log("number of observers: "+observedSubjects.Count);
+				Debug.Log("OnBeats");
 
 				currentBeatIndex++;
 				notifyAllObservedSubjects ();

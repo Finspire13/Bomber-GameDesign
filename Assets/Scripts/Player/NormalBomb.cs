@@ -47,10 +47,9 @@ public class NormalBomb :MonoBehaviour,Bomb,Distroyable,Locatable
 	}
 
 
-	public void setProperties(SetBomb owner,BombFire fire,int power,int lifeTime){
+	public void setProperties(SetBomb owner,int power,int lifeTime){
 		this.owner = owner;
 		this.lifeTime = lifeTime;
-		this.fire = fire;
 		this.power = power;
 	}
 	
@@ -82,13 +81,16 @@ public class NormalBomb :MonoBehaviour,Bomb,Distroyable,Locatable
 
 	}
 	public void distroy(){
+		if (owner.CurrNum > 0) {
+			owner.CurrNum -= 1;
+		}
 		GameDataProcessor.instance.removeObject (this);
 		RhythmRecorder.instance.removeObserver (this);
 		Destroy(this.gameObject,0);
 	}
 
 	public void actionOnBeat(){
-		Debug.Log ("lifeTime:" + lifeTime.ToString());
+//		Debug.Log ("lifeTime:" + lifeTime.ToString());
 		--lifeTime;
 
 	}

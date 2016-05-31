@@ -53,7 +53,8 @@ public class PlayerConrol : MonoBehaviour,Controlable,Locatable,SetBomb
 					Debug.Log("find script interface Bomb");
 					//script.LifeTime = bomblifeTime;
 					script.isActive = true;
-					script.LifeTime = 3;
+//					script.LifeTime = 3;
+					script.setProperties(this,4,2);
 				}
 			}
 		}
@@ -85,7 +86,7 @@ public class PlayerConrol : MonoBehaviour,Controlable,Locatable,SetBomb
 
 		idleMovementPosition = 0;
 
-		this.maxNum = 3;
+		this.maxNum = 1;
 		this.currNum = 0;
 		this.canSetBomb = true;
 
@@ -113,30 +114,31 @@ public class PlayerConrol : MonoBehaviour,Controlable,Locatable,SetBomb
 	{
 	}
 
+	//need to add move check to avoid walking out of the map
 	void CheckMovement()
 	{
 		if (Input.GetKeyDown ("up") || Input.GetKeyDown (KeyCode.W)) {
-			Debug.Log("up..");
+//			Debug.Log("up..");
 			StartCoroutine(Move (moveDirection.forward));
 			rhmFlag = false;
 		}
 		if (Input.GetKeyDown ("down") || Input.GetKeyDown (KeyCode.S)) {
-			Debug.Log("down..");
+//			Debug.Log("down..");
 			StartCoroutine(Move (moveDirection.back));
 			rhmFlag = false;
 		}
 		if (Input.GetKeyDown ("right") || Input.GetKeyDown (KeyCode.D)) {
-			Debug.Log("right..");
+//			Debug.Log("right..");
 			StartCoroutine(Move (moveDirection.right));
 			rhmFlag = false;
 		}
 		if (Input.GetKeyDown ("left") || Input.GetKeyDown (KeyCode.A)) {
-			Debug.Log("left..");
+//			Debug.Log("left..");
 			StartCoroutine(Move (moveDirection.left));
 			rhmFlag = false;
 		}
 		if (Input.GetKeyDown (KeyCode.Space) && canSetBomb) {
-			Debug.Log ("press down space");
+//			Debug.Log ("press down space");
 			installBomb ();
 			canSetBomb = false;
 			//rhmFlag = false;
