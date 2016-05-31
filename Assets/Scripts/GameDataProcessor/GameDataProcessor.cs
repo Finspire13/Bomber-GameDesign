@@ -67,8 +67,8 @@ public class GameDataProcessor : MonoBehaviour {
 		GameDataProcessor.instance.addObject (test1);
 		GameDataProcessor.instance.addObject (test2);
 
-		Debug.Log(GameDataProcessor.instance.getFrontalObjects (test1, 1).Count);
-		Debug.Log (GameDataProcessor.instance.getFrontalObjects (test1, 1)[0].GetType());
+//		Debug.Log(GameDataProcessor.instance.getFrontalObjects (test1, 1).Count);
+//		Debug.Log (GameDataProcessor.instance.getFrontalObjects (test1, 1)[0].GetType());
 
 	}
 	

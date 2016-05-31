@@ -21,8 +21,8 @@ public class LoadGame : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		Debug.Log ("Start:");
-		Debug.Log (Time.time);
+//		Debug.Log ("Start:");
+//		Debug.Log (Time.time);
 		if (!RhythmRecorder.instance.setRhythm (RhythmList.Test)) {
 			Debug.Log ("error");
 		}

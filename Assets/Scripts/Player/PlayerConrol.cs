@@ -51,7 +51,7 @@ public class PlayerConrol : MonoBehaviour,Controlable,Locatable,SetBomb
 					Debug.Log("find script");
 					//script.LifeTime = bomblifeTime;
 					script.isActive = true;
-					script.LifeTime = 5;
+					script.LifeTime = 2;
 				}
 			}
 		}
@@ -83,7 +83,7 @@ public class PlayerConrol : MonoBehaviour,Controlable,Locatable,SetBomb
 
 		idleMovementPosition = 0;
 
-		this.maxNum = 3;
+		this.maxNum = 5;
 		this.currNum = 0;
 
 		Debug.Log("PlayerControl Done..");
@@ -91,14 +91,15 @@ public class PlayerConrol : MonoBehaviour,Controlable,Locatable,SetBomb
 
 	// Update is called once per frame
 	void Update () {
-		if (rhmFlag) {
-			control ();
-		}
+		control ();
 	}
 
 	public void control()
 	{
-		CheckMovement ();
+		if (rhmFlag) {
+			CheckMovement ();
+
+		}
 		if (Time.frameCount % 10==0) {
 			IdleMovement ();
 		}
@@ -113,22 +114,27 @@ public class PlayerConrol : MonoBehaviour,Controlable,Locatable,SetBomb
 		if (Input.GetKeyDown ("up") || Input.GetKeyDown (KeyCode.W)) {
 			Debug.Log("up..");
 			StartCoroutine(Move (moveDirection.forward));
+			rhmFlag = false;
 		}
 		if (Input.GetKeyDown ("down") || Input.GetKeyDown (KeyCode.S)) {
 			Debug.Log("down..");
 			StartCoroutine(Move (moveDirection.back));
+			rhmFlag = false;
 		}
 		if (Input.GetKeyDown ("right") || Input.GetKeyDown (KeyCode.D)) {
 			Debug.Log("right..");
 			StartCoroutine(Move (moveDirection.right));
+			rhmFlag = false;
 		}
 		if (Input.GetKeyDown ("left") || Input.GetKeyDown (KeyCode.A)) {
 			Debug.Log("left..");
 			StartCoroutine(Move (moveDirection.left));
+			rhmFlag = false;
 		}
 		if (Input.GetKeyDown (KeyCode.Space)) {
-			Debug.Log("press down space");
-			installBomb();
+			Debug.Log ("press down space");
+			installBomb ();
+			rhmFlag = false;
 		}
 	}
 	

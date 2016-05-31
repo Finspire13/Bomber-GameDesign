@@ -59,6 +59,7 @@ public class NormalBombFire : MonoBehaviour,Distroyable,BombFire,Locatable
 
 	public void actionOnBeat (){
 		--lifeTime;
+		Debug.Log ("--lifeTime");
 		if (lifeTime <= 0) {
 			distroy();
 		}

@@ -5,8 +5,8 @@ public class NormalBomb :MonoBehaviour,Bomb,Distroyable,Locatable
 {
 	private SetBomb owner = null;
 	private BombFire fire = null;
-	private int lifeTime = 3;
-	private int power = 4;
+	private int lifeTime = 2;
+	private int power = 5;
 	private Position position;
 	public Position pos{ 
 		get{ return position; } 
@@ -32,7 +32,7 @@ public class NormalBomb :MonoBehaviour,Bomb,Distroyable,Locatable
 	// Use this for initialization
 	void Start ()
 	{
-		Debug.Log ("NormalBomb :MonoBehaviour,Bomb,Distroyable,Locatable");
+//		Debug.Log ("NormalBomb :MonoBehaviour,Bomb,Distroyable,Locatable");
 		GameDataProcessor.instance.addObject (this);
 		RhythmRecorder.instance.addObservedSubject (this);
 	}

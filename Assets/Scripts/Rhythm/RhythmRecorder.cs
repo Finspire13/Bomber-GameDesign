@@ -4,6 +4,7 @@ using System.Collections;
 
 public interface RhythmObservable{
 	void actionOnBeat ();
+	void actionAfterBeat();
 }
 
 public interface RhythmFlagOwner{
@@ -79,12 +80,17 @@ public class RhythmRecorder: MonoBehaviour{
 	}
 
 	private void notifyAllObservedSubjects(){
-		Debug.Log ("number of observers:" + observedSubjects.Count);
-		for (int i = 0; i < observedSubjects.Count; i++) {
+//		Debug.Log ("number of observers:" + observedSubjects.Count);
+//		Debug.Log ("currentBeatIndex:" + currentBeatIndex.ToString());
+		int count = observedSubjects.Count;
+		for (int i = 0; i < count; i++) {
 			RhythmObservable subject = (RhythmObservable)observedSubjects [i];
+
 			subject.actionOnBeat ();
 		}
 	}
+
+
 
 	private void updateFlagInOwners(){
 		if (isOnBeat ()) {
@@ -164,8 +170,12 @@ public class RhythmRecorder: MonoBehaviour{
 		updateFlagInOwners ();
 
 		if (isPlaying&&!isFinished()) {
+
 			float currentBeat = (float)beats [currentBeatIndex];
 			if ((Time.time - startTime) - currentBeat > 0.2) {
+
+//				Debug.Log("number of observers: "+observedSubjects.Count);
+
 				currentBeatIndex++;
 				notifyAllObservedSubjects ();
 
