@@ -30,7 +30,8 @@ public interface SetBomb:RhythmObservable
 //	}
 
 	void notifyExplosion ();
-	
+
+	//change bomb type
 	void setBomb(GameObject bombType);
 	void installBomb();
 }

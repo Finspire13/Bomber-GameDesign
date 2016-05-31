@@ -13,7 +13,7 @@ public class PlayerLife : MonoBehaviour,Distroyable
 		blood -= source.Damage;
 	}
 	public void distroy(){
-		Destroy (this.gameObject, 1);
+		Destroy (this.gameObject, 0);
 	}
 
 	public void actionOnBeat(){
@@ -22,13 +22,14 @@ public class PlayerLife : MonoBehaviour,Distroyable
 	// Use this for initialization
 	void Start ()
 	{
-	
+		blood = 5;
 	}
 	
 	// Update is called once per frame
 	void Update ()
 	{
 		if (blood <= 0) {
+			Debug.Log("game over!!!");
 			distroy();
 		}
 	}
