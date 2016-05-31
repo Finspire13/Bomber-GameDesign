@@ -4,7 +4,6 @@ using System.Collections;
 
 public interface RhythmObservable{
 	void actionOnBeat ();
-	void actionAfterBeat();
 }
 
 public interface RhythmFlagOwner{

@@ -33,7 +33,9 @@ public class NormalBombFire : MonoBehaviour,Distroyable,BombFire,Locatable
 	// Update is called once per frame
 	void Update ()
 	{
-	
+		if (lifeTime <= 0) {
+			distroy();
+		}
 	}
 
 	public int Damage{
@@ -60,9 +62,6 @@ public class NormalBombFire : MonoBehaviour,Distroyable,BombFire,Locatable
 	public void actionOnBeat (){
 		--lifeTime;
 		Debug.Log ("--lifeTime");
-		if (lifeTime <= 0) {
-			distroy();
-		}
 	}
 
 	public void distroy(){

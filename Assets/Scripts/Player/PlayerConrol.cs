@@ -3,6 +3,8 @@ using System.Collections;
 
 public class PlayerConrol : MonoBehaviour,Controlable,Locatable,SetBomb
 {
+	private bool canSetBomb = true;
+
 	private int speed = 1;
 	public int Speed 
 	{
@@ -44,14 +46,14 @@ public class PlayerConrol : MonoBehaviour,Controlable,Locatable,SetBomb
 				Debug.Log("not bomb");
 			}else{
 				GameObject go = (GameObject)Instantiate(this.bombType,this.gameObject.transform.position,this.gameObject.transform.rotation);
-				NormalBomb script = (NormalBomb)go.GetComponent("NormalBomb");
+				NormalBomb script = (NormalBomb)go.GetComponent("Bomb");
 				if(script == null){
 					Debug.Log("not script");
 				}else{
-					Debug.Log("find script");
+					Debug.Log("find script interface Bomb");
 					//script.LifeTime = bomblifeTime;
 					script.isActive = true;
-					script.LifeTime = 2;
+					script.LifeTime = 3;
 				}
 			}
 		}
@@ -83,10 +85,11 @@ public class PlayerConrol : MonoBehaviour,Controlable,Locatable,SetBomb
 
 		idleMovementPosition = 0;
 
-		this.maxNum = 5;
+		this.maxNum = 3;
 		this.currNum = 0;
+		this.canSetBomb = true;
 
-		Debug.Log("PlayerControl Done..");
+//		Debug.Log("PlayerControl Done..");
 	}
 
 	// Update is called once per frame
@@ -97,6 +100,7 @@ public class PlayerConrol : MonoBehaviour,Controlable,Locatable,SetBomb
 	public void control()
 	{
 		if (rhmFlag) {
+			canSetBomb = true;
 			CheckMovement ();
 
 		}
@@ -131,10 +135,11 @@ public class PlayerConrol : MonoBehaviour,Controlable,Locatable,SetBomb
 			StartCoroutine(Move (moveDirection.left));
 			rhmFlag = false;
 		}
-		if (Input.GetKeyDown (KeyCode.Space)) {
+		if (Input.GetKeyDown (KeyCode.Space) && canSetBomb) {
 			Debug.Log ("press down space");
 			installBomb ();
-			rhmFlag = false;
+			canSetBomb = false;
+			//rhmFlag = false;
 		}
 	}
 	

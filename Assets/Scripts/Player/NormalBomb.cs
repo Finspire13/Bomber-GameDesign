@@ -39,7 +39,11 @@ public class NormalBomb :MonoBehaviour,Bomb,Distroyable,Locatable
 	
 	// Update is called once per frame
 	void Update () {
-
+		if (lifeTime <= 0 && isActive) {
+			this.createFire();
+			isActive = false;
+			this.distroy();
+		}
 	}
 
 
@@ -86,11 +90,7 @@ public class NormalBomb :MonoBehaviour,Bomb,Distroyable,Locatable
 	public void actionOnBeat(){
 		Debug.Log ("lifeTime:" + lifeTime.ToString());
 		--lifeTime;
-		if (lifeTime <= 0 && isActive) {
-			this.createFire();
-			isActive = false;
-			this.distroy();
-		}
+
 	}
 	private void createFire(){
 		
