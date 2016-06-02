@@ -31,6 +31,8 @@ public class LoadGame : MonoBehaviour {
 		if (!RhythmRecorder.instance.startRhythm ()) {
 			Debug.Log ("error");
 		}
+
+        MapDataHelper.instance.createMapModel();
 	}
 	
 	// Update is called once per frame
