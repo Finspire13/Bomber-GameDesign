@@ -2,13 +2,13 @@
 using System.Collections;
 using UnityEngine.UI;
 
-public class RhythmReminder : MonoBehaviour,RhythmObservableInAdvance  {
+public class RhythmReminder : MonoBehaviour,RhythmObservable  {
 
 	public GameObject leftSlider;
 	public GameObject rightSlider;
 	// Use this for initialization
 	void Start () {
-		RhythmRecorder.instance.addObservedSubjectInAdvance (this);
+		RhythmRecorder.instance.addObservedSubject (this,-3);
 	}
 	
 	// Update is called once per frame
@@ -16,7 +16,7 @@ public class RhythmReminder : MonoBehaviour,RhythmObservableInAdvance  {
 	
 	}
 
-	public void actionOnBeatInAdvance(){
+	public void actionOnBeat(){
 		//StartCoroutine(BeatIt());
 		GameObject leftSliderInstance = Instantiate (leftSlider) as GameObject;
 		leftSliderInstance.transform.SetParent(gameObject.transform);
