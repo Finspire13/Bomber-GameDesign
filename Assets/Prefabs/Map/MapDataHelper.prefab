@@ -44,7 +44,7 @@ MonoBehaviour:
   WALL_CUBE: {fileID: 126182, guid: 75343584647a70744b37912787af319e, type: 2}
   PLANE: {fileID: 144210, guid: 6fff3f814493e7246831701856d5cb85, type: 2}
   PLAYER: {fileID: 172252, guid: 89691ad1759e2443784b3bc99a6dcdb4, type: 2}
-  ENEMY: {fileID: 172252, guid: 89691ad1759e2443784b3bc99a6dcdb4, type: 2}
+  ENEMY: {fileID: 175674, guid: 60f7dc9b9d2761c45aeb892e81f18d47, type: 2}
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

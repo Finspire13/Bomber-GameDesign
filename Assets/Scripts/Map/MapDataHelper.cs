@@ -110,6 +110,14 @@ public class MapDataHelper : MonoBehaviour {
                 mMapModel = new GameObject("MapModel");
                 mMapModel.transform.position = new Vector3(0, 0, 0);
 
+                //Assign mapSize to GameDataProcessor 
+                if (GameDataProcessor.instance != null)
+                {
+                    //Debug.Log(mMapData.row + ", " + mMapData.column);
+                    GameDataProcessor.instance.mapSizeX = mMapData.row;
+                    GameDataProcessor.instance.mapSizeY = mMapData.column;
+                }
+
                 for (int x = 0; x < mMapData.row; x++)
                 {
                     for (int z = 0; z < mMapData.column; z++)

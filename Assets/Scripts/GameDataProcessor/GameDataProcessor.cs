@@ -55,17 +55,15 @@ public class GameDataProcessor : MonoBehaviour {
 		DontDestroyOnLoad (gameObject);
 
 		gameObjects = new ArrayList ();
-		mapSizeX = 5;
-		mapSizeY = 5;
 	}
 
 	void Start () {
-		Locatable test1 = new Test ();
-		test1.pos = new Position (2, 3);
-		Locatable test2 = new Test ();
-		test2.pos = new Position (2, 4);
-		GameDataProcessor.instance.addObject (test1);
-		GameDataProcessor.instance.addObject (test2);
+//		Locatable test1 = new Test ();
+//		test1.pos = new Position (2, 3);
+//		Locatable test2 = new Test ();
+//		test2.pos = new Position (2, 4);
+//		GameDataProcessor.instance.addObject (test1);
+//		GameDataProcessor.instance.addObject (test2);
 
 //		Debug.Log(GameDataProcessor.instance.getFrontalObjects (test1, 1).Count);
 //		Debug.Log (GameDataProcessor.instance.getFrontalObjects (test1, 1)[0].GetType());
