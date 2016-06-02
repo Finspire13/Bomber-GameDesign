@@ -6,6 +6,10 @@ public interface RhythmObservable{
 	void actionOnBeat ();
 }
 
+public interface RhythmObservableInAdvance{
+	void actionOnBeatInAdvance ();
+}
+
 public interface RhythmFlagOwner{
 	bool rhythmFlag{ get; set;}
 }
@@ -20,7 +24,9 @@ public class RhythmRecorder: MonoBehaviour{
 	private ArrayList beats;
 	private bool isPlaying;
 	private int currentBeatIndex;
+	private int beatIndexInAdvance;
 	private ArrayList observedSubjects;
+	private ArrayList observedSubjectsInAdvance;
 	private ArrayList rhythmFlagOwners;
 	private ArrayList isFlagsChangable;
 
@@ -40,7 +46,9 @@ public class RhythmRecorder: MonoBehaviour{
 		beats = new ArrayList ();
 		isPlaying = false;
 		currentBeatIndex = 0;
+		beatIndexInAdvance = 0;
 		observedSubjects = new ArrayList ();
+		observedSubjectsInAdvance = new ArrayList ();
 		rhythmFlagOwners = new ArrayList ();
 		isFlagsChangable = new ArrayList ();
 	}
@@ -57,6 +65,14 @@ public class RhythmRecorder: MonoBehaviour{
 		observedSubjects.Add (newSubject);
 	}
 
+	public void removeAllObservedSubjectsInAdvance(){
+		observedSubjectsInAdvance.Clear ();
+	}
+
+	public void addObservedSubjectInAdvance(RhythmObservableInAdvance newSubject){
+		observedSubjectsInAdvance.Add (newSubject);
+	}
+
 	public void removeAllRhythmFlagOwners(){
 		rhythmFlagOwners.Clear ();
 		isFlagsChangable.Clear ();
@@ -69,6 +85,10 @@ public class RhythmRecorder: MonoBehaviour{
 
 	public void removeObserver(RhythmObservable subject){
 		observedSubjects.Remove (subject);
+	}
+
+	public void removeObserverInAdvance(RhythmObservableInAdvance subject){
+		observedSubjectsInAdvance.Remove (subject);
 	}
 
 	public void removeFlagOwner(RhythmFlagOwner owner){
@@ -86,6 +106,17 @@ public class RhythmRecorder: MonoBehaviour{
 			RhythmObservable subject = (RhythmObservable)observedSubjects [i];
 
 			subject.actionOnBeat ();
+		}
+	}
+
+	private void notifyAllObservedSubjectsInAdvance(){
+		//		Debug.Log ("number of observers:" + observedSubjects.Count);
+		//		Debug.Log ("currentBeatIndex:" + currentBeatIndex.ToString());
+		int count = observedSubjectsInAdvance.Count;
+		for (int i = 0; i < count; i++) {
+			RhythmObservableInAdvance subject = (RhythmObservableInAdvance)observedSubjectsInAdvance [i];
+
+			subject.actionOnBeatInAdvance ();
 		}
 	}
 
@@ -136,6 +167,7 @@ public class RhythmRecorder: MonoBehaviour{
 		startTime = Time.time;
 		isPlaying = true;
 		currentBeatIndex = 0;
+		beatIndexInAdvance = 0;
 
 		return true;
 	}
@@ -154,6 +186,7 @@ public class RhythmRecorder: MonoBehaviour{
 		startTime = 0;
 		isPlaying = false;
 		currentBeatIndex = 0;
+		beatIndexInAdvance = 0;
 	}
 
 	private bool isOnBeat()   
@@ -171,6 +204,7 @@ public class RhythmRecorder: MonoBehaviour{
 		if (isPlaying&&!isFinished()) {
 
 			float currentBeat = (float)beats [currentBeatIndex];
+
 			if ((Time.time - startTime) - currentBeat > 0.2) {
 
 //				Debug.Log("number of observers: "+observedSubjects.Count);
@@ -181,6 +215,19 @@ public class RhythmRecorder: MonoBehaviour{
 
 				for (int i = 0; i < isFlagsChangable.Count; i++) {
 					isFlagsChangable [i] = true;
+				}
+			}
+
+			if (beatIndexInAdvance < beats.Count) {
+				float beatInAdvance = (float)beats [beatIndexInAdvance];
+
+				if (beatInAdvance - (Time.time - startTime) < 3) {
+
+					//				Debug.Log("number of observers: "+observedSubjects.Count);
+					Debug.Log ("OnBeatsInAdvance");
+
+					beatIndexInAdvance++;
+					notifyAllObservedSubjectsInAdvance ();
 				}
 			}
 		}
