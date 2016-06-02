@@ -19,7 +19,7 @@ public class RhythmRecorder: MonoBehaviour{
 	private float startTime;
 	private ArrayList beats;
 	private bool isPlaying;
-	private float onBeatThreshold=0.2f;
+	private float onBeatThreshold=0.1f;
 
 	private ArrayList currentBeatIndice;
 	private ArrayList observedSubjects;

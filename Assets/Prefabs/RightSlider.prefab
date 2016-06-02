@@ -212,7 +212,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   slider: {fileID: 11452486}
-  timeToCountDown: 3
+  timeToCountDown: 2
   startTime: 0
 --- !u!114 &11498888
 MonoBehaviour:
@@ -293,8 +293,8 @@ RectTransform:
   m_RootOrder: 0
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 117.5, y: 117}
-  m_SizeDelta: {x: 235, y: 20}
+  m_AnchoredPosition: {x: 152, y: 117}
+  m_SizeDelta: {x: 304, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &22440612
 RectTransform:

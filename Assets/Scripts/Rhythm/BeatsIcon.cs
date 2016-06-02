@@ -6,7 +6,7 @@ public class BeatsIcon : MonoBehaviour,RhythmObservable {
 
 	// Use this for initialization
 	void Start () {
-		RhythmRecorder.instance.addObservedSubject (this,-0.2f);
+		RhythmRecorder.instance.addObservedSubject (this,-0.1f);
 	}
 	
 	// Update is called once per frame
