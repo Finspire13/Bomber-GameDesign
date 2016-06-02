@@ -5,7 +5,7 @@ using UnityEngine.UI;
 public class RhythmSlider : MonoBehaviour {
 
 	public Slider slider;
-	public float timeToCountDown=5;
+	public float timeToCountDown=2;
 	public float startTime;
 
 	// Use this for initialization
