@@ -208,13 +208,13 @@ public class GameDataProcessor : MonoBehaviour,RhythmObservable {
 	public void initizeMap(){
 		for (int i = 0; i < dangerMap.GetLength (0); ++i) {
 			for (int j = 0; j < dangerMap.GetLength (1); ++i) {
-				dangerMap [i] = -1;
+				dangerMap [i,j] = -1;
 			}
 		}
 
 		for (int i = 0; i < benefitMap.GetLength (0); ++i) {
 			for (int j = 0; j < benefitMap.GetLength (1); ++i) {
-				dangerMap [i] = 0;
+				dangerMap [i,j] = 0;
 			}
 		}
 	}

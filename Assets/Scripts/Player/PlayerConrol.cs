@@ -54,7 +54,7 @@ public class PlayerConrol : MonoBehaviour,Controlable,Locatable,SetBomb
 					//script.LifeTime = bomblifeTime;
 					//script.isActive = true;
 //					script.LifeTime = 3;
-					script.setProperties(this,4,2);
+					script.setProperties(this,4,5);
 				}
 			}
 		}
@@ -86,7 +86,7 @@ public class PlayerConrol : MonoBehaviour,Controlable,Locatable,SetBomb
 
 		idleMovementPosition = 0;
 
-		this.maxNum = 1;
+		this.maxNum = 3;
 		this.currNum = 0;
 		this.canSetBomb = true;
 
