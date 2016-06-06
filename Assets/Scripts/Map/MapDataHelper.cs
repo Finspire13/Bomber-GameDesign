@@ -108,7 +108,7 @@ public class MapDataHelper : MonoBehaviour {
             if (mMapModel == null)
             {
                 mMapModel = new GameObject("MapModel");
-                mMapModel.transform.position = new Vector3(0, 0, 0);
+				mMapModel.transform.position = new Vector3(0, 0, 0);
 
                 //Assign mapSize to GameDataProcessor 
                 if (GameDataProcessor.instance != null)

@@ -59,8 +59,8 @@ public class GameDataProcessor : MonoBehaviour,RhythmObservable {
 
 		gameObjects = new ArrayList ();
 
-		dangerMap = new int[mapSizeX][mapSizeY];
-		benefitMap = new int[mapSizeX][mapSizeY];
+		dangerMap = new int[mapSizeX,mapSizeY];
+		benefitMap = new int[mapSizeX,mapSizeY];
 	}
 
 	void Start () {
