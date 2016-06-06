@@ -1,3 +1,13 @@
+Explain GameDataProcessor Coordinate
+#Warning!
+From unity view and for GameDataProcessor:
+|----------------> x+
+|
+|
+|
+Y+
+
+
 <<<<<<< HEAD
 #Game Data Encoding
 
