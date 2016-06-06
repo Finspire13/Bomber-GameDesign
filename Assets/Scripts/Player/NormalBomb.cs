@@ -14,7 +14,12 @@ public class NormalBomb :MonoBehaviour,Bomb,Distroyable,Locatable
 	}
 	
 
-	public bool isActive = true;
+	private bool isActive = true;
+	public bool IsActive{
+		get{ return isActive; } 
+		set{ isActive=value; }
+	}
+
 	public int stepLenth = 1;
 //	public NormalBomb(GameObject owner,BombFire fire,int lifeTime){
 //		this.owner = owner;
@@ -78,8 +83,13 @@ public class NormalBomb :MonoBehaviour,Bomb,Distroyable,Locatable
 	} 
 
 	public void attackBy(Attackable source){
-
+		if (source is BombFire && isActive) {
+			this.createFire ();
+			isActive = false;
+			this.distroy ();
+		}
 	}
+
 	public void distroy(){
 		if (owner.CurrNum > 0) {
 			owner.CurrNum -= 1;

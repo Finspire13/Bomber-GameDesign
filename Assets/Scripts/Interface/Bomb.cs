@@ -29,6 +29,11 @@ public interface Bomb
 		get;
 		set;
 	}
+
+	bool IsActive {
+		get;
+		set;
+	}
 	void setProperties(SetBomb owner,int power,int lifeTime);
 }
 

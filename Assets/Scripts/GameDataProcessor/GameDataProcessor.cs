@@ -35,7 +35,7 @@ public class Test:Locatable{
 	}
 }
 
-public class GameDataProcessor : MonoBehaviour {
+public class GameDataProcessor : MonoBehaviour,RhythmObservable {
 
 	public static GameDataProcessor instance = null;
 
@@ -44,6 +44,9 @@ public class GameDataProcessor : MonoBehaviour {
 
 	private ArrayList gameObjects;
 	// Use this for initialization
+
+	private int[,] dangerMap; //for ai
+	private int[,] benefitMap; //for ai
 
 	void Awake()
 	{
@@ -55,6 +58,9 @@ public class GameDataProcessor : MonoBehaviour {
 		DontDestroyOnLoad (gameObject);
 
 		gameObjects = new ArrayList ();
+
+		dangerMap = new int[mapSizeX][mapSizeY];
+		benefitMap = new int[mapSizeX][mapSizeY];
 	}
 
 	void Start () {
@@ -67,6 +73,7 @@ public class GameDataProcessor : MonoBehaviour {
 
 //		Debug.Log(GameDataProcessor.instance.getFrontalObjects (test1, 1).Count);
 //		Debug.Log (GameDataProcessor.instance.getFrontalObjects (test1, 1)[0].GetType());
+		RhythmRecorder.instance.addObservedSubject(this);
 
 	}
 	
@@ -193,5 +200,24 @@ public class GameDataProcessor : MonoBehaviour {
 		return result;
 	}
 
+	public void actionOnBeat (){
+		updateDangerMap ();
+	}
+
+	public void addToDangerMap(Bomb bomb){
+		
+	}
+
+	public void updateDangerMap(){
+		
+	}
+
+	public void addToBenefitMap(Buff buff){
+
+
+	}
+	public void removeFromBenefitMap(Buff buff){
+		
+	}
 
 }

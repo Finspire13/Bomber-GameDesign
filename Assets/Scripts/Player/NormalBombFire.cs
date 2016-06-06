@@ -34,6 +34,7 @@ public class NormalBombFire : MonoBehaviour,Distroyable,BombFire,Locatable
 	void Update ()
 	{
 		if (lifeTime <= 0) {
+			attack ();
 			distroy();
 		}
 	}
@@ -72,7 +73,14 @@ public class NormalBombFire : MonoBehaviour,Distroyable,BombFire,Locatable
 	}
 
 	public void attack(){
-
+		ArrayList objs = GameDataProcessor.instance.getObjectsAtTheSamePosition (this);
+		if (objs != null) {
+			for (int i = 0; i < objs.Count; ++i) {
+				if (objs [i] is Distroyable) {
+					((Distroyable)objs [i]).attackBy (this);
+				}
+			}
+		}
 	}
 }
 
