@@ -32,4 +32,8 @@ public class BeatsIcon : MonoBehaviour,RhythmObservable {
 			yield return null;
 		}
 	}
+
+	void OnDestroy() {
+		RhythmRecorder.instance.removeObserver (this);
+	}
 }

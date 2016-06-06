@@ -6,6 +6,7 @@ public class LoadGame : MonoBehaviour {
 	public GameObject rhythmRecorder;
 	public GameObject mapDataHelper;
 	public GameObject gameDataProcessor;
+	public GameObject gameManager;
 	public GameObject ui;
 
 	void Awake(){
@@ -18,7 +19,9 @@ public class LoadGame : MonoBehaviour {
 		if (GameDataProcessor.instance == null) {
 			Instantiate (gameDataProcessor);
 		}
-		Instantiate (ui);
+		if (GameManager.instance == null) {
+			Instantiate (gameManager);
+		}
 	}
 
 	// Use this for initialization
@@ -32,7 +35,7 @@ public class LoadGame : MonoBehaviour {
 			Debug.Log ("error");
 		}
 
-        MapDataHelper.instance.createMapModel();
+		GameManager.instance.changeGameState (GameState.start);
 	}
 	
 	// Update is called once per frame

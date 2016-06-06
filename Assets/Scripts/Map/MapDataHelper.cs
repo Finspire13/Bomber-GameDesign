@@ -145,28 +145,32 @@ public class MapDataHelper : MonoBehaviour {
         GameObject mapComponent;
         switch (componetChar)
         {
-            case C_EMPTY:
-                break;
-            case C_NORMAL_CUBE:
-                mapComponent = (GameObject)Instantiate(NORMAL_CUBE, position, Quaternion.identity);
-                mapComponent.transform.parent = mMapModel.transform;
-                break;
-            case C_WALL_CUBE:
-                mapComponent = (GameObject)Instantiate(WALL_CUBE, position, Quaternion.identity);
-                mapComponent.transform.parent = mMapModel.transform;
-                break;
-            case C_PLAYER:
-                mapComponent = (GameObject)Instantiate(PLAYER, position, Quaternion.identity);
-                mapComponent.transform.parent = mMapModel.transform;
-			    mapComponent.transform.Rotate(0, -90, 0);
-                break;
-            case C_ENEMY:
-                mapComponent = (GameObject)Instantiate(ENEMY, position, Quaternion.identity);
-                mapComponent.transform.parent = mMapModel.transform;
-			    mapComponent.transform.Rotate(0, -90, 0);
-                break;
-            default:
-                break;
+		case C_EMPTY:
+			break;
+		case C_NORMAL_CUBE:
+			mapComponent = (GameObject)Instantiate (NORMAL_CUBE, position, Quaternion.identity);
+			mapComponent.transform.parent = mMapModel.transform;
+			GameDataProcessor.instance.addObject (mapComponent.GetComponent<NormalCube>());
+            break;
+		case C_WALL_CUBE:
+			mapComponent = (GameObject)Instantiate (WALL_CUBE, position, Quaternion.identity);
+			mapComponent.transform.parent = mMapModel.transform;
+			GameDataProcessor.instance.addObject (mapComponent.GetComponent<WallCube>());
+			break;
+		case C_PLAYER:
+			mapComponent = (GameObject)Instantiate (PLAYER, position, Quaternion.identity);
+			mapComponent.transform.parent = mMapModel.transform;
+			mapComponent.transform.Rotate (0, -90, 0);
+			GameDataProcessor.instance.addObject (mapComponent.GetComponentInChildren<PlayerConrol>());
+			break;
+		case C_ENEMY:
+			mapComponent = (GameObject)Instantiate (ENEMY, position, Quaternion.identity);
+			mapComponent.transform.parent = mMapModel.transform;
+			mapComponent.transform.Rotate (0, -90, 0);
+			//leave blank
+			break;
+		default:
+			break;
         }
         
         position.y = 0f;
