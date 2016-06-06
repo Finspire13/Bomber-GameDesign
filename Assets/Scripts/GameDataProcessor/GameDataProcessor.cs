@@ -59,8 +59,8 @@ public class GameDataProcessor : MonoBehaviour,RhythmObservable {
 
 		gameObjects = new ArrayList ();
 
-		dangerMap = new int[mapSizeX][mapSizeY];
-		benefitMap = new int[mapSizeX][mapSizeY];
+		dangerMap = new int[mapSizeX,mapSizeY];
+		benefitMap = new int[mapSizeX,mapSizeY];
 	}
 
 	void Start () {
@@ -74,7 +74,7 @@ public class GameDataProcessor : MonoBehaviour,RhythmObservable {
 //		Debug.Log(GameDataProcessor.instance.getFrontalObjects (test1, 1).Count);
 //		Debug.Log (GameDataProcessor.instance.getFrontalObjects (test1, 1)[0].GetType());
 		RhythmRecorder.instance.addObservedSubject(this);
-
+		initizeMap ();
 	}
 	
 	// Update is called once per frame
@@ -204,12 +204,117 @@ public class GameDataProcessor : MonoBehaviour,RhythmObservable {
 		updateDangerMap ();
 	}
 
+	public void initizeMap(){
+		for (int i = 0; i < dangerMap.GetLength (0); ++i) {
+			for (int j = 0; j < dangerMap.GetLength (1); ++i) {
+				dangerMap [i] = -1;
+			}
+		}
+
+		for (int i = 0; i < benefitMap.GetLength (0); ++i) {
+			for (int j = 0; j < benefitMap.GetLength (1); ++i) {
+				dangerMap [i] = 0;
+			}
+		}
+	}
+
+	public ArrayList getObjectAtPostion(Position pos){
+
+		int itemY = pos.y;
+		int itemX = pos.x;
+
+		ArrayList result = new ArrayList ();
+
+		for (int i = 0; i < gameObjects.Count; i++) {
+			Locatable temp = (Locatable) gameObjects [i];
+			if (temp.pos.y == itemY && temp.pos.x == itemX) {
+				result.Add (temp);
+			}
+		}
+		if (result.Count == 0) {
+			return null;
+		}
+		return result;
+	}
+
+	private void refreshDangerMap(Position pos,int dangerValue){
+		if (dangerMap [pos.x, pos.y] != -1 && dangerMap [pos.x, pos.y] > dangerValue) {
+			dangerMap [pos.x, pos.y] = dangerValue;
+			ArrayList objs = getObjectAtPostion (pos);
+			if (objs != null) {
+				for (int indx = 0; indx < objs.Count; ++indx) {
+					if (objs [indx] is Bomb) {
+						Bomb bomb = (Bomb)objs [indx];
+						for (int i = pos.x - bomb.Power; i < 2 * bomb.Power + 1; ++i) {
+							if (i >= 0 && i < this.mapSizeX && dangerMap [i, pos.y] > dangerValue) {
+								dangerMap [i, pos.y] = dangerValue;
+							}
+							refreshDangerMap (new Position (i, pos.y), dangerValue);
+						}
+						for(int j = pos.y - bomb.Power; j < 2 * bomb.Power + 1; ++j){
+							if (j >= 0 && j < this.mapSizeY && dangerMap [pos.x, j] > dangerValue) {
+								dangerMap [pos.x,j] = dangerValue;
+							}
+							refreshDangerMap (new Position (pos.x, j), dangerValue);
+						}
+					}
+				}
+			}
+		}
+	}
+
 	public void addToDangerMap(Bomb bomb){
-		
+		if(bomb is Locatable){
+			Position pos = ((Locatable)bomb).pos;
+			if (dangerMap [pos.x, pos.y] == -1) {
+				dangerMap [pos.x, pos.y] = bomb.LifeTime;
+				for (int i = pos.x - bomb.Power; i < 2 * bomb.Power + 1; ++i) {
+					if (i >= 0 && i < this.mapSizeX  && dangerMap [i, pos.y] == -1) {
+						dangerMap [i, pos.y] = bomb.LifeTime;
+					}
+					refreshDangerMap (new Position (i, pos.y), bomb.LifeTime);
+				}
+
+				for (int j = pos.y - bomb.Power; j < 2 * bomb.Power + 1; ++j) {
+					if (j >= 0 && j < this.mapSizeY && dangerMap [pos.x, j] == -1) {
+						dangerMap [pos.x, j] = bomb.LifeTime;
+					}
+					refreshDangerMap (new Position (pos.x, j), bomb.LifeTime);
+				}
+			} else {
+				if (dangerMap [pos.x, pos.y] <= bomb.LifeTime) {
+					for (int i = pos.x - bomb.Power; i < 2 * bomb.Power + 1; ++i) {
+						if (i >= 0 && i < this.mapSizeX && (dangerMap [i, pos.y] == -1 || dangerMap [i, pos.y] > dangerMap [pos.x, pos.y])) {
+							dangerMap [i, pos.y] = dangerMap [pos.x, pos.y];
+						}
+					}
+
+					for (int j = pos.y - bomb.Power; j < 2 * bomb.Power + 1; ++j) {
+						if (j >= 0 && j < this.mapSizeY && (dangerMap [pos.x, j] == -1 || dangerMap [pos.x, j] > dangerMap [pos.x, pos.y])) {
+							dangerMap [pos.x, j] = dangerMap [pos.x, pos.y];
+						}
+					}
+				}
+				refreshDangerMap (pos, bomb.LifeTime);
+			}
+		}
 	}
 
 	public void updateDangerMap(){
-		
+		for (int i = 0; i < dangerMap.GetLength (0); ++i) {
+			for (int j = 0; j < dangerMap.GetLength (1); ++j) {
+				if (dangerMap[i,j] > 0) {
+					--dangerMap [i, j];
+				}
+			}
+		}
+	}
+
+	public void removeFromDangerMap(BombFire fire){
+		if(fire is Locatable){
+			Position pos = ((Locatable)fire).pos;
+			dangerMap [pos.x, pos.y] = -1;
+		}
 	}
 
 	public void addToBenefitMap(Buff buff){
