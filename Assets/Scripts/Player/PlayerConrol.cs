@@ -52,7 +52,7 @@ public class PlayerConrol : MonoBehaviour,Controlable,Locatable,SetBomb
 				}else{
 					Debug.Log("find script interface Bomb");
 					//script.LifeTime = bomblifeTime;
-					script.isActive = true;
+					//script.isActive = true;
 //					script.LifeTime = 3;
 					script.setProperties(this,4,2);
 				}
@@ -77,7 +77,7 @@ public class PlayerConrol : MonoBehaviour,Controlable,Locatable,SetBomb
 	void Start ()
 	{
 		//should initize position of player 
-		this.position = new Position (0, 0);
+		this.position = new Position (1, 1);
 
 		this.bombType = Resources.Load("NormalBomb") as GameObject;
 		GameDataProcessor.instance.addObject (this);
@@ -95,6 +95,8 @@ public class PlayerConrol : MonoBehaviour,Controlable,Locatable,SetBomb
 
 	// Update is called once per frame
 	void Update () {
+		//this.position = new Position(Mathf.RoundToInt(transform.localPosition.z)+1,Mathf.RoundToInt(transform.localPosition.x)+1);
+		Debug.Log ("Player:"+this.position.x+","+this.position.y);
 		control ();
 	}
 
@@ -119,22 +121,66 @@ public class PlayerConrol : MonoBehaviour,Controlable,Locatable,SetBomb
 	{
 		if (Input.GetKeyDown ("up") || Input.GetKeyDown (KeyCode.W)) {
 //			Debug.Log("up..");
-			StartCoroutine(Move (moveDirection.forward));
+
+			ArrayList frontalObjects=GameDataProcessor.instance.getBackObjects (this);
+			bool tempFlag = true;
+			foreach (Locatable l in frontalObjects) {
+				if (l is WallCube||l is NormalCube)
+					tempFlag = false;
+			}
+
+			if (tempFlag) {
+				StartCoroutine (Move (moveDirection.forward));
+				this.position.y -= speed;
+			}
 			rhmFlag = false;
 		}
 		if (Input.GetKeyDown ("down") || Input.GetKeyDown (KeyCode.S)) {
 //			Debug.Log("down..");
-			StartCoroutine(Move (moveDirection.back));
+
+			ArrayList frontalObjects=GameDataProcessor.instance.getFrontalObjects (this);
+			bool tempFlag = true;
+			foreach (Locatable l in frontalObjects) {
+				if (l is WallCube||l is NormalCube)
+					tempFlag = false;
+			}
+
+			if (tempFlag) {
+				StartCoroutine (Move (moveDirection.back));
+				this.position.y += speed;
+			}
 			rhmFlag = false;
 		}
 		if (Input.GetKeyDown ("right") || Input.GetKeyDown (KeyCode.D)) {
 //			Debug.Log("right..");
-			StartCoroutine(Move (moveDirection.right));
+
+			ArrayList frontalObjects=GameDataProcessor.instance.getRightObjects (this);
+			bool tempFlag = true;
+			foreach (Locatable l in frontalObjects) {
+				if (l is WallCube||l is NormalCube)
+					tempFlag = false;
+			}
+
+			if (tempFlag) {
+				StartCoroutine (Move (moveDirection.right));
+				this.position.x += speed;
+			}
 			rhmFlag = false;
 		}
 		if (Input.GetKeyDown ("left") || Input.GetKeyDown (KeyCode.A)) {
 //			Debug.Log("left..");
-			StartCoroutine(Move (moveDirection.left));
+
+			ArrayList frontalObjects=GameDataProcessor.instance.getLeftObjects (this);
+			bool tempFlag = true;
+			foreach (Locatable l in frontalObjects) {
+				if (l is WallCube||l is NormalCube)
+					tempFlag = false;
+			}
+
+			if (tempFlag) {
+				StartCoroutine (Move (moveDirection.left));
+				this.position.x -= speed;
+			}
 			rhmFlag = false;
 		}
 		if (Input.GetKeyDown (KeyCode.Space) && canSetBomb) {
@@ -166,7 +212,6 @@ public class PlayerConrol : MonoBehaviour,Controlable,Locatable,SetBomb
 				m_ArmLeft.transform.position += 0.25F*Vector3.forward;
 				m_ArmRight.transform.position += 0.25F*Vector3.forward;
 
-				this.position.y += speed;
 				GameDataProcessor.instance.updatePosition(this,this.position);
 				break;
 			case moveDirection.back:
@@ -174,7 +219,6 @@ public class PlayerConrol : MonoBehaviour,Controlable,Locatable,SetBomb
 				m_ArmLeft.transform.position += 0.25F*Vector3.back;
 				m_ArmRight.transform.position += 0.25F*Vector3.back;
 
-				this.position.y -= speed;
 				GameDataProcessor.instance.updatePosition(this,this.position);
 				break;
 			case moveDirection.right:
@@ -182,7 +226,6 @@ public class PlayerConrol : MonoBehaviour,Controlable,Locatable,SetBomb
 				m_ArmLeft.transform.position += 0.25F*Vector3.right;
 				m_ArmRight.transform.position += 0.25F*Vector3.right;
 
-				this.position.x += speed;
 				GameDataProcessor.instance.updatePosition(this,this.position);
 				break;
 			case moveDirection.left:
@@ -190,7 +233,6 @@ public class PlayerConrol : MonoBehaviour,Controlable,Locatable,SetBomb
 				m_ArmLeft.transform.position += 0.25F*Vector3.left;
 				m_ArmRight.transform.position += 0.25F*Vector3.left;
 
-				this.position.x -= speed;
 				GameDataProcessor.instance.updatePosition(this,this.position);
 				break;
 			}
