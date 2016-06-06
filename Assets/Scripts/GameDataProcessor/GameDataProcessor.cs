@@ -79,8 +79,8 @@ public class GameDataProcessor : MonoBehaviour,RhythmObservable {
 	
 	// Update is called once per frame
 	void Update () {
-		Debug.Log ("game data");
-		Debug.Log (gameObjects.Count);
+//		Debug.Log ("game data");
+//		Debug.Log (gameObjects.Count);
 	}
 
 	public bool addObject(Locatable item){

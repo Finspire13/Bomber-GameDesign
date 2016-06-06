@@ -77,8 +77,8 @@ public class PlayerConrol : MonoBehaviour,Controlable,Locatable,SetBomb
 	void Start ()
 	{
 		//should initize position of player 
-		this.position = new Position (1, 1);
-
+//		this.position = new Position (1, 1);
+		this.position = new Position(Mathf.RoundToInt(transform.localPosition.z),Mathf.RoundToInt(transform.localPosition.x));
 		this.bombType = Resources.Load("NormalBomb") as GameObject;
 		GameDataProcessor.instance.addObject (this);
 		rhmFlag = false;
@@ -96,7 +96,7 @@ public class PlayerConrol : MonoBehaviour,Controlable,Locatable,SetBomb
 	// Update is called once per frame
 	void Update () {
 		//this.position = new Position(Mathf.RoundToInt(transform.localPosition.z)+1,Mathf.RoundToInt(transform.localPosition.x)+1);
-		Debug.Log ("Player:"+this.position.x+","+this.position.y);
+//		Debug.Log ("Player:"+this.position.x+","+this.position.y);
 		control ();
 	}
 

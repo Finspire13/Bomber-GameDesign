@@ -13,7 +13,6 @@ public interface Buff
 	}
 	void effect();
 
-
 }
 
 
