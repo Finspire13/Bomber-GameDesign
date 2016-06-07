@@ -21,24 +21,25 @@ public class WallCube : MonoBehaviour, Locatable, Distroyable {
     public void attackBy(Attackable source)
     {
 		Debug.Log("NormalCube->attackBy(),damage:"+source.Damage);
-        blood -= source.Damage;
+//        blood -= source.Damage;
+		blood = 0;
     }
     public void distroy()
     {
         Destroy(this.gameObject, 0);
     }
 
-//    public void actionOnBeat()
-//    {
-//
-//    }
+    public void actionOnBeat()
+    {
+
+    }
 
     // Use this for initialization
     void Start () {
         //Initize position of cube 
         //Debug.Log(Mathf.RoundToInt(transform.localPosition.x)+", "+Mathf.RoundToInt(transform.localPosition.z));
 		this.position = new Position(Mathf.RoundToInt(transform.localPosition.z),Mathf.RoundToInt(transform.localPosition.x));
-//		Debug.Log(Mathf.RoundToInt(transform.localPosition.x)+", "+Mathf.RoundToInt(transform.localPosition.z));
+//		Debug.Log(Mathf.RoundToInt(transform.localPosition.z)+", "+Mathf.RoundToInt(transform.localPosition.x));
         blood = 1;
 
     }
@@ -48,7 +49,7 @@ public class WallCube : MonoBehaviour, Locatable, Distroyable {
     {
         if (blood <= 0)
         {
-            Debug.Log("game over!!!");
+            Debug.Log("cube died!!!");
             distroy();
 			GameDataProcessor.instance.removeObject (this);
         }

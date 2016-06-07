@@ -106,7 +106,7 @@ public class PlayerConrol : MonoBehaviour,Controlable,Locatable,SetBomb
 
 		this.maxNum = 3;
 		this.currNum = 0;
-		this.bombLifeTime = 5;
+		this.bombLifeTime = 2;
 		this.bombFireTime = 1;
 		this.canSetBomb = true;
 

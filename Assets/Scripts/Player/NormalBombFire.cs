@@ -74,10 +74,14 @@ public class NormalBombFire : MonoBehaviour,Distroyable,BombFire,Locatable
 	}
 
 	public void attack(){
-		ArrayList objs = GameDataProcessor.instance.getObjectsAtTheSamePosition (this);
+		ArrayList objs = GameDataProcessor.instance.getObjectAtPostion (this.pos);
+//		Debug.Log ("x="+this.pos.x+",y="+this.pos.y);
+
 		if (objs != null) {
 			for (int i = 0; i < objs.Count; ++i) {
 				if (objs [i] is Distroyable) {
+					
+//					Debug.Log (".....5,0");
 //					Debug.Log ("x="+((Locatable)objs [i]).pos.x+",y="+((Locatable)objs [i]).pos.y);
 					((Distroyable)objs [i]).attackBy (this);
 				}

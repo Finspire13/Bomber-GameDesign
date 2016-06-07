@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
-public class NormalBomb :MonoBehaviour,Bomb,Distroyable,Locatable,RhythmObservable
+public class NormalBomb :MonoBehaviour,Bomb,Distroyable,Locatable
 {
 	private SetBomb owner = null;
 	private BombFire fire = null;
@@ -151,11 +151,11 @@ public class NormalBomb :MonoBehaviour,Bomb,Distroyable,Locatable,RhythmObservab
 					isCountinueCreate = false;
 				}
 			}
+//			Debug.Log ("x="+tempX+",y="+this.position.y);
 			if (isCountinueCreate == false) {
 				break;
 			}
-
-//			Debug.Log ("x="+tempX+",y="+this.position.y);
+				
 		}
 
 		tempPos = currPos;
@@ -177,11 +177,11 @@ public class NormalBomb :MonoBehaviour,Bomb,Distroyable,Locatable,RhythmObservab
 					isCountinueCreate = false;
 				}
 			}
+//			Debug.Log ("x="+tempX+",y="+this.position.y);
 			if (isCountinueCreate == false) {
 				break;
 			}
 
-//			Debug.Log ("x="+tempX+",y="+this.position.y);
 		}
 
 		tempPos = currPos;
@@ -189,31 +189,6 @@ public class NormalBomb :MonoBehaviour,Bomb,Distroyable,Locatable,RhythmObservab
 		for(int i = power*2+1;i < power*3+1;++i){
 			bool isCountinueCreate = true;
 			tempPos.z += stepLenth;
-			tempY += stepLenth;
-			Position currPosition = new Position(this.position.x,tempY);
-
-			fires[i] = (GameObject)Instantiate(fire,tempPos,this.gameObject.transform.rotation);
-			bfScript = (NormalBombFire)fires[i].GetComponent("NormalBombFire");
-			bfScript.setProperties (this.owner,fireTime);
-			bfScript.pos = currPosition;
-
-			ArrayList objs = GameDataProcessor.instance.getObjectAtPostion (currPosition);
-			foreach (Locatable l in objs) {
-				if (l is WallCube || l is NormalCube) {
-					isCountinueCreate = false;
-				}
-			}
-			if (isCountinueCreate == false) {
-				break;
-			}
-
-//			Debug.Log ("x="+this.position.x+",y="+tempY);
-		}
-		tempPos = currPos;
-		tempY = this.position.y;
-		for(int i = power*3+1;i < power*4+1;++i){
-			bool isCountinueCreate = true;
-			tempPos.z -= stepLenth;
 			tempY -= stepLenth;
 			Position currPosition = new Position(this.position.x,tempY);
 
@@ -228,11 +203,36 @@ public class NormalBomb :MonoBehaviour,Bomb,Distroyable,Locatable,RhythmObservab
 					isCountinueCreate = false;
 				}
 			}
+//			Debug.Log ("x="+this.position.x+",y="+tempY);
 			if (isCountinueCreate == false) {
 				break;
 			}
+				
+		}
+		tempPos = currPos;
+		tempY = this.position.y;
+		for(int i = power*3+1;i < power*4+1;++i){
+			bool isCountinueCreate = true;
+			tempPos.z -= stepLenth;
+			tempY += stepLenth;
+			Position currPosition = new Position(this.position.x,tempY);
 
+			fires[i] = (GameObject)Instantiate(fire,tempPos,this.gameObject.transform.rotation);
+			bfScript = (NormalBombFire)fires[i].GetComponent("NormalBombFire");
+			bfScript.setProperties (this.owner,fireTime);
+			bfScript.pos = currPosition;
+
+			ArrayList objs = GameDataProcessor.instance.getObjectAtPostion (currPosition);
+			foreach (Locatable l in objs) {
+				if (l is WallCube || l is NormalCube) {
+					isCountinueCreate = false;
+				}
+			}
 //			Debug.Log ("x="+this.position.x+",y="+tempY);
+			if (isCountinueCreate == false) {
+				break;
+			}
+				
 		}
 	}
 

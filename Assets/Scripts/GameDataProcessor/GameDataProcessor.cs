@@ -42,7 +42,7 @@ public class GameDataProcessor : MonoBehaviour,RhythmObservable {
 	public int mapSizeX;
 	public int mapSizeY;
 
-	private ArrayList gameObjects;
+	public ArrayList gameObjects;
 	// Use this for initialization
 
 	private int[,] dangerMap; //for ai
@@ -75,6 +75,7 @@ public class GameDataProcessor : MonoBehaviour,RhythmObservable {
 //		Debug.Log (GameDataProcessor.instance.getFrontalObjects (test1, 1)[0].GetType());
 		RhythmRecorder.instance.addObservedSubject(this);
 		initizeMap ();
+		Debug.Log ("mapSizeX:"+mapSizeX+",mapSizeY:"+mapSizeY);
 	}
 	
 	// Update is called once per frame
@@ -240,7 +241,7 @@ public class GameDataProcessor : MonoBehaviour,RhythmObservable {
 		if (dangerMap [pos.x, pos.y] != -1 && dangerMap [pos.x, pos.y] > dangerValue) {
 			dangerMap [pos.x, pos.y] = dangerValue;
 			ArrayList objs = getObjectAtPostion (pos);
-
+			if (objs != null) {
 				for (int indx = 0; indx < objs.Count; ++indx) {
 					if (objs [indx] is Bomb) {
 						Bomb bomb = (Bomb)objs [indx];
@@ -250,15 +251,15 @@ public class GameDataProcessor : MonoBehaviour,RhythmObservable {
 							}
 							refreshDangerMap (new Position (i, pos.y), dangerValue);
 						}
-						for(int j = pos.y - bomb.Power; j < 2 * bomb.Power + 1; ++j){
+						for (int j = pos.y - bomb.Power; j < 2 * bomb.Power + 1; ++j) {
 							if (j >= 0 && j < this.mapSizeY && dangerMap [pos.x, j] > dangerValue) {
-								dangerMap [pos.x,j] = dangerValue;
+								dangerMap [pos.x, j] = dangerValue;
 							}
 							refreshDangerMap (new Position (pos.x, j), dangerValue);
 						}
 					}
 				}
-
+			}
 		}
 	}
 
