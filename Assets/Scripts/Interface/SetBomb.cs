@@ -24,10 +24,18 @@ public interface SetBomb:RhythmObservable
 		set;
 	}
 
-//	int BombLifeTime {
-//		get;
-//		set;
-//	}
+	int BombPower {
+		get;
+		set;
+	}
+	int BombLifeTime {
+		get;
+		set;
+	}
+	int BombFireTime {
+		get;
+		set;
+	}
 
 	void notifyExplosion ();
 

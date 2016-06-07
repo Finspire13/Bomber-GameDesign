@@ -17,7 +17,7 @@ public class NormalCube : MonoBehaviour, Locatable {
         //Initize position of cube 
         //Debug.Log(Mathf.RoundToInt(transform.localPosition.x) + ", " + Mathf.RoundToInt(transform.localPosition.z));
 		this.position = new Position(Mathf.RoundToInt(transform.localPosition.z),Mathf.RoundToInt(transform.localPosition.x));
-		Debug.Log ("NC:"+this.position.x+","+this.position.y);
+//		Debug.Log ("NC:"+this.position.x+","+this.position.y);
     }
 
 }

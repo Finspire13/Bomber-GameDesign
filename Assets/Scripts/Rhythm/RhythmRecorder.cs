@@ -66,6 +66,7 @@ public class RhythmRecorder: MonoBehaviour{
 		observedSubjects.Add (newSubject);
 		timeOffsets.Add (timeOffset);
 		currentBeatIndice.Add (standardBeatIndex);
+//		newSubject.actionOnBeat ();
 	}
 
 	public void removeAllRhythmFlagOwners(){
@@ -199,7 +200,7 @@ public class RhythmRecorder: MonoBehaviour{
 			float currentStandardBeat = (float)beats [standardBeatIndex];
 			if ((Time.time - startTime) - currentStandardBeat > onBeatThreshold) {
 
-				Debug.Log("OnBeats");
+//				Debug.Log("OnBeats");
 				standardBeatIndex++;
 				for (int i = 0; i < isFlagsChangable.Count; i++) {
 					isFlagsChangable [i] = true;

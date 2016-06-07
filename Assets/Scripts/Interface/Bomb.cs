@@ -24,6 +24,10 @@ public interface Bomb
 		get;
 		set;
 	}
+	int FireTime {
+		get;
+		set;
+	}
 
 	int Power {
 		get;
@@ -34,7 +38,7 @@ public interface Bomb
 		get;
 		set;
 	}
-	void setProperties(SetBomb owner,int power,int lifeTime);
+	void setProperties(SetBomb owner,int power,int lifeTime,int fireTime);
 }
 
 

@@ -7,7 +7,7 @@ public class LoadGame : MonoBehaviour {
 	public GameObject mapDataHelper;
 	public GameObject gameDataProcessor;
 	public GameObject gameManager;
-	public GameObject ui;
+//	public GameObject ui;
 
 	void Awake(){
 		if (RhythmRecorder.instance == null) {

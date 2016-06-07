@@ -9,7 +9,7 @@
 // ------------------------------------------------------------------------------
 using System;
 
-public interface Distroyable:RhythmObservable
+public interface Distroyable
 {
 	int Blood 
 	{

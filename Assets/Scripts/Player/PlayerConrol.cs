@@ -54,11 +54,27 @@ public class PlayerConrol : MonoBehaviour,Controlable,Locatable,SetBomb
 					//script.LifeTime = bomblifeTime;
 					//script.isActive = true;
 //					script.LifeTime = 3;
-					script.setProperties(this,4,5);
+					script.setProperties(this,bombPower,bombLifeTime,bombFireTime);
 				}
 			}
 		}
 	}
+	private int bombPower = 3;
+	public int BombPower {
+		get{return bombPower; }
+		set{bombPower = value; }
+	}
+	private int bombLifeTime = 5;
+	public int BombLifeTime {
+		get{return bombLifeTime; }
+		set{bombLifeTime = value; }
+	}
+	private int bombFireTime = 1;
+	public int BombFireTime {
+		get{return bombFireTime; }
+		set{bombFireTime = value; }
+	}
+
 	public void notifyExplosion (){
 		if(currNum > 0){
 			currNum--;
@@ -77,8 +93,10 @@ public class PlayerConrol : MonoBehaviour,Controlable,Locatable,SetBomb
 	void Start ()
 	{
 		//should initize position of player 
-//		this.position = new Position (1, 1);
-		this.position = new Position(Mathf.RoundToInt(transform.localPosition.z),Mathf.RoundToInt(transform.localPosition.x));
+		this.position = new Position (1, 1);
+//		this.position = new Position(Mathf.CeilToInt(transform.localPosition.z),Mathf.CeilToInt(transform.localPosition.x));
+
+//		Debug.Log ("x:"+transform.localPosition.z+",y:"+transform.localPosition.x);
 		this.bombType = Resources.Load("NormalBomb") as GameObject;
 		GameDataProcessor.instance.addObject (this);
 		rhmFlag = false;
@@ -88,6 +106,8 @@ public class PlayerConrol : MonoBehaviour,Controlable,Locatable,SetBomb
 
 		this.maxNum = 3;
 		this.currNum = 0;
+		this.bombLifeTime = 5;
+		this.bombFireTime = 1;
 		this.canSetBomb = true;
 
 //		Debug.Log("PlayerControl Done..");
@@ -119,6 +139,12 @@ public class PlayerConrol : MonoBehaviour,Controlable,Locatable,SetBomb
 	//need to add move check to avoid walking out of the map
 	void CheckMovement()
 	{
+		if (Input.GetKeyDown (KeyCode.Space) && canSetBomb) {
+			//			Debug.Log ("press down space");
+			installBomb ();
+			canSetBomb = false;
+			//rhmFlag = false;
+		}
 		if (Input.GetKeyDown ("up") || Input.GetKeyDown (KeyCode.W)) {
 //			Debug.Log("up..");
 
@@ -182,12 +208,6 @@ public class PlayerConrol : MonoBehaviour,Controlable,Locatable,SetBomb
 				this.position.x -= speed;
 			}
 			rhmFlag = false;
-		}
-		if (Input.GetKeyDown (KeyCode.Space) && canSetBomb) {
-//			Debug.Log ("press down space");
-			installBomb ();
-			canSetBomb = false;
-			//rhmFlag = false;
 		}
 	}
 	

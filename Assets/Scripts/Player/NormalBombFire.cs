@@ -3,8 +3,8 @@ using System.Collections;
 
 public class NormalBombFire : MonoBehaviour,Distroyable,BombFire,Locatable
 {
-	private int lifeTime;
-	private int damge;
+	private int lifeTime = 1;
+	private int damge = 10;
 	private SetBomb owner;
 	public SetBomb Owner {
 		get{return this.owner;}
@@ -27,7 +27,7 @@ public class NormalBombFire : MonoBehaviour,Distroyable,BombFire,Locatable
 	{
 		GameDataProcessor.instance.addObject (this);
 		RhythmRecorder.instance.addObservedSubject (this);
-		lifeTime = 1;
+//		lifeTime = 1;
 	}
 	
 	// Update is called once per frame
@@ -36,6 +36,7 @@ public class NormalBombFire : MonoBehaviour,Distroyable,BombFire,Locatable
 		if (lifeTime <= 0) {
 			attack ();
 			distroy();
+//			Debug.Log ("x="+this.position.x+",y="+this.position.y);
 		}
 	}
 
@@ -77,6 +78,7 @@ public class NormalBombFire : MonoBehaviour,Distroyable,BombFire,Locatable
 		if (objs != null) {
 			for (int i = 0; i < objs.Count; ++i) {
 				if (objs [i] is Distroyable) {
+//					Debug.Log ("x="+((Locatable)objs [i]).pos.x+",y="+((Locatable)objs [i]).pos.y);
 					((Distroyable)objs [i]).attackBy (this);
 				}
 			}

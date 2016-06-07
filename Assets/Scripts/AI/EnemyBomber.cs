@@ -75,10 +75,21 @@ public class EnemyBomber : MonoBehaviour,Controlable,Distroyable,SetBomb,Locatab
 		set{currNum = value;}
 	}
 
-	//	int BombLifeTime {
-	//		get;
-	//		set;
-	//	}
+	private int bombPower = 4;
+	public int BombPower {
+		get{return bombPower; }
+		set{bombPower = value; }
+	}
+	private int bombLifeTime = 5;
+	public int BombLifeTime {
+		get{return bombLifeTime; }
+		set{bombLifeTime = value; }
+	}
+	private int bombFireTime = 1;
+	public int BombFireTime {
+		get{return bombFireTime; }
+		set{bombFireTime = value; }
+	}
 
 	public void notifyExplosion (){
 		
@@ -92,5 +103,7 @@ public class EnemyBomber : MonoBehaviour,Controlable,Distroyable,SetBomb,Locatab
 	public void installBomb(){
 		
 	}
+
+
 }
 

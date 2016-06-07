@@ -232,9 +232,7 @@ public class GameDataProcessor : MonoBehaviour,RhythmObservable {
 				result.Add (temp);
 			}
 		}
-		if (result.Count == 0) {
-			return null;
-		}
+
 		return result;
 	}
 
@@ -242,7 +240,7 @@ public class GameDataProcessor : MonoBehaviour,RhythmObservable {
 		if (dangerMap [pos.x, pos.y] != -1 && dangerMap [pos.x, pos.y] > dangerValue) {
 			dangerMap [pos.x, pos.y] = dangerValue;
 			ArrayList objs = getObjectAtPostion (pos);
-			if (objs != null) {
+
 				for (int indx = 0; indx < objs.Count; ++indx) {
 					if (objs [indx] is Bomb) {
 						Bomb bomb = (Bomb)objs [indx];
@@ -260,7 +258,7 @@ public class GameDataProcessor : MonoBehaviour,RhythmObservable {
 						}
 					}
 				}
-			}
+
 		}
 	}
 
