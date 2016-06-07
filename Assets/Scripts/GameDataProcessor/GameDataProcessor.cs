@@ -75,13 +75,14 @@ public class GameDataProcessor : MonoBehaviour,RhythmObservable {
 //		Debug.Log (GameDataProcessor.instance.getFrontalObjects (test1, 1)[0].GetType());
 		RhythmRecorder.instance.addObservedSubject(this);
 		initizeMap ();
-		Debug.Log ("mapSizeX:"+mapSizeX+",mapSizeY:"+mapSizeY);
+//		Debug.Log ("mapSizeX:"+mapSizeX+",mapSizeY:"+mapSizeY);
 	}
 	
 	// Update is called once per frame
 	void Update () {
 //		Debug.Log ("game data");
 //		Debug.Log (gameObjects.Count);
+		Debug.Log ("mapSizeX:"+mapSizeX+",mapSizeY:"+mapSizeY);
 	}
 
 	public bool addObject(Locatable item){

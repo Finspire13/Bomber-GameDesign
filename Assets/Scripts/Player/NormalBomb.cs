@@ -138,6 +138,9 @@ public class NormalBomb :MonoBehaviour,Bomb,Distroyable,Locatable
 			bool isCountinueCreate = true;
 			tempPos.x += stepLenth;
 			tempX += stepLenth;
+			if(tempX<0 || tempX >= GameDataProcessor.instance.mapSizeX){
+				break;
+			}
 			Position currPosition = new Position(tempX,this.position.y);
 
 			fires [i] = (GameObject)Instantiate (fire, tempPos, this.gameObject.transform.rotation);
@@ -164,6 +167,11 @@ public class NormalBomb :MonoBehaviour,Bomb,Distroyable,Locatable
 			bool isCountinueCreate = true;
 			tempPos.x -= stepLenth;
 			tempX -= stepLenth;
+
+			if(tempX<0 || tempX >= GameDataProcessor.instance.mapSizeX){
+				break;
+			}
+ 
 			Position currPosition = new Position(tempX,this.position.y);
 
 			fires[i] = (GameObject)Instantiate(fire,tempPos,this.gameObject.transform.rotation);
@@ -190,6 +198,11 @@ public class NormalBomb :MonoBehaviour,Bomb,Distroyable,Locatable
 			bool isCountinueCreate = true;
 			tempPos.z += stepLenth;
 			tempY -= stepLenth;
+
+			if(tempY<0 || tempY >= GameDataProcessor.instance.mapSizeY){
+				break;
+			}
+
 			Position currPosition = new Position(this.position.x,tempY);
 
 			fires[i] = (GameObject)Instantiate(fire,tempPos,this.gameObject.transform.rotation);
@@ -215,6 +228,11 @@ public class NormalBomb :MonoBehaviour,Bomb,Distroyable,Locatable
 			bool isCountinueCreate = true;
 			tempPos.z -= stepLenth;
 			tempY += stepLenth;
+
+			if(tempY<0 || tempY >= GameDataProcessor.instance.mapSizeY){
+				break;
+			}
+
 			Position currPosition = new Position(this.position.x,tempY);
 
 			fires[i] = (GameObject)Instantiate(fire,tempPos,this.gameObject.transform.rotation);
