@@ -26,6 +26,7 @@ public class WallCube : MonoBehaviour, Locatable, Distroyable {
     }
     public void distroy()
     {
+		
         Destroy(this.gameObject, 0);
     }
 
@@ -50,9 +51,24 @@ public class WallCube : MonoBehaviour, Locatable, Distroyable {
         if (blood <= 0)
         {
             Debug.Log("cube died!!!");
+			createBuff ();
+
             distroy();
 			GameDataProcessor.instance.removeObject (this);
         }
     }
 
+	void createBuff(){
+		GameObject buff = Resources.Load("BombPowerUp") as GameObject;
+		GameObject obj = (GameObject)Instantiate(buff,this.gameObject.transform.position,this.gameObject.transform.rotation);
+		Buff script = (Buff)obj.GetComponent("Buff");
+		if (script == null) {
+			Debug.Log ("not script");
+		} else {
+			if (script is Locatable) {
+				Debug.Log ("script is Locatable");
+				((Locatable)script).pos = new Position (this.pos.x,this.pos.y);
+			}
+		}
+	}
 }

@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+public enum EnemyState{EMEMY_IDLE,EMEMY_WALK,EMEMY_SETBOMB};
+
 public class EnemyBomber : MonoBehaviour,Controlable,Distroyable,SetBomb,Locatable
 {
 	int speed = 1;
@@ -31,12 +33,16 @@ public class EnemyBomber : MonoBehaviour,Controlable,Distroyable,SetBomb,Locatab
 
 		this.maxNum = 3;
 		this.currNum = 0;
+
+		this.bombLifeTime = 3;
+		this.bombPower = 2;
+		this.bombFireTime = 1;
 	}
 	
 	// Update is called once per frame
 	void Update ()
 	{
-		
+//		control ();
 	}
 
 	public void control(){
@@ -46,10 +52,6 @@ public class EnemyBomber : MonoBehaviour,Controlable,Distroyable,SetBomb,Locatab
 	public bool rhythmFlag{ 
 		get{ return rhmFlag;} 
 		set{ rhmFlag = value;}
-	}
-
-	public void actionOnBeat (){
-		
 	}
 
 	public int Blood 
@@ -101,9 +103,62 @@ public class EnemyBomber : MonoBehaviour,Controlable,Distroyable,SetBomb,Locatab
 	}
 
 	public void installBomb(){
-		
+		if(currNum < maxNum){
+			currNum++;
+			if(bombType == null){
+				Debug.Log("not bomb");
+			}else{
+				GameObject go = (GameObject)Instantiate(this.bombType,this.gameObject.transform.position,this.gameObject.transform.rotation);
+				NormalBomb script = (NormalBomb)go.GetComponent("Bomb");
+				if(script == null){
+					Debug.Log("not script");
+				}else{
+					Debug.Log("find script interface Bomb");
+					//script.LifeTime = bomblifeTime;
+					//script.isActive = true;
+					//					script.LifeTime = 3;
+					script.setProperties(this,bombPower,bombLifeTime,bombFireTime);
+
+					GameDataProcessor.instance.addToDangerMap (script);
+				}
+			}
+		}
 	}
 
+	// *************** AI control ***************
+	private int getRandom(int count)
+	{
+		return new System.Random().Next(count);
+
+	}
+	private EnemyState enemyThink(){
+		return EnemyState.EMEMY_IDLE;
+	}
+
+	public void actionOnBeat (){
+		EnemyState result  = enemyThink();
+		switch (result) {
+		case EnemyState.EMEMY_IDLE:
+			idleAction ();
+			break;
+		case EnemyState.EMEMY_WALK:
+			walkAction ();
+			break;
+		case EnemyState.EMEMY_SETBOMB:
+			setBombAction ();
+			break;
+		}
+	}
+
+	private void idleAction(){
+
+	}
+	private void walkAction(){
+
+	}
+	private void setBombAction(){
+		installBomb ();
+	}
 
 }
 

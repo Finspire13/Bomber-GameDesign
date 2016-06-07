@@ -45,8 +45,10 @@ public class GameDataProcessor : MonoBehaviour,RhythmObservable {
 	public ArrayList gameObjects;
 	// Use this for initialization
 
-	private int[,] dangerMap; //for ai
-	private int[,] benefitMap; //for ai
+	private int[,] dangerMap = null; //for ai
+	private int[,] benefitMap = null; //for ai
+
+	private bool mapInitClock = true;
 
 	void Awake()
 	{
@@ -59,8 +61,6 @@ public class GameDataProcessor : MonoBehaviour,RhythmObservable {
 
 		gameObjects = new ArrayList ();
 
-		dangerMap = new int[mapSizeX,mapSizeY];
-		benefitMap = new int[mapSizeX,mapSizeY];
 	}
 
 	void Start () {
@@ -74,7 +74,7 @@ public class GameDataProcessor : MonoBehaviour,RhythmObservable {
 //		Debug.Log(GameDataProcessor.instance.getFrontalObjects (test1, 1).Count);
 //		Debug.Log (GameDataProcessor.instance.getFrontalObjects (test1, 1)[0].GetType());
 		RhythmRecorder.instance.addObservedSubject(this);
-		initizeMap ();
+//		initizeMap ();
 //		Debug.Log ("mapSizeX:"+mapSizeX+",mapSizeY:"+mapSizeY);
 	}
 	
@@ -83,6 +83,15 @@ public class GameDataProcessor : MonoBehaviour,RhythmObservable {
 //		Debug.Log ("game data");
 //		Debug.Log (gameObjects.Count);
 		Debug.Log ("mapSizeX:"+mapSizeX+",mapSizeY:"+mapSizeY);
+		if (mapInitClock && mapSizeX*mapSizeY != 0 ) {
+			dangerMap = new int[mapSizeX, mapSizeY];
+			benefitMap = new int[mapSizeX, mapSizeY];
+			initizeMap ();
+			mapInitClock = false;
+			int temp = mapSizeX;
+			mapSizeX = mapSizeY;
+			mapSizeY = temp;
+		}
 	}
 
 	public bool addObject(Locatable item){
@@ -204,19 +213,34 @@ public class GameDataProcessor : MonoBehaviour,RhythmObservable {
 	}
 
 	public void actionOnBeat (){
+//		int ran = this.getRandom (10);
+//		Debug.Log ("random:"+ran);
+		if (this.getRandom (10) == 0) {
+//			Debug.Log ("refresh!!!");
+			refreshDangerMap ();
+		}
 		updateDangerMap ();
+	}
+	public void refreshDangerMap(){
+		if (dangerMap != null) {
+			for (int i = 0; i < dangerMap.GetLength (0); ++i) {
+				for (int j = 0; j < dangerMap.GetLength (1); ++j) {
+					dangerMap [i, j] = -1;
+				}
+			}
+		}
 	}
 
 	public void initizeMap(){
 		for (int i = 0; i < dangerMap.GetLength (0); ++i) {
-			for (int j = 0; j < dangerMap.GetLength (1); ++i) {
+			for (int j = 0; j < dangerMap.GetLength (1); ++j) {
 				dangerMap [i,j] = -1;
 			}
 		}
 
 		for (int i = 0; i < benefitMap.GetLength (0); ++i) {
-			for (int j = 0; j < benefitMap.GetLength (1); ++i) {
-				dangerMap [i,j] = 0;
+			for (int j = 0; j < benefitMap.GetLength (1); ++j) {
+				benefitMap [i,j] = 0;
 			}
 		}
 	}
@@ -239,22 +263,23 @@ public class GameDataProcessor : MonoBehaviour,RhythmObservable {
 	}
 
 	private void refreshDangerMap(Position pos,int dangerValue){
-		if (dangerMap [pos.x, pos.y] != -1 && dangerMap [pos.x, pos.y] > dangerValue) {
-			dangerMap [pos.x, pos.y] = dangerValue;
+		if (pos.x>=0 && pos.x<mapSizeX && pos.y>=0 && pos.y<mapSizeY &&
+			dangerMap [pos.y, pos.x] != -1 && dangerMap [pos.y, pos.x] > dangerValue) {
+			dangerMap [pos.y, pos.x] = dangerValue;
 			ArrayList objs = getObjectAtPostion (pos);
 			if (objs != null) {
 				for (int indx = 0; indx < objs.Count; ++indx) {
 					if (objs [indx] is Bomb) {
 						Bomb bomb = (Bomb)objs [indx];
-						for (int i = pos.x - bomb.Power; i < 2 * bomb.Power + 1; ++i) {
-							if (i >= 0 && i < this.mapSizeX && dangerMap [i, pos.y] > dangerValue) {
-								dangerMap [i, pos.y] = dangerValue;
+						for (int i = pos.x - bomb.Power; i < pos.x + bomb.Power + 1; ++i) {
+							if (i >= 0 && i < this.mapSizeX && dangerMap [pos.y, i] > dangerValue) {
+								dangerMap [pos.y, i] = dangerValue;
 							}
 							refreshDangerMap (new Position (i, pos.y), dangerValue);
 						}
-						for (int j = pos.y - bomb.Power; j < 2 * bomb.Power + 1; ++j) {
-							if (j >= 0 && j < this.mapSizeY && dangerMap [pos.x, j] > dangerValue) {
-								dangerMap [pos.x, j] = dangerValue;
+						for (int j = pos.y - bomb.Power; j < pos.y + bomb.Power + 1; ++j) {
+							if (j >= 0 && j < this.mapSizeY && dangerMap [j, pos.x] > dangerValue) {
+								dangerMap [j, pos.x] = dangerValue;
 							}
 							refreshDangerMap (new Position (pos.x, j), dangerValue);
 						}
@@ -267,32 +292,33 @@ public class GameDataProcessor : MonoBehaviour,RhythmObservable {
 	public void addToDangerMap(Bomb bomb){
 		if(bomb is Locatable){
 			Position pos = ((Locatable)bomb).pos;
-			if (dangerMap [pos.x, pos.y] == -1) {
-				dangerMap [pos.x, pos.y] = bomb.LifeTime;
-				for (int i = pos.x - bomb.Power; i < 2 * bomb.Power + 1; ++i) {
-					if (i >= 0 && i < this.mapSizeX  && dangerMap [i, pos.y] == -1) {
-						dangerMap [i, pos.y] = bomb.LifeTime;
+			if (dangerMap [pos.y, pos.x] == -1) {
+				dangerMap [pos.y, pos.x] = bomb.LifeTime;
+				for (int i = pos.x - bomb.Power; i < pos.x + bomb.Power + 1; ++i) {
+					if (i >= 0 && i < this.mapSizeX  && dangerMap [pos.y, i] == -1) {
+						dangerMap [pos.y, i] = bomb.LifeTime;
 					}
-					refreshDangerMap (new Position (i, pos.y), bomb.LifeTime);
+					Position currPosition = new Position (i, pos.y);
+					refreshDangerMap (currPosition, bomb.LifeTime);
 				}
 
-				for (int j = pos.y - bomb.Power; j < 2 * bomb.Power + 1; ++j) {
-					if (j >= 0 && j < this.mapSizeY && dangerMap [pos.x, j] == -1) {
-						dangerMap [pos.x, j] = bomb.LifeTime;
+				for (int j = pos.y - bomb.Power; j < pos.y + bomb.Power + 1; ++j) {
+					if (j >= 0 && j < this.mapSizeY && dangerMap [j, pos.x] == -1) {
+						dangerMap [j, pos.x] = bomb.LifeTime;
 					}
 					refreshDangerMap (new Position (pos.x, j), bomb.LifeTime);
 				}
 			} else {
-				if (dangerMap [pos.x, pos.y] <= bomb.LifeTime) {
-					for (int i = pos.x - bomb.Power; i < 2 * bomb.Power + 1; ++i) {
-						if (i >= 0 && i < this.mapSizeX && (dangerMap [i, pos.y] == -1 || dangerMap [i, pos.y] > dangerMap [pos.x, pos.y])) {
-							dangerMap [i, pos.y] = dangerMap [pos.x, pos.y];
+				if (dangerMap [pos.y, pos.x] <= bomb.LifeTime) {
+					for (int i = pos.x - bomb.Power; i < pos.x + bomb.Power + 1; ++i) {
+						if (i >= 0 && i < this.mapSizeX && (dangerMap [pos.y, i] == -1 || dangerMap [pos.y, i] > dangerMap [pos.y, pos.x])) {
+							dangerMap [pos.y, i] = dangerMap [pos.y, pos.x];
 						}
 					}
 
-					for (int j = pos.y - bomb.Power; j < 2 * bomb.Power + 1; ++j) {
-						if (j >= 0 && j < this.mapSizeY && (dangerMap [pos.x, j] == -1 || dangerMap [pos.x, j] > dangerMap [pos.x, pos.y])) {
-							dangerMap [pos.x, j] = dangerMap [pos.x, pos.y];
+					for (int j = pos.y - bomb.Power; j < pos.y + bomb.Power + 1; ++j) {
+						if (j >= 0 && j < this.mapSizeY && (dangerMap [j, pos.x] == -1 || dangerMap [j, pos.x] > dangerMap [pos.y, pos.x])) {
+							dangerMap [j, pos.x] = dangerMap [pos.y, pos.x];
 						}
 					}
 				}
@@ -302,10 +328,12 @@ public class GameDataProcessor : MonoBehaviour,RhythmObservable {
 	}
 
 	public void updateDangerMap(){
-		for (int i = 0; i < dangerMap.GetLength (0); ++i) {
-			for (int j = 0; j < dangerMap.GetLength (1); ++j) {
-				if (dangerMap[i,j] > 0) {
-					--dangerMap [i, j];
+		if (dangerMap != null) {
+			for (int i = 0; i < dangerMap.GetLength (0); ++i) {
+				for (int j = 0; j < dangerMap.GetLength (1); ++j) {
+					if (dangerMap [i, j] > 0) {
+						--dangerMap [i, j];
+					}
 				}
 			}
 		}
@@ -314,7 +342,7 @@ public class GameDataProcessor : MonoBehaviour,RhythmObservable {
 	public void removeFromDangerMap(BombFire fire){
 		if(fire is Locatable){
 			Position pos = ((Locatable)fire).pos;
-			dangerMap [pos.x, pos.y] = -1;
+			dangerMap [pos.y, pos.x] = -1;
 		}
 	}
 
@@ -324,6 +352,10 @@ public class GameDataProcessor : MonoBehaviour,RhythmObservable {
 	}
 	public void removeFromBenefitMap(Buff buff){
 		
+	}
+
+	public int getRandom (int max){
+		return new System.Random ().Next (max);
 	}
 
 }

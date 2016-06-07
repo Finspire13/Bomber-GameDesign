@@ -40,6 +40,7 @@ public class NormalBomb :MonoBehaviour,Bomb,Distroyable,Locatable
 //		Debug.Log ("NormalBomb :MonoBehaviour,Bomb,Distroyable,Locatable");
 		GameDataProcessor.instance.addObject (this);
 		RhythmRecorder.instance.addObservedSubject (this);
+		GameDataProcessor.instance.addToDangerMap (this);
 	}
 	
 	// Update is called once per frame

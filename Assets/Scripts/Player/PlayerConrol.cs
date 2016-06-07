@@ -55,11 +55,13 @@ public class PlayerConrol : MonoBehaviour,Controlable,Locatable,SetBomb
 					//script.isActive = true;
 //					script.LifeTime = 3;
 					script.setProperties(this,bombPower,bombLifeTime,bombFireTime);
+
+					GameDataProcessor.instance.addToDangerMap (script);
 				}
 			}
 		}
 	}
-	private int bombPower = 3;
+	private int bombPower = 2;
 	public int BombPower {
 		get{return bombPower; }
 		set{bombPower = value; }
@@ -98,7 +100,7 @@ public class PlayerConrol : MonoBehaviour,Controlable,Locatable,SetBomb
 
 //		Debug.Log ("x:"+transform.localPosition.z+",y:"+transform.localPosition.x);
 		this.bombType = Resources.Load("NormalBomb") as GameObject;
-		GameDataProcessor.instance.addObject (this);
+//		GameDataProcessor.instance.addObject (this);
 		rhmFlag = false;
 		RhythmRecorder.instance.addRhythmFlagOwner (this);
 
@@ -106,7 +108,8 @@ public class PlayerConrol : MonoBehaviour,Controlable,Locatable,SetBomb
 
 		this.maxNum = 3;
 		this.currNum = 0;
-		this.bombLifeTime = 2;
+		this.bombLifeTime = 3;
+		this.bombPower = 1;
 		this.bombFireTime = 1;
 		this.canSetBomb = true;
 

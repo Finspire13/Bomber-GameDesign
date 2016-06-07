@@ -69,6 +69,7 @@ public class NormalBombFire : MonoBehaviour,Distroyable,BombFire,Locatable
 	public void distroy(){
 
 		GameDataProcessor.instance.removeObject (this);
+		GameDataProcessor.instance.removeFromDangerMap (this);
 		RhythmRecorder.instance.removeObserver (this);
 		Destroy(this.gameObject,0);
 	}

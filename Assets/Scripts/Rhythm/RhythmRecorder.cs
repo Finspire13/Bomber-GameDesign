@@ -184,7 +184,7 @@ public class RhythmRecorder: MonoBehaviour{
 		updateFlagInOwners ();
 
 		if (isPlaying&&!isFinished()) {
-
+//			Debug.Log ("random:" + GameDataProcessor.instance.getRandom (6));
 			for (int i = 0; i < observedSubjects.Count; i++) {
 				int tempBeatIndex = (int)currentBeatIndice [i];
 				if (tempBeatIndex < beats.Count) {
