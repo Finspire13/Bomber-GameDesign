@@ -65,7 +65,7 @@ public class PlayerConrol : MonoBehaviour,Controlable,Locatable,SetBomb,Distroya
 				Debug.Log("not bomb");
 			}else{
 				GameObject go = (GameObject)Instantiate(this.bombType,this.gameObject.transform.position,this.gameObject.transform.rotation);
-				NormalBomb script = (NormalBomb)go.GetComponent("Bomb");
+				Bomb script = (Bomb)go.GetComponent("Bomb");
 				if(script == null){
 					Debug.Log("not script");
 				}else{
@@ -118,7 +118,7 @@ public class PlayerConrol : MonoBehaviour,Controlable,Locatable,SetBomb,Distroya
 //		this.position = new Position(Mathf.CeilToInt(transform.localPosition.z),Mathf.CeilToInt(transform.localPosition.x));
 
 //		Debug.Log ("x:"+transform.localPosition.z+",y:"+transform.localPosition.x);
-		this.bombType = Resources.Load("NormalBomb") as GameObject;
+		this.bombType = Resources.Load("SquareBomb") as GameObject;
 //		GameDataProcessor.instance.addObject (this);
 		rhmFlag = false;
 		RhythmRecorder.instance.addRhythmFlagOwner (this);
