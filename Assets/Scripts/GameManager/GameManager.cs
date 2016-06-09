@@ -13,8 +13,14 @@ public class GameManager : MonoBehaviour {
 	public GameObject levelEndCanvas;
 	public GameObject endCanvas;
 	private GameObject currentCanvas;
+	private int playerBlood;
 	private int level;
 
+	public int PlayerBlood
+	{
+		get{ return playerBlood; }
+		set{ playerBlood = value; }
+	}
 
 	// Use this for initialization
 	void Awake(){

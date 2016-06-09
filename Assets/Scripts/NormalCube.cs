@@ -54,7 +54,12 @@ public class NormalCube : MonoBehaviour, Locatable,Distroyable {
 	}
 
 	void createBuff(){
-		GameObject buff = Resources.Load("GhostForm") as GameObject;
+
+		string[] buffList = {"Heal","GhostForm","BombPowerUp" };
+
+		int buffIndex=UnityEngine.Random.Range (0, buffList.Length);
+
+		GameObject buff = Resources.Load(buffList[buffIndex]) as GameObject;
 		GameObject obj = (GameObject)Instantiate(buff,this.gameObject.transform.position,this.gameObject.transform.rotation);
 		Buff script = (Buff)obj.GetComponent("Buff");
 		if (script == null) {

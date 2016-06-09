@@ -16,9 +16,6 @@ public class PlayerConrol : MonoBehaviour,Controlable,Locatable,SetBomb,Distroya
 		Destroy (this.gameObject, 0);
 	}
 
-	public void actionOnBeat(){
-
-	}
 	private bool canSetBomb = true;
 	private bool isGhost=false;
 	public bool IsGhost 
@@ -135,7 +132,7 @@ public class PlayerConrol : MonoBehaviour,Controlable,Locatable,SetBomb,Distroya
 		this.bombFireTime = 1;
 		this.canSetBomb = true;
 		this.isGhost = false;
-		this.blood = 5;
+		this.blood = 50;
 
 
 //		Debug.Log("PlayerControl Done..");
@@ -147,6 +144,7 @@ public class PlayerConrol : MonoBehaviour,Controlable,Locatable,SetBomb,Distroya
 //		Debug.Log ("Player:"+this.position.x+","+this.position.y);
 		control ();
 
+		GameManager.instance.PlayerBlood = this.blood;
 		if (blood <= 0) {
 			Debug.Log("game over!!!");
 			distroy();

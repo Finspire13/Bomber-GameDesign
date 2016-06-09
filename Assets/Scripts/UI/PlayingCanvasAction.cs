@@ -2,11 +2,12 @@
 using System.Collections;
 using UnityEngine.UI;
 
-public class RhythmReminder : MonoBehaviour,RhythmObservable  {
+public class PlayingCanvasAction : MonoBehaviour,RhythmObservable  {
 
 	public GameObject leftSlider;
 	public GameObject rightSlider;
 	public Button levelEndButton;
+	public Text bloodText;
 	// Use this for initialization
 	void Start () {
 		RhythmRecorder.instance.addObservedSubject (this,-2);
@@ -15,7 +16,7 @@ public class RhythmReminder : MonoBehaviour,RhythmObservable  {
 	
 	// Update is called once per frame
 	void Update () {
-	
+		bloodText.text = "HP: " + GameManager.instance.PlayerBlood;
 	}
 
 	public void actionOnBeat(){
