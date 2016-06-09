@@ -82,7 +82,7 @@ public class GameDataProcessor : MonoBehaviour,RhythmObservable {
 	void Update () {
 //		Debug.Log ("game data");
 //		Debug.Log (gameObjects.Count);
-		Debug.Log ("mapSizeX:"+mapSizeX+",mapSizeY:"+mapSizeY);
+		//Debug.Log ("mapSizeX:"+mapSizeX+",mapSizeY:"+mapSizeY);
 		if (mapInitClock && mapSizeX*mapSizeY != 0 ) {
 			dangerMap = new int[mapSizeX, mapSizeY];
 			benefitMap = new int[mapSizeX, mapSizeY];

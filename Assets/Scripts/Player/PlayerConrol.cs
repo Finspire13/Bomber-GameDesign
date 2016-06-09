@@ -1,9 +1,31 @@
 using UnityEngine;
 using System.Collections;
 
-public class PlayerConrol : MonoBehaviour,Controlable,Locatable,SetBomb
+public class PlayerConrol : MonoBehaviour,Controlable,Locatable,SetBomb,Distroyable
 {
+	private int blood;
+	public int Blood 
+	{
+		get{return blood;}
+		set{blood = value;}
+	}
+	public void attackBy(Attackable source){
+		blood -= source.Damage;
+	}
+	public void distroy(){
+		Destroy (this.gameObject, 0);
+	}
+
+	public void actionOnBeat(){
+
+	}
 	private bool canSetBomb = true;
+	private bool isGhost=false;
+	public bool IsGhost 
+	{
+		get{return isGhost;}
+		set{isGhost = value;}
+	}
 
 	private int speed = 1;
 	public int Speed 
@@ -112,6 +134,9 @@ public class PlayerConrol : MonoBehaviour,Controlable,Locatable,SetBomb
 		this.bombPower = 1;
 		this.bombFireTime = 1;
 		this.canSetBomb = true;
+		this.isGhost = false;
+		this.blood = 5;
+
 
 //		Debug.Log("PlayerControl Done..");
 	}
@@ -121,6 +146,11 @@ public class PlayerConrol : MonoBehaviour,Controlable,Locatable,SetBomb
 		//this.position = new Position(Mathf.RoundToInt(transform.localPosition.z)+1,Mathf.RoundToInt(transform.localPosition.x)+1);
 //		Debug.Log ("Player:"+this.position.x+","+this.position.y);
 		control ();
+
+		if (blood <= 0) {
+			Debug.Log("game over!!!");
+			distroy();
+		}
 	}
 
 	public void control()
@@ -158,7 +188,7 @@ public class PlayerConrol : MonoBehaviour,Controlable,Locatable,SetBomb
 					tempFlag = false;
 			}
 
-			if (tempFlag) {
+			if ((tempFlag||isGhost)&&this.position.y>0) {
 				StartCoroutine (Move (moveDirection.forward));
 				this.position.y -= speed;
 			}
@@ -174,7 +204,7 @@ public class PlayerConrol : MonoBehaviour,Controlable,Locatable,SetBomb
 					tempFlag = false;
 			}
 
-			if (tempFlag) {
+			if ((tempFlag||isGhost)&&this.position.y<GameDataProcessor.instance.mapSizeY-1) {
 				StartCoroutine (Move (moveDirection.back));
 				this.position.y += speed;
 			}
@@ -190,7 +220,7 @@ public class PlayerConrol : MonoBehaviour,Controlable,Locatable,SetBomb
 					tempFlag = false;
 			}
 
-			if (tempFlag) {
+			if ((tempFlag||isGhost)&&this.position.x<GameDataProcessor.instance.mapSizeX-1) {
 				StartCoroutine (Move (moveDirection.right));
 				this.position.x += speed;
 			}
@@ -206,7 +236,7 @@ public class PlayerConrol : MonoBehaviour,Controlable,Locatable,SetBomb
 					tempFlag = false;
 			}
 
-			if (tempFlag) {
+			if ((tempFlag||isGhost)&&this.position.x>0) {
 				StartCoroutine (Move (moveDirection.left));
 				this.position.x -= speed;
 			}
