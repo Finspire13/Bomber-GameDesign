@@ -45,8 +45,8 @@ public class GameDataProcessor : MonoBehaviour,RhythmObservable {
 	public ArrayList gameObjects;
 	// Use this for initialization
 
-	private int[,] dangerMap = null; //for ai
-	private int[,] benefitMap = null; //for ai
+	public int[,] dangerMap = null; //for ai
+	public int[,] benefitMap = null; //for ai
 
 	private bool mapInitClock = true;
 
@@ -92,6 +92,10 @@ public class GameDataProcessor : MonoBehaviour,RhythmObservable {
 			mapSizeX = mapSizeY;
 			mapSizeY = temp;
 		}
+	}
+
+	public bool isInitialized(){
+		return (!mapInitClock);
 	}
 
 	public bool addObject(Locatable item){
@@ -219,7 +223,12 @@ public class GameDataProcessor : MonoBehaviour,RhythmObservable {
 //			Debug.Log ("refresh!!!");
 			refreshDangerMap ();
 		}
+		if (this.getRandom(15) == 0){
+			Debug.Log ("refresh benefit map!!!");
+			refreshBenefitMap ();
+		}
 		updateDangerMap ();
+		updateBenefitMap ();
 	}
 	public void refreshDangerMap(){
 		if (dangerMap != null) {
@@ -347,11 +356,58 @@ public class GameDataProcessor : MonoBehaviour,RhythmObservable {
 	}
 
 	public void addToBenefitMap(Buff buff){
-
-
+		if (buff is Locatable) {
+			int x = ((Locatable)buff).pos.x;
+			int y = ((Locatable)buff).pos.y;
+			this.benefitMap [y,x] += buff.Value;
+		}
 	}
 	public void removeFromBenefitMap(Buff buff){
-		
+		if (buff is Locatable) {
+			int x = ((Locatable)buff).pos.x;
+			int y = ((Locatable)buff).pos.y;
+			int value = this.benefitMap [y,x] - buff.Value;
+			if (value > 0) {
+				this.benefitMap [y,x] = value;
+			} else {
+				this.benefitMap [y,x] = 0;
+			}
+		}
+	}
+
+	public void refreshBenefitMap(){
+		if (benefitMap != null) {
+			for (int i = 0; i < benefitMap.GetLength (0); ++i) {
+				for (int j = 0; j < benefitMap.GetLength (1); ++j) {
+					if (benefitMap [i, j] >= 5) {
+						benefitMap [i, j] = 0;
+					}
+				}
+			}
+		}
+	}
+	//for benefitMap's value of player position
+	private void updatePlayerValue(){
+		ArrayList positions =  RhythmRecorder.instance.getPlayersPosition ();
+		for (int i = 0; i < positions.Count; ++i) {
+			if (positions [i] is Locatable) {
+				Position pos = ((Locatable)positions [i]).pos;
+				benefitMap [pos.y, pos.x] += 2;
+			}
+		}
+	}
+
+	public void updateBenefitMap(){
+		if (benefitMap != null) {
+			for (int i = 0; i < benefitMap.GetLength (0); ++i) {
+				for (int j = 0; j < benefitMap.GetLength (1); ++j) {
+					if (benefitMap [i, j] > 0) {
+						--benefitMap [i, j];
+					}
+				}
+			}
+		}
+		updatePlayerValue ();
 	}
 
 	public int getRandom (int max){

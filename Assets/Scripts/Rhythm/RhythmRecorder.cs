@@ -208,10 +208,20 @@ public class RhythmRecorder: MonoBehaviour{
 			}
 		}
 	}
-		
 
 	public bool isFinished(){
 		return standardBeatIndex >= beats.Count;
+	}
+
+	public ArrayList getPlayersPosition(){
+		ArrayList result = new ArrayList ();
+		for (int i = 0; i < rhythmFlagOwners.Count; ++i) {
+			if (rhythmFlagOwners [i] is Controlable && rhythmFlagOwners [i] is Locatable) {
+				result.Add (rhythmFlagOwners [i]);
+			}
+		}
+
+		return result;
 	}
 
 	/*public void testPrint()

@@ -142,7 +142,7 @@ public class SquareBomb :MonoBehaviour,Bomb,Distroyable,Locatable
 					continue;
 				}
 
-				Debug.Log (tempX+" "+tempY);
+//				Debug.Log (tempX+" "+tempY);
 
 				Position currPosition = new Position(tempX,tempY);
 
