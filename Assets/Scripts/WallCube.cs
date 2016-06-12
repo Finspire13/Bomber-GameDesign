@@ -18,7 +18,7 @@ public class WallCube : MonoBehaviour, Locatable {
         //Debug.Log(Mathf.RoundToInt(transform.localPosition.x)+", "+Mathf.RoundToInt(transform.localPosition.z));
 		this.position = new Position(Mathf.RoundToInt(transform.localPosition.z),Mathf.RoundToInt(transform.localPosition.x));
 //		Debug.Log(Mathf.RoundToInt(transform.localPosition.z)+", "+Mathf.RoundToInt(transform.localPosition.x));
-        
+//		Debug.Log ("WC:"+this.position.x+","+this.position.y);
 
     }
 

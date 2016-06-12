@@ -114,10 +114,12 @@ public class PlayerConrol : MonoBehaviour,Controlable,Locatable,SetBomb,Distroya
 	void Start ()
 	{
 		//should initize position of player 
-		this.position = new Position (1, 1);
-//		this.position = new Position(Mathf.CeilToInt(transform.localPosition.z),Mathf.CeilToInt(transform.localPosition.x));
+//		this.position = new Position (1, 1);
+		this.position = new Position(Mathf.CeilToInt(transform.localPosition.z),Mathf.CeilToInt(transform.localPosition.x));
 
-//		Debug.Log ("x:"+transform.localPosition.z+",y:"+transform.localPosition.x);
+		Debug.Log ("player position: x:"+transform.localPosition.z+",y:"+transform.localPosition.x);
+//		Debug.Log ("player: x:"+this.pos.x+",y:"+this.pos.y);
+
 		this.bombType = Resources.Load("SquareBomb") as GameObject;
 //		GameDataProcessor.instance.addObject (this);
 		rhmFlag = false;
