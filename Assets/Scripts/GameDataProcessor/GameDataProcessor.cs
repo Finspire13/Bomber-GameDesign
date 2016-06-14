@@ -46,7 +46,7 @@ public class GameDataProcessor : MonoBehaviour,RhythmObservable {
 	// Use this for initialization
 
 	public int[,] dangerMap = null; //for ai
-	public int[,] benefitMap = null; //for ai
+	public float[,] benefitMap = null; //for ai
 
 	private bool mapInitClock = true;
 
@@ -85,7 +85,7 @@ public class GameDataProcessor : MonoBehaviour,RhythmObservable {
 //		Debug.Log ("mapSizeX:"+mapSizeX+",mapSizeY:"+mapSizeY);
 		if (mapInitClock && mapSizeX*mapSizeY != 0 ) {
 			dangerMap = new int[mapSizeX, mapSizeY];
-			benefitMap = new int[mapSizeX, mapSizeY];
+			benefitMap = new float[mapSizeX, mapSizeY];
 			initizeMap ();
 			mapInitClock = false;
 			int temp = mapSizeX;
@@ -249,7 +249,7 @@ public class GameDataProcessor : MonoBehaviour,RhythmObservable {
 
 		for (int i = 0; i < benefitMap.GetLength (0); ++i) {
 			for (int j = 0; j < benefitMap.GetLength (1); ++j) {
-				benefitMap [i,j] = 0;
+				benefitMap [i,j] = 0f;
 			}
 		}
 	}
@@ -359,18 +359,18 @@ public class GameDataProcessor : MonoBehaviour,RhythmObservable {
 		if (buff is Locatable) {
 			int x = ((Locatable)buff).pos.x;
 			int y = ((Locatable)buff).pos.y;
-			this.benefitMap [y,x] += buff.Value;
+			this.benefitMap [y,x] += (float)buff.Value;
 		}
 	}
 	public void removeFromBenefitMap(Buff buff){
 		if (buff is Locatable) {
 			int x = ((Locatable)buff).pos.x;
 			int y = ((Locatable)buff).pos.y;
-			int value = this.benefitMap [y,x] - buff.Value;
+			float value = this.benefitMap [y,x] - buff.Value;
 			if (value > 0) {
 				this.benefitMap [y,x] = value;
 			} else {
-				this.benefitMap [y,x] = 0;
+				this.benefitMap [y,x] = 0f;
 			}
 		}
 	}
@@ -380,7 +380,7 @@ public class GameDataProcessor : MonoBehaviour,RhythmObservable {
 			for (int i = 0; i < benefitMap.GetLength (0); ++i) {
 				for (int j = 0; j < benefitMap.GetLength (1); ++j) {
 					if (benefitMap [i, j] >= 5) {
-						benefitMap [i, j] = 0;
+						benefitMap [i, j] = 0f;
 					}
 				}
 			}
@@ -392,7 +392,7 @@ public class GameDataProcessor : MonoBehaviour,RhythmObservable {
 		for (int i = 0; i < positions.Count; ++i) {
 			if (positions [i] is Locatable) {
 				Position pos = ((Locatable)positions [i]).pos;
-				benefitMap [pos.y, pos.x] += 2;
+				benefitMap [pos.y, pos.x] += (float)getRandom(5);
 			}
 		}
 	}

@@ -30,8 +30,12 @@ public class EnemyBomber : MonoBehaviour,Distroyable,SetBomb,Locatable
 	{
 		this.bombType = Resources.Load("NormalBomb") as GameObject;
 		RhythmRecorder.instance.addObservedSubject (this);
-		this.position = new Position(Mathf.RoundToInt(transform.localPosition.z),Mathf.RoundToInt(transform.localPosition.x));
+//		this.position = new Position(Mathf.RoundToInt(transform.localPosition.z),Mathf.RoundToInt(transform.localPosition.x));
+
+		this.position = new Position(Mathf.RoundToInt(transform.localPosition.x),Mathf.RoundToInt(-transform.localPosition.z));
 		GameDataProcessor.instance.addObject (this);
+
+		Debug.Log ("enemy pos:x="+position.x+",y="+position.y);
 
 		this.maxNum = 3;
 		this.currNum = 0;
@@ -134,7 +138,7 @@ public class EnemyBomber : MonoBehaviour,Distroyable,SetBomb,Locatable
 	// *************** AI control ***************
 //	private int[,] decisionMap = null;
 //	private bool mapInitClock = true;
-	Queue currPath;
+	Queue<Position> currPath;
 	EnemyState lastState;
 
 	private int getRandom(int count)
@@ -163,29 +167,34 @@ public class EnemyBomber : MonoBehaviour,Distroyable,SetBomb,Locatable
 		ArrayList decisionMap = computDecisionMap ();
 
 		int indx = getRandom (3);
-		if (currPath != null && currPath.Count < 0) {
+		if (currPath != null && currPath.Count <= 0) {
 			MyPair pair = decisionMap [indx] as MyPair;
 			Position dest = new Position (pair.px, pair.py);
 			this.currPath = findPathTo(dest);
+			Debug.Log ("EMEMY_WALK");
 			return EnemyState.EMEMY_WALK;
 		}
 
-		indx = getRandom (15);
-		if (indx < 4 && decisionMap.Count > indx) {
+		indx = getRandom (16);
+		if (indx < 3 && decisionMap.Count > indx) {
 			MyPair pair = decisionMap [indx] as MyPair;
 			Position dest = new Position (pair.px, pair.py);
 			this.currPath = findPathTo(dest);
 
 			Debug.Log ("dest:"+dest.x + "," + dest.y);
 
+			Debug.Log ("EMEMY_WALK");
 			return EnemyState.EMEMY_WALK;
-		} else if (indx < 6) {
+		} else if (indx < 5) {
+			Debug.Log ("EMEMY_IDLE");
 			return EnemyState.EMEMY_IDLE;
-		} else if(indx < 8){
+		} else if(indx < 7){
+			Debug.Log ("EMEMY_SETBOMB");
 			return EnemyState.EMEMY_SETBOMB;
 		}
 
 		return EnemyState.EMEMY_WALK;
+		Debug.Log ("EMEMY_WALK");
 	}
 	private void idleAction(){
 //		Debug.Log("Enemy idle");
@@ -199,24 +208,150 @@ public class EnemyBomber : MonoBehaviour,Distroyable,SetBomb,Locatable
 	}
 	//寻路算法
 	private Queue findPathTo(Position dest){
-		Queue path = new Queue ();
+		Queue<Position> path = new Queue ();
+		int[,] dangerMap = GameDataProcessor.instance.dangerMap;
+		int[,] floodMark = new int[GameDataProcessor.instance.mapSizeX, GameDataProcessor.instance.mapSizeY];\
+		bool isReachDest = false;
+		bool canReach = markPath (this.pos,dest,1,floodMark,isReachDest);
+
+
 		return path;
+	}
+	private bool markPath (Position lastPos,Position target,int pathDistance,out int[,] floodMark,out bool isReachDest){
+		if (lastPos.x == target.x && lastPos.y == target.y) {
+//			floodMark [lastPos.y, lastPos.x]
+			isReachDest = true;
+			return true;
+		}
+
+		ArrayList objs;
+		Position curr = new Position(lastPos.x+1,lastPos.y);
+		bool rightAccess = true;
+		if (floodMark [curr.y, curr.x] != -1) {
+			rightAccess = false;
+		} else {
+			objs = GameDataProcessor.instance.getObjectAtPostion(curr);
+			for (int i = 0; i < objs.Count; ++i) {
+				if (objs [i] is NormalCube || objs [i] is WallCube) {
+					floodMark [curr.y, curr.x] = 999999;
+				rightAccess = false;
+					break;
+				}
+			}
+		}
+		if (rightAccess) {
+			floodMark [curr.y, curr.x] = pathDistance;
+		}
+
+		curr = new Position(lastPos.x-1,lastPos.y);
+		bool leftAccess = true;
+		if (floodMark [curr.y, curr.x] != -1) {
+			leftAccess = false;
+		} else {
+			objs = GameDataProcessor.instance.getObjectAtPostion (curr);
+			for (int i = 0; i < objs.Count; ++i) {
+				if (objs [i] is NormalCube || objs [i] is WallCube) {
+					floodMark [curr.y, curr.x] = 999999;
+					leftAccess = false;
+					break;
+				}
+			}
+		}
+		if (leftAccess) {
+			floodMark [curr.y, curr.x] = pathDistance;
+		}
+
+		curr = new Position(lastPos.x,lastPos.y+1);
+		curr = new Position(lastPos.x-1,lastPos.y);
+		if(curr.x == target.x && curr.y == target.y){
+			floodMark [lastPos.y, lastPos.x] = pathDistance;
+			return false;
+		}
+		bool downAccess = true;
+		if (floodMark [curr.y, curr.x] != -1) {
+			downAccess = false;
+		} else {
+			objs = GameDataProcessor.instance.getObjectAtPostion (curr);
+			for (int i = 0; i < objs.Count; ++i) {
+				if (objs [i] is NormalCube || objs [i] is WallCube) {
+					floodMark [curr.y, curr.x] = 999999;
+					downAccess = false;
+					break;
+				}
+			}
+		}
+		if (downAccess) {
+			floodMark [curr.y, curr.x] = pathDistance;
+		}
+
+		curr = new Position(lastPos.x,lastPos.y-1);
+		bool upAccess = true;
+		if (floodMark [curr.y, curr.x] != -1) {
+			upAccess = false;
+		} else {
+			objs = GameDataProcessor.instance.getObjectAtPostion (curr);
+			for (int i = 0; i < objs.Count; ++i) {
+				if (objs [i] is NormalCube || objs [i] is WallCube) {
+					floodMark [curr.y, curr.x] = 999999;
+					upAccess = false;
+					break;
+				}
+			}
+		}
+		if (upAccess) {
+			floodMark [curr.y, curr.x] = pathDistance;
+		}
+
+		if (rightAccess) {
+			curr = new Position (lastPos.x + 1, lastPos.y);
+			markPath (curr, target, pathDistance + 1, out floodMark, out isReachDest);
+			if (isReachDest) {
+				return true;
+			}
+		}
+		if (leftAccess) {
+			curr = new Position (lastPos.x - 1, lastPos.y);
+			markPath (curr, target, pathDistance + 1, out floodMark, out isReachDest);
+			if (isReachDest) {
+				return true;
+			}
+		}
+		if (downAccess) {
+			curr = new Position (lastPos.x, lastPos.y + 1);
+			markPath (curr, target, pathDistance + 1, out floodMark, out isReachDest);
+			if (isReachDest) {
+				return true;
+			}
+		}
+		if (upAccess) {
+			curr = new Position (lastPos.x, lastPos.y - 1);
+			markPath (curr, target, pathDistance + 1, out floodMark, out isReachDest);
+			if (isReachDest) {
+				return true;
+			}
+		}
+		return upAccess || rightAccess || downAccess || upAccess;
+
+	}
+
+	private Queue<Position> createPath(Position target,int[,] floodMark){
+		return null;
 	}
 
 	private ArrayList computDecisionMap(){
 		ArrayList topValuePlace = new ArrayList();
 		int[,] dangerMap = GameDataProcessor.instance.dangerMap;
-		int[,] benefitMap = GameDataProcessor.instance.benefitMap;
+		float[,] benefitMap = GameDataProcessor.instance.benefitMap;
 
 		for (int i = 0; i < dangerMap.GetLength (0); ++i) {
 			for (int j = 0; j < dangerMap.GetLength (1); ++j) {
-				int value = 0;
+				float value = 0;
 				if (dangerMap [i, j] == -1) {
-					value = 15 + benefitMap[i,j]*2;
+					value = 15 + benefitMap[i,j]*2 + distanceBenefit(j,i);
 				} else {
-					value = dangerMap [i, j] + benefitMap[i,j]*2;
+					value = dangerMap [i, j] + benefitMap[i,j]*2 + distanceBenefit(j,i);
 				}
-				topValuePlace.Add (new MyPair (i, j, value));
+				topValuePlace.Add (new MyPair (j, i, value));
 			}
 		}
 		topValuePlace.Sort ();
@@ -224,11 +359,16 @@ public class EnemyBomber : MonoBehaviour,Distroyable,SetBomb,Locatable
 		return topValuePlace;
 	}
 
+	private float distanceBenefit(int x,int y){
+		float value =  10 - Math.Abs(this.pos.x-x)-Math.Abs(this.pos.y-y);
+		return (value > 0) ? value : 0;
+	}
+
 	public class MyPair:IComparable{
-		public int value;
+		public float value;
 		public int px;
 		public int py;
-		public MyPair(int x,int y,int value){
+		public MyPair(int x,int y,float value){
 			this.px = x;
 			this.py = y;
 			this.value = value;
