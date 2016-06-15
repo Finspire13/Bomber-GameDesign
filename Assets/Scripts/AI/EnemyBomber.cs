@@ -30,10 +30,10 @@ public class EnemyBomber : MonoBehaviour,Distroyable,SetBomb,Locatable,CanBuffed
 	{
 		this.bombType = Resources.Load("NormalBomb") as GameObject;
 		RhythmRecorder.instance.addObservedSubject (this);
-//		this.position = new Position(Mathf.RoundToInt(transform.localPosition.z),Mathf.RoundToInt(transform.localPosition.x));
+		this.position = new Position(Mathf.RoundToInt(transform.localPosition.z),Mathf.RoundToInt(transform.localPosition.x));
 
-		this.position = new Position(Mathf.RoundToInt(transform.localPosition.x),Mathf.RoundToInt(-transform.localPosition.z));
 		GameDataProcessor.instance.addObject (this);
+
 
 		Debug.Log ("enemy pos:x="+position.x+",y="+position.y);
 
