@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
-public class PlayerConrol : MonoBehaviour,Controlable,Locatable,SetBomb,Distroyable
+public class PlayerConrol : MonoBehaviour,Controlable,Locatable,SetBomb,Distroyable,CanBuffed
 {
 	private int blood;
 	public int Blood 

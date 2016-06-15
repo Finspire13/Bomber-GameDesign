@@ -99,8 +99,8 @@ public class GameDataProcessor : MonoBehaviour,RhythmObservable {
 	}
 
 	public bool addObject(Locatable item){
-		if (item.pos.x < 0 || item.pos.x >= mapSizeX || item.pos.y < 0 || item.pos.y >= mapSizeY)
-			return false;
+//		if (item.pos.x < 0 || item.pos.x >= mapSizeX || item.pos.y < 0 || item.pos.y >= mapSizeY)
+//			return false;
 	
 		gameObjects.Add (item);
 		return true;
@@ -220,11 +220,11 @@ public class GameDataProcessor : MonoBehaviour,RhythmObservable {
 //		int ran = this.getRandom (10);
 //		Debug.Log ("random:"+ran);
 		if (this.getRandom (10) == 0) {
-//			Debug.Log ("refresh!!!");
+			Debug.Log ("refresh danger map");
 			refreshDangerMap ();
 		}
 		if (this.getRandom(15) == 0){
-			Debug.Log ("refresh benefit map!!!");
+//			Debug.Log ("refresh benefit map!!!");
 			refreshBenefitMap ();
 		}
 		updateDangerMap ();

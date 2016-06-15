@@ -124,6 +124,22 @@ Prefab:
       propertyPath: m_RootOrder
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 11495062, guid: 0ed97654c1073da44b9c023781576c4e, type: 2}
+      propertyPath: mapDataHelper
+      value: 
+      objectReference: {fileID: 141286, guid: d24b905db2995e64f8736d53b96739fa, type: 2}
+    - target: {fileID: 11495062, guid: 0ed97654c1073da44b9c023781576c4e, type: 2}
+      propertyPath: gameDataProcessor
+      value: 
+      objectReference: {fileID: 124456, guid: 5381da89662054e80841d0e451b35813, type: 2}
+    - target: {fileID: 11495062, guid: 0ed97654c1073da44b9c023781576c4e, type: 2}
+      propertyPath: gameManager
+      value: 
+      objectReference: {fileID: 165880, guid: ed8254bd0715f4b7e906f38b7bbdbc88, type: 2}
+    - target: {fileID: 11495062, guid: 0ed97654c1073da44b9c023781576c4e, type: 2}
+      propertyPath: rhythmRecorder
+      value: 
+      objectReference: {fileID: 108866, guid: 4574ec2f9d974f54cae0cfa8de130406, type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 0ed97654c1073da44b9c023781576c4e, type: 2}
   m_IsPrefabParent: 0
@@ -347,7 +363,7 @@ Prefab:
     m_Modifications:
     - target: {fileID: 498428, guid: 0cde95dd6d4e44f85b12aa7537f27132, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 5
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 498428, guid: 0cde95dd6d4e44f85b12aa7537f27132, type: 2}
       propertyPath: m_LocalPosition.y
@@ -355,7 +371,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 498428, guid: 0cde95dd6d4e44f85b12aa7537f27132, type: 2}
       propertyPath: m_LocalPosition.z
-      value: -10
+      value: -3
       objectReference: {fileID: 0}
     - target: {fileID: 498428, guid: 0cde95dd6d4e44f85b12aa7537f27132, type: 2}
       propertyPath: m_LocalRotation.x

@@ -21,14 +21,15 @@ public class Heal : MonoBehaviour,Buff,Locatable,RhythmObservable {
 	public void effect(){
 
 	}
+	private int effectValue = 10;
 
 	public void actionOnBeat (){
 		--lifeTime;
 		if (!this.position.Equals(null)) {
 			ArrayList objs = GameDataProcessor.instance.getObjectAtPostion (this.position);
 			for (int i = 0; i < objs.Count; ++i) {
-				if (objs[i] is PlayerConrol) {
-					((PlayerConrol)objs[i]).Blood +=buffValue;
+				if (objs[i] is CanBuffed) {
+					((Distroyable)objs[i]).Blood +=effectValue;
 					Debug.Log ("Heal!");
 					lifeTime = 0;
 				}
@@ -42,9 +43,9 @@ public class Heal : MonoBehaviour,Buff,Locatable,RhythmObservable {
 	// Use this for initialization
 	void Start ()
 	{
-		RhythmRecorder.instance.addObservedSubject (this);
+		RhythmRecorder.instance.addObservedSubject (this,0.1f);
 		GameDataProcessor.instance.addToBenefitMap (this);
-		this.lifeTime = 20;
+		this.lifeTime = 200;
 		this.buffValue = 20;
 	}
 

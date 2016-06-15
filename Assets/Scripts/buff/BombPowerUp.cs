@@ -42,9 +42,9 @@ public class BombPowerUp : MonoBehaviour,Buff,Locatable,RhythmObservable
 	// Use this for initialization
 	void Start ()
 	{
-		RhythmRecorder.instance.addObservedSubject (this);
+		RhythmRecorder.instance.addObservedSubject (this,0.1f);
 		GameDataProcessor.instance.addToBenefitMap (this);
-		this.lifeTime = 20;
+		this.lifeTime = 200;
 		this.buffValue = 5;
 	}
 	
