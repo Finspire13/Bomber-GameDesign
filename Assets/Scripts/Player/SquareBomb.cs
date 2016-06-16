@@ -123,7 +123,7 @@ public class SquareBomb :MonoBehaviour,Bomb,Distroyable,Locatable
 	}
 	private void createFire(){
 
-		GameObject fire = Resources.Load("firebase") as GameObject;
+		GameObject fire = Resources.Load("poisonFireBase") as GameObject;
 		GameObject[] fires = new GameObject[(power*2+1)*(power*2+1)];
 
 		Vector3 tempPos = this.gameObject.transform.position;

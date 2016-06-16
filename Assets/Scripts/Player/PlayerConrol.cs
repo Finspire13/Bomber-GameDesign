@@ -125,7 +125,7 @@ public class PlayerConrol : MonoBehaviour,Controlable,Locatable,SetBomb,Distroya
 		Debug.Log ("player position: x:"+transform.localPosition.z+",y:"+transform.localPosition.x);
 //		Debug.Log ("player: x:"+this.pos.x+",y:"+this.pos.y);
 
-		this.bombType = Resources.Load("NormalBomb") as GameObject;
+		this.bombType = Resources.Load("SquareBomb") as GameObject;
 //		GameDataProcessor.instance.addObject (this);
 		rhmFlag = false;
 		RhythmRecorder.instance.addRhythmFlagOwner (this);
