@@ -275,29 +275,29 @@ public class PlayerConrol : MonoBehaviour,Controlable,Locatable,SetBomb,Distroya
 			switch (dir) {
 			case moveDirection.forward:
 				transform.position += 0.25F*Vector3.forward;
-				m_ArmLeft.transform.position += 0.25F*Vector3.forward;
-				m_ArmRight.transform.position += 0.25F*Vector3.forward;
+				//m_ArmLeft.transform.position += 0.25F*Vector3.forward;
+				//m_ArmRight.transform.position += 0.25F*Vector3.forward;
 
 				GameDataProcessor.instance.updatePosition(this,this.position);
 				break;
 			case moveDirection.back:
 				transform.position += 0.25F*Vector3.back;
-				m_ArmLeft.transform.position += 0.25F*Vector3.back;
-				m_ArmRight.transform.position += 0.25F*Vector3.back;
+				//m_ArmLeft.transform.position += 0.25F*Vector3.back;
+				//m_ArmRight.transform.position += 0.25F*Vector3.back;
 
 				GameDataProcessor.instance.updatePosition(this,this.position);
 				break;
 			case moveDirection.right:
 				transform.position += 0.25F*Vector3.right;
-				m_ArmLeft.transform.position += 0.25F*Vector3.right;
-				m_ArmRight.transform.position += 0.25F*Vector3.right;
+				//m_ArmLeft.transform.position += 0.25F*Vector3.right;
+				//m_ArmRight.transform.position += 0.25F*Vector3.right;
 
 				GameDataProcessor.instance.updatePosition(this,this.position);
 				break;
 			case moveDirection.left:
 				transform.position += 0.25F*Vector3.left;
-				m_ArmLeft.transform.position += 0.25F*Vector3.left;
-				m_ArmRight.transform.position += 0.25F*Vector3.left;
+				//m_ArmLeft.transform.position += 0.25F*Vector3.left;
+				//m_ArmRight.transform.position += 0.25F*Vector3.left;
 
 				GameDataProcessor.instance.updatePosition(this,this.position);
 				break;
