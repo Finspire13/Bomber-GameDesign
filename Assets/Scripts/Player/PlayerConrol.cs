@@ -110,12 +110,17 @@ public class PlayerConrol : MonoBehaviour,Controlable,Locatable,SetBomb,Distroya
 		forward,back,left,right
 	};
 
+	private GameObject followCamera;
+
 	// Use this for initialization
 	void Start ()
 	{
 		//should initize position of player 
 //		this.position = new Position (1, 1);
 		this.position = new Position(Mathf.CeilToInt(transform.localPosition.z),Mathf.CeilToInt(transform.localPosition.x));
+
+		//Add follow camera to player
+		followCamera = GameObject.FindGameObjectWithTag("MainCamera");
 
 		Debug.Log ("player position: x:"+transform.localPosition.z+",y:"+transform.localPosition.x);
 //		Debug.Log ("player: x:"+this.pos.x+",y:"+this.pos.y);
@@ -151,6 +156,9 @@ public class PlayerConrol : MonoBehaviour,Controlable,Locatable,SetBomb,Distroya
 			Debug.Log("game over!!!");
 			distroy();
 		}
+	}
+
+	void setFollowCamera(){
 	}
 
 	public void control()
