@@ -156,9 +156,14 @@ public class PlayerConrol : MonoBehaviour,Controlable,Locatable,SetBomb,Distroya
 			Debug.Log("game over!!!");
 			distroy();
 		}
+
+		setFollowCamera ();
 	}
 
 	void setFollowCamera(){
+		if (followCamera != null) {
+			followCamera.transform.position = new Vector3(transform.position.x, followCamera.transform.position.y, transform.position.z);
+		}
 	}
 
 	public void control()
