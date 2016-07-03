@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class BombPowerUp : MonoBehaviour,Buff,Locatable,RhythmObservable
+public class BombNumberUp : MonoBehaviour,Buff,Locatable,RhythmObservable
 {
 	private Position position;
 	public Position pos{ 
@@ -13,13 +13,13 @@ public class BombPowerUp : MonoBehaviour,Buff,Locatable,RhythmObservable
 		get{return lifeTime; }
 		set{lifeTime = value; }
 	}
-	public int buffValue = 25;
+	public int buffValue = 15;
 	public int Value {
 		get{return buffValue; }
 		set{buffValue = value; }
 	}
 	public void effect(){
-		
+
 	}
 
 	public void actionOnBeat (){
@@ -28,8 +28,8 @@ public class BombPowerUp : MonoBehaviour,Buff,Locatable,RhythmObservable
 			ArrayList objs = GameDataProcessor.instance.getObjectAtPostion (this.position);
 			for (int i = 0; i < objs.Count; ++i) {
 				if (objs[i] is SetBomb) {
-					((SetBomb)objs[i]).BombPower += 1;
-					Debug.Log ("player power up !");
+					((SetBomb)objs[i]).MaxNum += 1;
+					Debug.Log ("player bomb number up !");
 					lifeTime = 0;
 				}
 			}
@@ -47,7 +47,7 @@ public class BombPowerUp : MonoBehaviour,Buff,Locatable,RhythmObservable
 //		this.lifeTime = 200;
 //		this.buffValue = 5;
 	}
-	
+
 	// Update is called once per frame
 	void Update ()
 	{

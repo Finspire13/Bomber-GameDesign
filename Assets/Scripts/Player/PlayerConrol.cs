@@ -61,6 +61,7 @@ public class PlayerConrol : MonoBehaviour,Controlable,Locatable,SetBomb,Distroya
 	public void installBomb(){
 		if(currNum < maxNum){
 			currNum++;
+			Debug.Log("player currNum:"+currNum);
 			if(bombType == null){
 				Debug.Log("not bomb");
 			}else{
@@ -100,6 +101,7 @@ public class PlayerConrol : MonoBehaviour,Controlable,Locatable,SetBomb,Distroya
 		if(currNum > 0){
 			currNum--;
 		}
+		Debug.Log ("Player notifyExplosion");
 	}
 
 	private int idleMovementPosition;
@@ -125,7 +127,7 @@ public class PlayerConrol : MonoBehaviour,Controlable,Locatable,SetBomb,Distroya
 //		Debug.Log ("player position: x:"+transform.localPosition.z+",y:"+transform.localPosition.x);
 //		Debug.Log ("player: x:"+this.pos.x+",y:"+this.pos.y);
 
-		this.bombType = Resources.Load("SquareBomb") as GameObject;
+		this.bombType = Resources.Load("NormalBomb") as GameObject;
 //		GameDataProcessor.instance.addObject (this);
 		rhmFlag = false;
 		RhythmRecorder.instance.addRhythmFlagOwner (this);

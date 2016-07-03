@@ -8,12 +8,12 @@ public class GhostForm : MonoBehaviour,Buff,Locatable,RhythmObservable {
 		get{return position; }
 		set{position = value; }
 	}
-	private int lifeTime = 5;
+	private int lifeTime = 25;
 	public int LifeTime{
 		get{return lifeTime; }
 		set{lifeTime = value; }
 	}
-	private int buffValue = 5;
+	public int buffValue = 10;
 	public int Value {
 		get{return buffValue; }
 		set{buffValue = value; }
@@ -44,8 +44,8 @@ public class GhostForm : MonoBehaviour,Buff,Locatable,RhythmObservable {
 	{
 		RhythmRecorder.instance.addObservedSubject (this);
 		GameDataProcessor.instance.addToBenefitMap (this);
-		this.lifeTime = 20;
-		this.buffValue = 5;
+//		this.lifeTime = 20;
+//		this.buffValue = 5;
 	}
 
 	// Update is called once per frame

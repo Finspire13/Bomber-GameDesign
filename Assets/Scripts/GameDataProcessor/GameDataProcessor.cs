@@ -402,7 +402,7 @@ public class GameDataProcessor : MonoBehaviour,RhythmObservable {
 			for (int i = 0; i < benefitMap.GetLength (0); ++i) {
 				for (int j = 0; j < benefitMap.GetLength (1); ++j) {
 					if (benefitMap [i, j] > 0) {
-						--benefitMap [i, j];
+						benefitMap [i, j] -= 0.5f;
 					}
 				}
 			}
@@ -410,7 +410,8 @@ public class GameDataProcessor : MonoBehaviour,RhythmObservable {
 		updatePlayerValue ();
 	}
 
-	public int getRandom (int max){
+	//提供小于count的随机数字
+	public static int getRandom (int max){
 		return new System.Random ().Next (max);
 	}
 

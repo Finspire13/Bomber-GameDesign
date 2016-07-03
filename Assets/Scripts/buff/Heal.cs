@@ -8,12 +8,12 @@ public class Heal : MonoBehaviour,Buff,Locatable,RhythmObservable {
 		get{return position; }
 		set{position = value; }
 	}
-	private int lifeTime = 5;
+	private int lifeTime = 25;
 	public int LifeTime{
 		get{return lifeTime; }
 		set{lifeTime = value; }
 	}
-	private int buffValue = 20;
+	public int buffValue = 15;
 	public int Value {
 		get{return buffValue; }
 		set{buffValue = value; }
@@ -45,8 +45,8 @@ public class Heal : MonoBehaviour,Buff,Locatable,RhythmObservable {
 	{
 		RhythmRecorder.instance.addObservedSubject (this,0.1f);
 		GameDataProcessor.instance.addToBenefitMap (this);
-		this.lifeTime = 200;
-		this.buffValue = 20;
+//		this.lifeTime = 200;
+//		this.buffValue = 15;
 	}
 
 	// Update is called once per frame
