@@ -69,7 +69,7 @@ public class PlayerConrol : MonoBehaviour,Controlable,Locatable,SetBomb,Distroya
 				if(script == null){
 					Debug.Log("not script");
 				}else{
-					Debug.Log("find script interface Bomb");
+//					Debug.Log("find script interface Bomb");
 					//script.LifeTime = bomblifeTime;
 					//script.isActive = true;
 //					script.LifeTime = 3;
@@ -122,7 +122,7 @@ public class PlayerConrol : MonoBehaviour,Controlable,Locatable,SetBomb,Distroya
 		//Add follow camera to player
 		followCamera = GameObject.FindGameObjectWithTag("MainCamera");
 
-		Debug.Log ("player position: x:"+transform.localPosition.z+",y:"+transform.localPosition.x);
+//		Debug.Log ("player position: x:"+transform.localPosition.z+",y:"+transform.localPosition.x);
 //		Debug.Log ("player: x:"+this.pos.x+",y:"+this.pos.y);
 
 		this.bombType = Resources.Load("SquareBomb") as GameObject;

@@ -220,7 +220,7 @@ public class GameDataProcessor : MonoBehaviour,RhythmObservable {
 //		int ran = this.getRandom (10);
 //		Debug.Log ("random:"+ran);
 		if (this.getRandom (10) == 0) {
-			Debug.Log ("refresh danger map");
+//			Debug.Log ("refresh danger map");
 			refreshDangerMap ();
 		}
 		if (this.getRandom(15) == 0){

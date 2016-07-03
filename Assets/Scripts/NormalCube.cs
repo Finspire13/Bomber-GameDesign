@@ -21,7 +21,7 @@ public class NormalCube : MonoBehaviour, Locatable,Distroyable {
 	}
 	public void attackBy(Attackable source)
 	{
-		Debug.Log("NormalCube->attackBy(),damage:"+source.Damage);
+//		Debug.Log("NormalCube->attackBy(),damage:"+source.Damage);
 		//        blood -= source.Damage;
 		blood = 0;
 	}
@@ -45,7 +45,7 @@ public class NormalCube : MonoBehaviour, Locatable,Distroyable {
 	{
 		if (blood <= 0)
 		{
-			Debug.Log("cube died!!!");
+//			Debug.Log("cube died!!!");
 			createBuff ();
 
 			distroy();
@@ -66,7 +66,7 @@ public class NormalCube : MonoBehaviour, Locatable,Distroyable {
 			Debug.Log ("not script");
 		} else {
 			if (script is Locatable) {
-				Debug.Log ("script is Locatable");
+//				Debug.Log ("script is Locatable");
 				((Locatable)script).pos = new Position (this.pos.x,this.pos.y);
 			}
 		}

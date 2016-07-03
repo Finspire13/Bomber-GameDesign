@@ -35,7 +35,7 @@ public class EnemyBomber : MonoBehaviour,Distroyable,SetBomb,Locatable,CanBuffed
 		GameDataProcessor.instance.addObject (this);
 
 
-		Debug.Log ("enemy pos:x="+position.x+",y="+position.y);
+//		Debug.Log ("enemy pos:x="+position.x+",y="+position.y);
 
 		this.maxNum = 3;
 		this.currNum = 0;
@@ -180,16 +180,17 @@ public class EnemyBomber : MonoBehaviour,Distroyable,SetBomb,Locatable,CanBuffed
 			if (currPath == null || currPath.Count <= 0) {
 				MyPair pair = decisionMap [indx] as MyPair;
 				Position dest = new Position (pair.px, pair.py);
+				Debug.Log ("0...dest:" + dest.x + "," + dest.y);
 				this.currPath = findPathTo (dest);
-				Debug.Log ("walk to dest and think again!");
+//				Debug.Log ("walk to dest and think again!");
 				return EnemyState.EMEMY_WALK;
 			}
 
-			indx = getRandom (15);
+			indx = getRandom (30);
 			if (indx < 3 && decisionMap.Count > indx) {
 				MyPair pair = decisionMap [indx] as MyPair;
 				Position dest = new Position (pair.px, pair.py);
-//				Debug.Log ("dest:" + dest.x + "," + dest.y);
+				Debug.Log ("1...:" + dest.x + "," + dest.y);
 				this.currPath = findPathTo (dest);
 
 //			Debug.Log ("EMEMY_WALK");
@@ -231,16 +232,31 @@ public class EnemyBomber : MonoBehaviour,Distroyable,SetBomb,Locatable,CanBuffed
 
 			return EnemyState.EMEMY_AVOID;
 		}
+
+
+		//************** test code *****
+//		bool canGetPath = false;
+//		if (canGetPath) {
+////			MyPair pair = decisionMap [indx] as MyPair;
+//			Position dest = new Position (1, 1);
+//			Debug.Log ("0...dest:" + dest.x + "," + dest.y);
+//			this.currPath = findPathTo (dest);
+//		//	Debug.Log ("walk to dest and think again!");
+//		}
+//		return EnemyState.EMEMY_WALK;
+		//************** test end *****
 	}
 	private bool isWall(Position position){
 		ArrayList objs = GameDataProcessor.instance.getObjectAtPostion (position);
 		for (int i = 0; i < objs.Count; ++i) {
-			if (objs [i] is NormalBomb || objs [i] is WallCube) {
+			if (objs [i] is NormalCube || objs [i] is WallCube) {
 				return true;
 			}
 		}
 		return false;
 	}
+
+
 	private bool isNowSafe(){
 		int p = this.getRandom (20);
 		if (p < 18) {
@@ -318,14 +334,21 @@ public class EnemyBomber : MonoBehaviour,Distroyable,SetBomb,Locatable,CanBuffed
 		Queue<Position> path = new Queue<Position> ();
 
 		int[,] floodMark = new int[GameDataProcessor.instance.mapSizeY,GameDataProcessor.instance.mapSizeX];
-		bool isReachDest = false;
 		for (int i = 0; i < floodMark.GetLength (0); ++i) {
 			for (int j = 0; j < floodMark.GetLength (1); ++j) {
 				floodMark[i,j] = -1;
 			}
 		}
 		floodMark [this.pos.y, this.pos.x] = 0;
-		bool canReach = markPath (this.pos,dest,1,ref floodMark,ref isReachDest);
+//		bool isReachDest = false;
+//		bool canReach = markPath (this.pos,dest,1,ref floodMark,ref isReachDest);
+		bool canReach = true;
+		markPathWFS(this.pos,dest,ref floodMark);
+		if (floodMark [dest.y, dest.x] < 0) {
+			canReach = false;
+		} else {
+			canReach = true;
+		}
 
 		ArrayList objs = GameDataProcessor.instance.getObjectAtPostion (dest);
 		for (int i = 0; i < objs.Count; ++i) {
@@ -365,7 +388,7 @@ public class EnemyBomber : MonoBehaviour,Distroyable,SetBomb,Locatable,CanBuffed
 			for (int i = 0; i < objs.Count; ++i) {
 				if (objs [i] is NormalCube || objs [i] is WallCube) {
 					floodMark [curr.y, curr.x] = 999999;
-				rightAccess = false;
+					rightAccess = false;
 					break;
 				}
 			}
@@ -457,8 +480,72 @@ public class EnemyBomber : MonoBehaviour,Distroyable,SetBomb,Locatable,CanBuffed
 			}
 		}
 		return upAccess || rightAccess || downAccess || upAccess;
-
 	}
+
+	private void markPathWFS(Position source,Position dest,ref int[,] floodMark){
+		Queue<Position> queSearch = new Queue<Position>();
+		queSearch.Enqueue (source);
+		floodMark [source.y, source.x] = 0;
+
+		GameDataProcessor gdp = GameDataProcessor.instance;
+		while (queSearch.Count > 0) {
+			Position curr = queSearch.Dequeue ();
+			int pathLen = floodMark[curr.y,curr.x] + 1;
+			if (curr.y > 0 && curr.y < gdp.mapSizeY-1  && curr.x > 0 && curr.x < gdp.mapSizeX-1) {
+				if (floodMark [curr.y, curr.x + 1] < 0) {
+					Position temp = new Position (curr.x + 1, curr.y);
+					bool isHereWall = isWall (temp);
+					if (isHereWall) {
+						floodMark [curr.y, curr.x + 1] = 999999;
+					} else {
+						floodMark [curr.y, curr.x + 1] = pathLen;
+						queSearch.Enqueue (temp);
+					}
+				}
+			
+				if (floodMark [curr.y, curr.x - 1] < 0) {
+					Position temp = new Position (curr.x - 1, curr.y);
+					bool isHereWall = isWall (temp);
+					if (isHereWall) {
+						floodMark [curr.y, curr.x - 1] = 999999;
+					} else {
+						floodMark [curr.y, curr.x - 1] = pathLen;
+						queSearch.Enqueue (temp);
+					}
+				}
+					
+				if (floodMark [curr.y + 1, curr.x] < 0) {
+					Position temp = new Position (curr.x, curr.y + 1);
+					bool isHereWall = isWall (temp);
+					if (isHereWall) {
+						floodMark [curr.y + 1, curr.x] = 999999;
+					} else {
+						floodMark [curr.y + 1, curr.x] = pathLen;
+						queSearch.Enqueue (temp);
+					}
+				}
+
+				if (floodMark [curr.y - 1, curr.x] < 0) {
+					Position temp = new Position (curr.x, curr.y - 1);
+					bool isHereWall = isWall (temp);
+					if (isHereWall) {
+						floodMark [curr.y - 1, curr.x] = 999999;
+					} else {
+						floodMark [curr.y - 1, curr.x] = pathLen;
+						queSearch.Enqueue (temp);
+					}
+				}
+			}
+		}
+	}
+
+
+
+
+
+
+
+
 
 	private void createPath(Position target, int distance, ref int[,] floodMark, ref Stack<Position> pathStatck){
 //		Stack<Position> pathStatck = new Stack<Position>();
