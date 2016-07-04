@@ -107,14 +107,15 @@ public class NormalBomb :MonoBehaviour,Bomb,Distroyable,Locatable
 //			isActive = false;
 //			this.distroy ();
 //		}
-		lifeTime = 0;
+//		lifeTime = 0;
+		this.distroy ();
 	}
 
 	public void distroy(){
 //		if (owner.CurrNum > 0) {
 //			owner.CurrNum -= 1;
 //		}
-		owner.notifyExplosion();
+		owner.notifyExplosion(this);
 		GameDataProcessor.instance.removeObject (this);
 		RhythmRecorder.instance.removeObserver (this);
 		Destroy(this.gameObject,0);

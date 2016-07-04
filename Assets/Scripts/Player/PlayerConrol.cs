@@ -42,7 +42,7 @@ public class PlayerConrol : MonoBehaviour,Controlable,Locatable,SetBomb,Distroya
 		set{ position=value; }
 	}
 
-	//capacity of bomb at a time
+	//capacity of bomb at a timeobtainTools
 	private int maxNum;
 	public int MaxNum {
 		get{return this.maxNum;}
@@ -75,7 +75,7 @@ public class PlayerConrol : MonoBehaviour,Controlable,Locatable,SetBomb,Distroya
 					//script.isActive = true;
 //					script.LifeTime = 3;
 					script.setProperties(this,bombPower,bombLifeTime,bombFireTime);
-
+					this.registerBomb (script);
 					GameDataProcessor.instance.addToDangerMap (script);
 				}
 			}
@@ -97,10 +97,11 @@ public class PlayerConrol : MonoBehaviour,Controlable,Locatable,SetBomb,Distroya
 		set{bombFireTime = value; }
 	}
 
-	public void notifyExplosion (){
+	public void notifyExplosion (Bomb bomb){
 		if(currNum > 0){
 			currNum--;
 		}
+		bombList.Remove (bomb);
 		Debug.Log ("Player notifyExplosion");
 	}
 
@@ -117,8 +118,11 @@ public class PlayerConrol : MonoBehaviour,Controlable,Locatable,SetBomb,Distroya
 	// Use this for initialization
 	void Start ()
 	{
-		//should initize position of player 
-//		this.position = new Position (1, 1);
+		BombTriggleTool tool = new BombTriggleTool (this);
+		this.obtainTools (tool);
+		this.obtainTools (tool);
+
+
 		this.position = new Position(Mathf.CeilToInt(transform.localPosition.z),Mathf.CeilToInt(transform.localPosition.x));
 
 		//Add follow camera to player
@@ -136,7 +140,7 @@ public class PlayerConrol : MonoBehaviour,Controlable,Locatable,SetBomb,Distroya
 
 		this.maxNum = 3;
 		this.currNum = 0;
-		this.bombLifeTime = 3;
+		this.bombLifeTime = 30;
 		this.bombPower = 1;
 		this.bombFireTime = 1;
 		this.canSetBomb = true;
@@ -193,6 +197,27 @@ public class PlayerConrol : MonoBehaviour,Controlable,Locatable,SetBomb,Distroya
 			canSetBomb = false;
 			//rhmFlag = false;
 		}
+//		if (Input.GetKeyDown (KeyCode.Z)) {
+//			if (activeToolState == 1) {
+//				triggleAllBomb ();
+//			}
+//			if (activeToolState == 2) {
+//			}
+//			Debug.Log ("player uses tool");
+//		}
+
+		//check of using of bomb tools
+		for (int i = 0; i < playerTools.Count; ++i) {
+			if(playerTools[i] is BombTool){
+				BombTool currTool = playerTools [i] as BombTool;
+				if (Input.GetKeyDown (currTool.getKeyCode())) {
+					currTool.useToolBy (this);
+					Debug.Log (currTool.getToolName());
+				}
+			}
+		}
+
+
 		if (Input.GetKeyDown ("up") || Input.GetKeyDown (KeyCode.W)) {
 //			Debug.Log("up..");
 
@@ -319,6 +344,26 @@ public class PlayerConrol : MonoBehaviour,Controlable,Locatable,SetBomb,Distroya
 			m_ArmRight.transform.position += 0.3F*Vector3.up;
 			idleMovementPosition = 1;
 		}
+	}
+		
+	private ArrayList bombList = new ArrayList();
+	private ArrayList playerTools = new ArrayList();
+
+	public void registerBomb (Bomb bomb){
+		bombList.Add (bomb);
+	}
+	public ArrayList getAllBomb(){
+		return bombList;
+	}
+
+	public bool obtainTools (BombTool tool){
+		
+		foreach(BombTool temp in playerTools){
+			Debug.Log (temp.getToolName()+"has already existed");
+			return false;
+		}
+		playerTools.Add (tool);
+		return true;
 	}
 }
 

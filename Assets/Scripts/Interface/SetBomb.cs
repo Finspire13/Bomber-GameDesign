@@ -9,6 +9,7 @@
 // ------------------------------------------------------------------------------
 using System;
 using UnityEngine;
+using System.Collections;
 
 public interface SetBomb:RhythmObservable
 {
@@ -37,11 +38,19 @@ public interface SetBomb:RhythmObservable
 		set;
 	}
 
-	void notifyExplosion ();
+	void notifyExplosion (Bomb bomb);
 
 	//change bomb type
 	void setBomb(GameObject bombType);
 	void installBomb();
+
+	void registerBomb (Bomb bomb);
+	ArrayList getAllBomb();
+//	void triggleAllBomb();
+
+
+	bool obtainTools (BombTool tool);
+//	void obtainBombPush ();
 }
 
 

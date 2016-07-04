@@ -100,11 +100,12 @@ public class EnemyBomber : MonoBehaviour,Distroyable,SetBomb,Locatable,CanBuffed
 		set{bombFireTime = value; }
 	}
 
-	public void notifyExplosion (){
+	public void notifyExplosion (Bomb bomb){
 		if(currNum > 0){
 			currNum--;
 		}
-		Debug.Log ("AI notifyExplosion");
+		bombList.Remove (bomb);
+//		Debug.Log ("AI notifyExplosion");
 	}
 
 	private GameObject bombType;
@@ -179,18 +180,18 @@ public class EnemyBomber : MonoBehaviour,Distroyable,SetBomb,Locatable,CanBuffed
 			if (currPath == null || currPath.Count <= 0) {
 				MyPair pair = decisionMap [indx] as MyPair;
 				Position dest = new Position (pair.px, pair.py);
-				Debug.Log ("0...dest:" + dest.x + "," + dest.y);
+//				Debug.Log ("0...dest:" + dest.x + "," + dest.y);
 				this.currPath = findPathTo (dest);
 //				Debug.Log ("walk to dest and think again!");
 				return EnemyState.EMEMY_WALK;
 			}
 
 			indx = getRandom (30);
-			Debug.Log ("random indx:"+indx);
+//			Debug.Log ("random indx:"+indx);
 			if (indx < 3 && decisionMap.Count > indx) {
 				MyPair pair = decisionMap [indx] as MyPair;
 				Position dest = new Position (pair.px, pair.py);
-				Debug.Log ("1...:" + dest.x + "," + dest.y);
+//				Debug.Log ("1...:" + dest.x + "," + dest.y);
 				this.currPath = findPathTo (dest);
 
 //			Debug.Log ("EMEMY_WALK");
@@ -199,14 +200,14 @@ public class EnemyBomber : MonoBehaviour,Distroyable,SetBomb,Locatable,CanBuffed
 //			Debug.Log ("EMEMY_IDLE");
 				return EnemyState.EMEMY_IDLE;
 			} else if (indx < 10 + bombOffset() && lastState != EnemyState.EMEMY_IDLE) {
-			Debug.Log ("EMEMY_SETBOMB");
+//			Debug.Log ("EMEMY_SETBOMB");
 				return EnemyState.EMEMY_SETBOMB;
 			}
 
 //		Debug.Log ("EMEMY_WALK");
 			return EnemyState.EMEMY_WALK;
 		} else {
-			Debug.Log ("Unsafe!!");
+//			Debug.Log ("Unsafe!!");
 //			currPath.Clear ();
 			Queue<Position> queTemp = new Queue<Position> ();
 
@@ -214,37 +215,38 @@ public class EnemyBomber : MonoBehaviour,Distroyable,SetBomb,Locatable,CanBuffed
 
 			int maxX = GameDataProcessor.instance.mapSizeX;
 			int maxY = GameDataProcessor.instance.mapSizeY;
-			if (!isWall (new Position (this.pos.x + 1, this.pos.y)) && this.pos.x + 1 < maxX &&
+			if (!isWall (new Position (this.pos.x + 1, this.pos.y)) && this.pos.x < maxX-1 &&
 			    (dangerMap [this.pos.y, this.pos.x + 1] >= 2 || dangerMap [this.pos.y, this.pos.x + 1] == -1)) {
 				queTemp.Enqueue (new Position (this.pos.x + 1, this.pos.y));
 				queTemp.Enqueue (new Position (this.pos.x + 1, this.pos.y));
 //				currPath.Enqueue (new Position (this.pos.x + 1, this.pos.y));
 				Debug.Log ("to right:");
-			} else if (!isWall (new Position (this.pos.x - 1, this.pos.y)) && this.pos.x - 1 >= 0 &&
+			} else if (!isWall (new Position (this.pos.x - 1, this.pos.y)) && this.pos.x  >= 1 &&
 			           (dangerMap [this.pos.y, this.pos.x - 1] >= 2 || dangerMap [this.pos.y, this.pos.x - 1] == -1)) {
 				queTemp.Enqueue (new Position (this.pos.x - 1, this.pos.y));
 				queTemp.Enqueue (new Position (this.pos.x - 1, this.pos.y));
 				Debug.Log ("to left:");
-			} else if (!isWall (new Position (this.pos.x, this.pos.y + 1)) && this.pos.y + 1 < maxY &&
+			} else if (!isWall (new Position (this.pos.x, this.pos.y + 1)) && this.pos.y < maxY-1 &&
 			           (dangerMap [this.pos.y + 1, this.pos.x] >= 2 || dangerMap [this.pos.y + 1, this.pos.x] == -1)) {
 				queTemp.Enqueue (new Position (this.pos.x, this.pos.y + 1));
 				queTemp.Enqueue (new Position (this.pos.x, this.pos.y + 1));
 				Debug.Log ("to down:");
-			} else if (!isWall (new Position (this.pos.x, this.pos.y - 1)) && this.pos.y - 1 >= 0 &&
+			} else if (!isWall (new Position (this.pos.x, this.pos.y - 1)) && this.pos.y  >= 1 &&
 			           (dangerMap [this.pos.y - 1, this.pos.x] >= 2 || dangerMap [this.pos.y - 1, this.pos.x] == -1)) {
 				queTemp.Enqueue (new Position (this.pos.x, this.pos.y - 1));
 				queTemp.Enqueue (new Position (this.pos.x, this.pos.y - 1));
 				Debug.Log ("to up:");
 			} else {
+				Debug.Log ("to random:");
 				currPath.Clear ();
-				if (!isWall (new Position (this.pos.x + 1, this.pos.y)) && this.pos.x + 1 < maxX) {
+				if (!isWall (new Position (this.pos.x + 1, this.pos.y)) && this.pos.x < maxX-1) {
 					currPath.Enqueue (new Position (this.pos.x + 1, this.pos.y));
-				} else if (!isWall (new Position (this.pos.x - 1, this.pos.y)) && this.pos.x - 1 >= 0) {
-					currPath.Enqueue (new Position (this.pos.x + 1, this.pos.y));
-				} else if (!isWall (new Position (this.pos.x, this.pos.y + 1)) && this.pos.y + 1 < maxY) {
-					currPath.Enqueue (new Position (this.pos.x + 1, this.pos.y));
-				} else if (!isWall (new Position (this.pos.x, this.pos.y - 1)) && this.pos.y - 1 >= 0) {
-					currPath.Enqueue (new Position (this.pos.x + 1, this.pos.y));
+				} else if (!isWall (new Position (this.pos.x - 1, this.pos.y)) && this.pos.x >= 1) {
+					currPath.Enqueue (new Position (this.pos.x - 1, this.pos.y));
+				} else if (!isWall (new Position (this.pos.x, this.pos.y + 1)) && this.pos.y < maxY-1) {
+					currPath.Enqueue (new Position (this.pos.x, this.pos.y + 1));
+				} else if (!isWall (new Position (this.pos.x, this.pos.y - 1)) && this.pos.y >= 1) {
+					currPath.Enqueue (new Position (this.pos.x, this.pos.y - 1));
 				}
 				return EnemyState.EMEMY_AVOID;
 			}
@@ -339,7 +341,7 @@ public class EnemyBomber : MonoBehaviour,Distroyable,SetBomb,Locatable,CanBuffed
 //		Debug.Log("Enemy walk");
 		if (currPath != null && currPath.Count > 0) {
 			Position temp = currPath.Dequeue ();
-			Debug.Log("->("+temp.x+","+temp.y+")");
+//			Debug.Log("->("+temp.x+","+temp.y+")");
 			float deltaX = ((float)(temp.y - this.pos.y)/4f);
 			float deltaY = ((float)(temp.x - this.pos.x)/4f);
 
@@ -693,4 +695,32 @@ public class EnemyBomber : MonoBehaviour,Distroyable,SetBomb,Locatable,CanBuffed
 		}
 	}
 
+
+	ArrayList bombList = new ArrayList();
+	public void registerBomb (Bomb bomb){
+		bombList.Add (bomb);
+	}
+	public void triggleAllBomb(){
+		for (int i = 0; i < bombList.Count; ++i) {
+			if (bombList [i] is Bomb) {
+				((Bomb)bombList [i]).LifeTime = 0;
+			}
+		}
+		bombList.Clear ();
+	}
+
+	public void obtainBombTriggle(){
+		
+	}
+	public void obtainBombPush(){
+		
+	}
+
+	public ArrayList getAllBomb(){
+		return null;
+	}
+
+	public bool obtainTools (BombTool tool){
+		return false;
+	}
 }

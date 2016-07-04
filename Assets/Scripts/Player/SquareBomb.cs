@@ -114,7 +114,7 @@ public class SquareBomb :MonoBehaviour,Bomb,Distroyable,Locatable
 //		if (owner.CurrNum > 0) {
 //			owner.CurrNum -= 1;
 //		}
-		owner.notifyExplosion();
+		owner.notifyExplosion(this);
 		GameDataProcessor.instance.removeObject (this);
 		RhythmRecorder.instance.removeObserver (this);
 		Destroy(this.gameObject,0);
