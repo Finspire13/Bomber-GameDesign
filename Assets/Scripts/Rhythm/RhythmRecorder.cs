@@ -7,7 +7,7 @@ public interface RhythmObservable{
 }
 
 public interface RhythmFlagOwner{
-	bool rhythmFlag{ get; set;}
+	int rhythmFlag{ get; set;}
 }
 
 public class RhythmRecorder: MonoBehaviour{
@@ -111,7 +111,11 @@ public class RhythmRecorder: MonoBehaviour{
 			for (int i = 0; i < rhythmFlagOwners.Count; i++) {
 				if ((bool)isFlagsChangable [i]) {
 					RhythmFlagOwner owner = (RhythmFlagOwner)rhythmFlagOwners [i];
-					owner.rhythmFlag = true;
+					if (owner is MoveAble) {
+						owner.rhythmFlag = ((MoveAble)owner).Speed;
+					} else {
+						owner.rhythmFlag = 1;
+					}
 					isFlagsChangable [i] = false;
 				}
 			}
@@ -119,7 +123,7 @@ public class RhythmRecorder: MonoBehaviour{
 		else {
 			for (int i = 0; i < rhythmFlagOwners.Count; i++) {
 				RhythmFlagOwner owner = (RhythmFlagOwner)rhythmFlagOwners [i];
-				owner.rhythmFlag = false;
+				owner.rhythmFlag = 0;
 			}
 		}
 	}

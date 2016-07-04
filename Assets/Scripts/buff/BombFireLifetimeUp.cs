@@ -24,19 +24,6 @@ public class BombFireLifetimeUp : MonoBehaviour,Buff,Locatable,RhythmObservable
 
 	public void actionOnBeat (){
 		--lifeTime;
-		if (!this.position.Equals(null)) {
-			ArrayList objs = GameDataProcessor.instance.getObjectAtPostion (this.position);
-			for (int i = 0; i < objs.Count; ++i) {
-				if (objs[i] is SetBomb) {
-					((SetBomb)objs[i]).BombFireTime += 1;
-					Debug.Log ("player power up !");
-					lifeTime = 0;
-				}
-			}
-
-		} else {
-			Debug.Log ("buff positon is null!!!");
-		}
 	}
 
 	// Use this for initialization
@@ -51,6 +38,19 @@ public class BombFireLifetimeUp : MonoBehaviour,Buff,Locatable,RhythmObservable
 	// Update is called once per frame
 	void Update ()
 	{
+		if (!this.position.Equals(null)) {
+			ArrayList objs = GameDataProcessor.instance.getObjectAtPostion (this.position);
+			for (int i = 0; i < objs.Count; ++i) {
+				if (objs[i] is SetBomb) {
+					((SetBomb)objs[i]).BombFireTime += 1;
+					Debug.Log ("player power up !");
+					lifeTime = 0;
+				}
+			}
+
+		} else {
+			Debug.Log ("buff positon is null!!!");
+		}
 		if (lifeTime <= 0) {
 			RhythmRecorder.instance.removeObserver (this);
 			GameDataProcessor.instance.removeFromBenefitMap (this);

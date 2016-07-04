@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 public enum EnemyState{EMEMY_IDLE,EMEMY_WALK,EMEMY_SETBOMB,EMEMY_AVOID};
 
-public class EnemyBomber : MonoBehaviour,Distroyable,SetBomb,Locatable,CanBuffed
+public class EnemyBomber : MonoBehaviour,Distroyable,SetBomb,Locatable,CanBuffed,MoveAble
 {
 	int speed = 1;
 	public int Speed 
@@ -340,18 +340,19 @@ public class EnemyBomber : MonoBehaviour,Distroyable,SetBomb,Locatable,CanBuffed
 	private void walkAction(){
 //		Debug.Log("Enemy walk");
 		if (currPath != null && currPath.Count > 0) {
-			Position temp = currPath.Dequeue ();
-//			Debug.Log("->("+temp.x+","+temp.y+")");
-			float deltaX = ((float)(temp.y - this.pos.y)/4f);
-			float deltaY = ((float)(temp.x - this.pos.x)/4f);
+			for (int count = 0;count < speed && currPath.Count > 0;++count) {
+				Position temp = currPath.Dequeue ();
+//				Debug.Log("->("+temp.x+","+temp.y+")");
+				float deltaX = ((float)(temp.y - this.pos.y) / 4f);
+				float deltaY = ((float)(temp.x - this.pos.x) / 4f);
 
-//			Debug.Log ("move to y:"+((float)(temp.y - this.pos.y))/4f);
-//			Debug.Log ("move to x:"+((float)(temp.x - this.pos.x))/4f);
+//				Debug.Log ("move to y:"+((float)(temp.y - this.pos.y))/4f);
+//				Debug.Log ("move to x:"+((float)(temp.x - this.pos.x))/4f);
 
-			StartCoroutine(enemyMove (deltaX,deltaY));
+				StartCoroutine (enemyMove (deltaX, deltaY));
 
-			this.pos = temp;
-//			Debug.Log ("position: " + this.transform.position + " ");
+				this.pos = temp;
+			}
 		}
 
 	}

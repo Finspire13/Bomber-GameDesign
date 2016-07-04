@@ -11,11 +11,6 @@ using System;
 
 public interface Controlable:RhythmObservable,RhythmFlagOwner
 {
-	int Speed 
-	{
-		get;
-		set;
-	}
 	void control();
 
 }

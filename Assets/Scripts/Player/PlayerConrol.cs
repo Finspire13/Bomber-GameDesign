@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
-public class PlayerConrol : MonoBehaviour,Controlable,Locatable,SetBomb,Distroyable,CanBuffed
+public class PlayerConrol : MonoBehaviour,Controlable,Locatable,SetBomb,Distroyable,CanBuffed,MoveAble
 {
 	private int blood;
 	public int Blood 
@@ -30,11 +30,16 @@ public class PlayerConrol : MonoBehaviour,Controlable,Locatable,SetBomb,Distroya
 		get{return speed;}
 		set{speed = value;}
 	}
-	private bool rhmFlag = false;
-	public bool rhythmFlag{ 
+	private int rhmFlag = 0;
+	public int rhythmFlag{ 
 		get{return rhmFlag;} 
 		set{rhmFlag=value;}
 	}
+//	private int moveAbility = 1;
+//	public int MoveAbility{ 
+//		get{return moveAbility;} 
+//		set{this.moveAbility = value;}
+//	}
 
 	private Position position;
 	public Position pos{ 
@@ -133,7 +138,7 @@ public class PlayerConrol : MonoBehaviour,Controlable,Locatable,SetBomb,Distroya
 
 		this.bombType = Resources.Load("NormalBomb") as GameObject;
 //		GameDataProcessor.instance.addObject (this);
-		rhmFlag = false;
+		rhmFlag = 0;
 		RhythmRecorder.instance.addRhythmFlagOwner (this);
 
 		idleMovementPosition = 0;
@@ -174,7 +179,7 @@ public class PlayerConrol : MonoBehaviour,Controlable,Locatable,SetBomb,Distroya
 
 	public void control()
 	{
-		if (rhmFlag) {
+		if (rhmFlag > 0) {
 			canSetBomb = true;
 			CheckMovement ();
 
@@ -217,7 +222,6 @@ public class PlayerConrol : MonoBehaviour,Controlable,Locatable,SetBomb,Distroya
 			}
 		}
 
-
 		if (Input.GetKeyDown ("up") || Input.GetKeyDown (KeyCode.W)) {
 //			Debug.Log("up..");
 
@@ -230,9 +234,9 @@ public class PlayerConrol : MonoBehaviour,Controlable,Locatable,SetBomb,Distroya
 
 			if ((tempFlag||isGhost)&&this.position.y>0) {
 				StartCoroutine (Move (moveDirection.forward));
-				this.position.y -= speed;
+				this.position.y -= 1;
 			}
-			rhmFlag = false;
+			--rhmFlag;
 		}
 		if (Input.GetKeyDown ("down") || Input.GetKeyDown (KeyCode.S)) {
 //			Debug.Log("down..");
@@ -246,9 +250,9 @@ public class PlayerConrol : MonoBehaviour,Controlable,Locatable,SetBomb,Distroya
 
 			if ((tempFlag||isGhost)&&this.position.y<GameDataProcessor.instance.mapSizeY-1) {
 				StartCoroutine (Move (moveDirection.back));
-				this.position.y += speed;
+				this.position.y += 1;
 			}
-			rhmFlag = false;
+			--rhmFlag;
 		}
 		if (Input.GetKeyDown ("right") || Input.GetKeyDown (KeyCode.D)) {
 //			Debug.Log("right..");
@@ -262,9 +266,9 @@ public class PlayerConrol : MonoBehaviour,Controlable,Locatable,SetBomb,Distroya
 
 			if ((tempFlag||isGhost)&&this.position.x<GameDataProcessor.instance.mapSizeX-1) {
 				StartCoroutine (Move (moveDirection.right));
-				this.position.x += speed;
+				this.position.x += 1;
 			}
-			rhmFlag = false;
+			--rhmFlag;
 		}
 		if (Input.GetKeyDown ("left") || Input.GetKeyDown (KeyCode.A)) {
 //			Debug.Log("left..");
@@ -278,9 +282,9 @@ public class PlayerConrol : MonoBehaviour,Controlable,Locatable,SetBomb,Distroya
 
 			if ((tempFlag||isGhost)&&this.position.x>0) {
 				StartCoroutine (Move (moveDirection.left));
-				this.position.x -= speed;
+				this.position.x -= 1;
 			}
-			rhmFlag = false;
+			--rhmFlag;
 		}
 	}
 	
@@ -347,7 +351,7 @@ public class PlayerConrol : MonoBehaviour,Controlable,Locatable,SetBomb,Distroya
 	}
 		
 	private ArrayList bombList = new ArrayList();
-	private ArrayList playerTools = new ArrayList();
+	public ArrayList playerTools = new ArrayList();
 
 	public void registerBomb (Bomb bomb){
 		bombList.Add (bomb);
