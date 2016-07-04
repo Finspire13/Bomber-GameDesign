@@ -21,18 +21,6 @@ public class SquareBomb :MonoBehaviour,Bomb,Distroyable,Locatable
 	}
 
 	public int stepLenth = 1;
-	//	public NormalBomb(GameObject owner,BombFire fire,int lifeTime){
-	//		this.owner = owner;
-	//		this.fire = fire;
-	//		this.lifeTime = lifeTime;
-	//		this.isActive = true;
-	//	}
-	//	public NormalBomb(GameObject owner,BombFire fire){
-	//		NormalBomb (owner, fire, 5);
-	//	}
-	//	public NormalBomb(){
-	//		NormalBomb (null, null, 0);
-	//	}
 
 	// Use this for initialization
 	void Start ()
@@ -114,6 +102,7 @@ public class SquareBomb :MonoBehaviour,Bomb,Distroyable,Locatable
 //		if (owner.CurrNum > 0) {
 //			owner.CurrNum -= 1;
 //		}
+		GameManager.instance.increaseBombCount(owner);
 		owner.notifyExplosion(this);
 		GameDataProcessor.instance.removeObject (this);
 		RhythmRecorder.instance.removeObserver (this);

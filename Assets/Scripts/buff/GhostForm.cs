@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class GhostForm : MonoBehaviour,Buff,Locatable,RhythmObservable {
+public class GhostForm : MonoBehaviour,Buff,Locatable,RhythmObservable,ScoreCount {
 
 	private Position position;
 	public Position pos{ 
@@ -18,8 +18,16 @@ public class GhostForm : MonoBehaviour,Buff,Locatable,RhythmObservable {
 		get{return buffValue; }
 		set{buffValue = value; }
 	}
-	public void effect(){
-
+	private string gameName = "Buff-GhostForm";
+	private float gameValue = 10f;
+	public string getName(){
+		return this.gameName;
+	}
+	public float getValue(){
+		return this.gameValue;
+	}
+	public void addToScore(){
+		GameManager.instance.addToPlayerScoreList (this);
 	}
 
 	public void actionOnBeat (){
@@ -45,6 +53,9 @@ public class GhostForm : MonoBehaviour,Buff,Locatable,RhythmObservable {
 					((PlayerConrol)objs[i]).IsGhost =true;
 					Debug.Log ("Ghost Player!");
 					lifeTime = 0;
+					if (objs [i] is PlayerConrol) {
+						this.addToScore ();
+					}
 				}
 			}
 

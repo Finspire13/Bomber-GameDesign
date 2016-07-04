@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Heal : MonoBehaviour,Buff,Locatable,RhythmObservable {
+public class Heal : MonoBehaviour,Buff,Locatable,RhythmObservable,ScoreCount {
 
 	private Position position;
 	public Position pos{ 
@@ -18,11 +18,19 @@ public class Heal : MonoBehaviour,Buff,Locatable,RhythmObservable {
 		get{return buffValue; }
 		set{buffValue = value; }
 	}
-	public void effect(){
-
+	private string gameName = "Buff-Heal";
+	private float gameValue = 10f;
+	public string getName(){
+		return this.gameName;
 	}
-	private int effectValue = 10;
+	public float getValue(){
+		return this.gameValue;
+	}
+	public void addToScore(){
+		GameManager.instance.addToPlayerScoreList (this);
+	}
 
+	private int effectValue = 10;
 	public void actionOnBeat (){
 		--lifeTime;
 	}
@@ -46,6 +54,9 @@ public class Heal : MonoBehaviour,Buff,Locatable,RhythmObservable {
 					((Distroyable)objs[i]).Blood +=effectValue;
 					Debug.Log ("Heal!");
 					lifeTime = 0;
+					if (objs [i] is PlayerConrol) {
+						this.addToScore ();
+					}
 				}
 			}
 

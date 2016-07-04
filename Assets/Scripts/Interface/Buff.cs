@@ -11,7 +11,6 @@ public interface Buff
 		get;
 		set;
 	}
-	void effect();
 
 }
 

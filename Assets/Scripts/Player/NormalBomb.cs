@@ -115,6 +115,7 @@ public class NormalBomb :MonoBehaviour,Bomb,Distroyable,Locatable
 //		if (owner.CurrNum > 0) {
 //			owner.CurrNum -= 1;
 //		}
+		GameManager.instance.increaseBombCount(owner);
 		owner.notifyExplosion(this);
 		GameDataProcessor.instance.removeObject (this);
 		RhythmRecorder.instance.removeObserver (this);

@@ -66,7 +66,7 @@ public class PlayerConrol : MonoBehaviour,Controlable,Locatable,SetBomb,Distroya
 	public void installBomb(){
 		if(currNum < maxNum){
 			currNum++;
-			Debug.Log("player currNum:"+currNum);
+//			Debug.Log("player currNum:"+currNum);
 			if(bombType == null){
 				Debug.Log("not bomb");
 			}else{
@@ -91,7 +91,7 @@ public class PlayerConrol : MonoBehaviour,Controlable,Locatable,SetBomb,Distroya
 		get{return bombPower; }
 		set{bombPower = value; }
 	}
-	private int bombLifeTime = 5;
+	private int bombLifeTime = 3;
 	public int BombLifeTime {
 		get{return bombLifeTime; }
 		set{bombLifeTime = value; }
@@ -107,7 +107,7 @@ public class PlayerConrol : MonoBehaviour,Controlable,Locatable,SetBomb,Distroya
 			currNum--;
 		}
 		bombList.Remove (bomb);
-		Debug.Log ("Player notifyExplosion");
+//		Debug.Log ("Player notifyExplosion");
 	}
 
 	private int idleMovementPosition;
@@ -143,7 +143,7 @@ public class PlayerConrol : MonoBehaviour,Controlable,Locatable,SetBomb,Distroya
 
 		idleMovementPosition = 0;
 
-		this.maxNum = 3;
+		this.maxNum = 10;
 		this.currNum = 0;
 		this.bombLifeTime = 30;
 		this.bombPower = 1;
@@ -217,7 +217,7 @@ public class PlayerConrol : MonoBehaviour,Controlable,Locatable,SetBomb,Distroya
 				BombTool currTool = playerTools [i] as BombTool;
 				if (Input.GetKeyDown (currTool.getKeyCode())) {
 					currTool.useToolBy (this);
-					Debug.Log (currTool.getToolName());
+//					Debug.Log (currTool.getToolName());
 				}
 			}
 		}

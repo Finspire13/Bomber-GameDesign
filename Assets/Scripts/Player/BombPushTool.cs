@@ -2,11 +2,22 @@
 using UnityEngine;
 using System.Collections;
 
-public class BombPushTool: BombTool
+public class BombPushTool: BombTool,ScoreCount
 {
 	private KeyCode code = KeyCode.X;
 	private SetBomb owner;
-	private String toolName="BombPushTool";
+	private string toolName="BombPushTool";
+//	private string gameName = "Tool-BombPushTool";
+	private float gameValue = 50f;
+	public string getName(){
+		return "Tool-"+this.toolName;
+	}
+	public float getValue(){
+		return this.gameValue;
+	}
+	public void addToScore(){
+		GameManager.instance.addToPlayerScoreList (this);
+	}
 
 	public BombPushTool (SetBomb owner)
 	{

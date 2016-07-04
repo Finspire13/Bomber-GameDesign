@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class SpeedUp : MonoBehaviour,Buff,Locatable,RhythmObservable 
+public class SpeedUp : MonoBehaviour,Buff,Locatable,RhythmObservable,ScoreCount
 {
 	private Position position;
 	public Position pos{ 
@@ -18,11 +18,19 @@ public class SpeedUp : MonoBehaviour,Buff,Locatable,RhythmObservable
 		get{return buffValue; }
 		set{buffValue = value; }
 	}
-	public void effect(){
-
+	private string gameName = "Buff-SpeedUp";
+	private float gameValue = 10f;
+	public string getName(){
+		return this.gameName;
 	}
-	private int effectValue = 1;
+	public float getValue(){
+		return this.gameValue;
+	}
+	public void addToScore(){
+		GameManager.instance.addToPlayerScoreList (this);
+	}
 
+	private int effectValue = 1;
 	public void actionOnBeat (){
 		--lifeTime;
 	}
@@ -44,8 +52,11 @@ public class SpeedUp : MonoBehaviour,Buff,Locatable,RhythmObservable
 			for (int i = 0; i < objs.Count; ++i) {
 				if (objs[i] is MoveAble) {
 					((MoveAble)objs[i]).Speed +=effectValue;
-					Debug.Log ("Speed Up!");
+//					Debug.Log ("Speed Up!");
 					lifeTime = 0;
+					if (objs [i] is PlayerConrol) {
+						this.addToScore ();
+					}
 				}
 			}
 

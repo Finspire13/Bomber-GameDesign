@@ -2,11 +2,21 @@
 using UnityEngine;
 using System.Collections;
 
-public class BombTriggleTool: BombTool
+public class BombTriggleTool: BombTool,ScoreCount
 {
 	private KeyCode code = KeyCode.Z;
 	private SetBomb owner;
-	private String toolName="BombTriggleTool";
+	private string toolName="BombTriggleTool";
+	private float gameValue = 50f;
+	public string getName(){
+		return "Tool-"+this.toolName;
+	}
+	public float getValue(){
+		return this.gameValue;
+	}
+	public void addToScore(){
+		GameManager.instance.addToPlayerScoreList (this);
+	}
 
 	public BombTriggleTool (SetBomb owner)
 	{

@@ -410,8 +410,8 @@ public class GameDataProcessor : MonoBehaviour,RhythmObservable {
 		updatePlayerValue ();
 	}
 
-	//提供小于count的随机数字
-	public static int getRandom (int max){
+	//提供小于max的随机数字
+	public int getRandom (int max){
 		return new System.Random ().Next (max);
 	}
 

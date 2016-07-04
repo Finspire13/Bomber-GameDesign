@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class BombFireLifetimeUp : MonoBehaviour,Buff,Locatable,RhythmObservable
+public class BombFireLifetimeUp : MonoBehaviour,Buff,Locatable,RhythmObservable,ScoreCount
 {
 	private Position position;
 	public Position pos{ 
@@ -18,8 +18,17 @@ public class BombFireLifetimeUp : MonoBehaviour,Buff,Locatable,RhythmObservable
 		get{return buffValue; }
 		set{buffValue = value; }
 	}
-	public void effect(){
+	private string gameName = "Buff-FireTimeUp";
+	private float gameValue = 10f;
 
+	public string getName(){
+		return this.gameName;
+	}
+	public float getValue(){
+		return this.gameValue;
+	}
+	public void addToScore(){
+		GameManager.instance.addToPlayerScoreList (this);
 	}
 
 	public void actionOnBeat (){
@@ -45,6 +54,9 @@ public class BombFireLifetimeUp : MonoBehaviour,Buff,Locatable,RhythmObservable
 					((SetBomb)objs[i]).BombFireTime += 1;
 					Debug.Log ("player power up !");
 					lifeTime = 0;
+					if (objs [i] is PlayerConrol) {
+						this.addToScore ();
+					}
 				}
 			}
 

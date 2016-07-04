@@ -2,7 +2,19 @@
 using System.Collections;
 using System;
 
-public class NormalCube : MonoBehaviour, Locatable,Distroyable {
+public class NormalCube : MonoBehaviour, Locatable,Distroyable,ScoreCount {
+
+	private string gameName = "Wall-NormalWall";
+	private float gameValue = 2f;
+	public string getName(){
+		return this.gameName;
+	}
+	public float getValue(){
+		return this.gameValue;
+	}
+	public void addToScore(){
+		GameManager.instance.addToPlayerScoreList (this);
+	}
 
     private Position position;
     public Position pos
@@ -56,7 +68,7 @@ public class NormalCube : MonoBehaviour, Locatable,Distroyable {
 	void createBuff(){
 
 //		string[] buffList = {"Heal","GhostForm","BombPowerUp","BombNumberUp","FireLifeTimeUp","SpeedUp" };
-		string[] buffList = {"SpeedUp"};
+		string[] buffList = {"FireLifeTimeUp"};
 		int buffIndex=UnityEngine.Random.Range (0, buffList.Length);
 
 		GameObject buff = Resources.Load(buffList[buffIndex]) as GameObject;

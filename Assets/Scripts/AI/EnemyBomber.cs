@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 public enum EnemyState{EMEMY_IDLE,EMEMY_WALK,EMEMY_SETBOMB,EMEMY_AVOID};
 
-public class EnemyBomber : MonoBehaviour,Distroyable,SetBomb,Locatable,CanBuffed,MoveAble
+public class EnemyBomber : MonoBehaviour,Distroyable,SetBomb,Locatable,CanBuffed,MoveAble,ScoreCount
 {
 	int speed = 1;
 	public int Speed 
@@ -19,6 +19,18 @@ public class EnemyBomber : MonoBehaviour,Distroyable,SetBomb,Locatable,CanBuffed
 	private int maxNum;
 	private int currNum;
 	private Position position;
+
+	private string gameName = "EnemyBomber";
+	private float gameValue = 100f;
+	public string getName(){
+		return this.gameName;
+	}
+	public float getValue(){
+		return this.gameValue;
+	}
+	public void addToScore(){
+		GameManager.instance.addToPlayerScoreList (this);
+	}
 
 	public Position pos{ 
 		get{ return position;}
@@ -67,7 +79,12 @@ public class EnemyBomber : MonoBehaviour,Distroyable,SetBomb,Locatable,CanBuffed
 		set{blood = value; }
 	}
 	public void attackBy(Attackable source){
-		
+		Debug.Log ("AI was attacked by"+source.ToString());
+		if (blood <= 0) {
+			if (source is BombFire && ((BombFire)source).Owner is PlayerConrol) {
+				this.addToScore ();
+			}
+		}
 	}
 	public void distroy(){
 		Destroy (this.gameObject, 0);
@@ -220,24 +237,24 @@ public class EnemyBomber : MonoBehaviour,Distroyable,SetBomb,Locatable,CanBuffed
 				queTemp.Enqueue (new Position (this.pos.x + 1, this.pos.y));
 				queTemp.Enqueue (new Position (this.pos.x + 1, this.pos.y));
 //				currPath.Enqueue (new Position (this.pos.x + 1, this.pos.y));
-				Debug.Log ("to right:");
+//				Debug.Log ("to right:");
 			} else if (!isWall (new Position (this.pos.x - 1, this.pos.y)) && this.pos.x  >= 1 &&
 			           (dangerMap [this.pos.y, this.pos.x - 1] >= 2 || dangerMap [this.pos.y, this.pos.x - 1] == -1)) {
 				queTemp.Enqueue (new Position (this.pos.x - 1, this.pos.y));
 				queTemp.Enqueue (new Position (this.pos.x - 1, this.pos.y));
-				Debug.Log ("to left:");
+//				Debug.Log ("to left:");
 			} else if (!isWall (new Position (this.pos.x, this.pos.y + 1)) && this.pos.y < maxY-1 &&
 			           (dangerMap [this.pos.y + 1, this.pos.x] >= 2 || dangerMap [this.pos.y + 1, this.pos.x] == -1)) {
 				queTemp.Enqueue (new Position (this.pos.x, this.pos.y + 1));
 				queTemp.Enqueue (new Position (this.pos.x, this.pos.y + 1));
-				Debug.Log ("to down:");
+//				Debug.Log ("to down:");
 			} else if (!isWall (new Position (this.pos.x, this.pos.y - 1)) && this.pos.y  >= 1 &&
 			           (dangerMap [this.pos.y - 1, this.pos.x] >= 2 || dangerMap [this.pos.y - 1, this.pos.x] == -1)) {
 				queTemp.Enqueue (new Position (this.pos.x, this.pos.y - 1));
 				queTemp.Enqueue (new Position (this.pos.x, this.pos.y - 1));
-				Debug.Log ("to up:");
+//				Debug.Log ("to up:");
 			} else {
-				Debug.Log ("to random:");
+//				Debug.Log ("to random:");
 				currPath.Clear ();
 				if (!isWall (new Position (this.pos.x + 1, this.pos.y)) && this.pos.x < maxX-1) {
 					currPath.Enqueue (new Position (this.pos.x + 1, this.pos.y));
@@ -277,7 +294,6 @@ public class EnemyBomber : MonoBehaviour,Distroyable,SetBomb,Locatable,CanBuffed
 	}
 	private int bombOffset(){
 		int offset = 0;
-		GameDataProcessor gdp = GameDataProcessor.instance;
 		Position[] dirs = {new Position(this.pos.x+1,this.pos.y),
 			new Position(this.pos.x-1,this.pos.y),
 			new Position(this.pos.x,this.pos.y+1),

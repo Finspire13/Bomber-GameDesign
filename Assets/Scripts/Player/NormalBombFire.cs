@@ -3,6 +3,7 @@ using System.Collections;
 
 public class NormalBombFire : MonoBehaviour,Distroyable,BombFire,Locatable
 {
+	private bool fireSwitch = false;
 	private int lifeTime = 1;
 	private int damge = 10;
 	private SetBomb owner;
@@ -27,6 +28,7 @@ public class NormalBombFire : MonoBehaviour,Distroyable,BombFire,Locatable
 	{
 		GameDataProcessor.instance.addObject (this);
 		RhythmRecorder.instance.addObservedSubject (this);
+		fireSwitch = true;
 //		lifeTime = 1;
 	}
 	
@@ -34,8 +36,12 @@ public class NormalBombFire : MonoBehaviour,Distroyable,BombFire,Locatable
 	void Update ()
 	{
 		if (lifeTime <= 0) {
-			attack ();
 			distroy();
+			return;
+		}
+		if (fireSwitch) {
+			fireSwitch = false;
+			attack ();
 //			Debug.Log ("x="+this.position.x+",y="+this.position.y);
 		}
 	}
@@ -63,6 +69,7 @@ public class NormalBombFire : MonoBehaviour,Distroyable,BombFire,Locatable
 
 	public void actionOnBeat (){
 		--lifeTime;
+		fireSwitch = true;
 //		Debug.Log ("--lifeTime");
 	}
 

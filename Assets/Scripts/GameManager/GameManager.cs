@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public enum GameState{start,playing,levelEnd,end};
 
@@ -15,6 +16,32 @@ public class GameManager : MonoBehaviour {
 	private GameObject currentCanvas;
 	private int playerBlood;
 	private int level;
+
+//	private float playerScore;
+	public ArrayList playerScoreList = new ArrayList();
+	public void addToPlayerScoreList(ScoreCount item){
+		playerScoreList.Add (item);
+	}
+	public int playerBombCount = 0;
+	public void increaseBombCount(SetBomb setter){
+		if (setter is PlayerConrol) {
+			++playerBombCount;
+		}
+	}
+
+	public Dictionary<string,float> computeScore(){
+		Dictionary<string,float> scoreMap = new Dictionary<string,float> ();
+		foreach (ScoreCount sc in playerScoreList) {
+			if (scoreMap.ContainsKey (sc.getName ())) {
+				float temp = scoreMap [sc.getName ()];
+				temp += sc.getValue ();
+				scoreMap [sc.getName ()] = temp;
+			} else {
+				scoreMap.Add (sc.getName(),sc.getValue());
+			}
+		}
+		return scoreMap;
+	}
 
 	public int PlayerBlood
 	{

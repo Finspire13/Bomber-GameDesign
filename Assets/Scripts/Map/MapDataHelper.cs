@@ -187,8 +187,9 @@ public class MapDataHelper : MonoBehaviour {
 
     public void deleteMapModel()
     {
-        if (mMapModel != null) { }
-        DestroyImmediate(mMapModel);
+		if (mMapModel != null) {
+			Destroy (mMapModel,0);
+		}
     }
 
     public int[,] getMapData()
