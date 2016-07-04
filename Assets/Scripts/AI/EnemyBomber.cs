@@ -180,6 +180,7 @@ public class EnemyBomber : MonoBehaviour,Distroyable,SetBomb,Locatable,CanBuffed
 			if (currPath == null || currPath.Count <= 0) {
 				MyPair pair = decisionMap [indx] as MyPair;
 				Position dest = new Position (pair.px, pair.py);
+				Debug.Log ("dest:" + dest.x + "," + dest.y);
 				this.currPath = findPathTo (dest);
 				Debug.Log ("walk to dest and think again!");
 				return EnemyState.EMEMY_WALK;
@@ -189,7 +190,7 @@ public class EnemyBomber : MonoBehaviour,Distroyable,SetBomb,Locatable,CanBuffed
 			if (indx < 3 && decisionMap.Count > indx) {
 				MyPair pair = decisionMap [indx] as MyPair;
 				Position dest = new Position (pair.px, pair.py);
-//				Debug.Log ("dest:" + dest.x + "," + dest.y);
+				Debug.Log ("dest:" + dest.x + "," + dest.y);
 				this.currPath = findPathTo (dest);
 
 //			Debug.Log ("EMEMY_WALK");
