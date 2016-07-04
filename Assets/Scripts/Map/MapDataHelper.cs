@@ -22,7 +22,7 @@ public class MapDataHelper : MonoBehaviour {
     private const int C_PLAYER = 1;
     private const int C_ENEMY = 2;
 
-    struct MapData
+    public struct MapData
     {
         public int row;
         public int column;
@@ -50,6 +50,10 @@ public class MapDataHelper : MonoBehaviour {
     {
         
     }
+
+	public void setMapData(MapData mapData){
+		this.mMapData = mapData;
+	}
 
 	/*
     public static MapDataHelper GetInstance()
@@ -140,7 +144,7 @@ public class MapDataHelper : MonoBehaviour {
 
     }
 
-    public void createMapComponent(int componetChar, Vector3 position)
+    void createMapComponent(int componetChar, Vector3 position)
     {
         GameObject mapComponent;
         switch (componetChar)
