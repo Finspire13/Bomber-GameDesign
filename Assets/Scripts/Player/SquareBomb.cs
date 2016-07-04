@@ -4,7 +4,7 @@ using System.Collections;
 public class SquareBomb :MonoBehaviour,Bomb,Distroyable,Locatable
 {
 	private SetBomb owner = null;
-	private BombFire fire = null;
+	public GameObject fire = null;
 	private int lifeTime = 2;
 	private int power = 5;
 	private Position position;
@@ -37,6 +37,9 @@ public class SquareBomb :MonoBehaviour,Bomb,Distroyable,Locatable
 	// Use this for initialization
 	void Start ()
 	{
+		if (this.fire == null) {
+			this.fire = Resources.Load ("poisonFireBase") as GameObject;
+		}
 		//		Debug.Log ("NormalBomb :MonoBehaviour,Bomb,Distroyable,Locatable");
 		GameDataProcessor.instance.addObject (this);
 		RhythmRecorder.instance.addObservedSubject (this);
@@ -68,7 +71,7 @@ public class SquareBomb :MonoBehaviour,Bomb,Distroyable,Locatable
 		get{return this.owner;}
 		set{this.owner = value;}
 	}
-	public BombFire Fire{
+	public GameObject Fire{
 		get{return this.fire;}
 		set{this.fire = value;}
 	}
@@ -108,9 +111,10 @@ public class SquareBomb :MonoBehaviour,Bomb,Distroyable,Locatable
 	}
 
 	public void distroy(){
-		if (owner.CurrNum > 0) {
-			owner.CurrNum -= 1;
-		}
+//		if (owner.CurrNum > 0) {
+//			owner.CurrNum -= 1;
+//		}
+		owner.notifyExplosion();
 		GameDataProcessor.instance.removeObject (this);
 		RhythmRecorder.instance.removeObserver (this);
 		Destroy(this.gameObject,0);
@@ -122,8 +126,6 @@ public class SquareBomb :MonoBehaviour,Bomb,Distroyable,Locatable
 
 	}
 	private void createFire(){
-
-		GameObject fire = Resources.Load("poisonFireBase") as GameObject;
 		GameObject[] fires = new GameObject[(power*2+1)*(power*2+1)];
 
 		Vector3 tempPos = this.gameObject.transform.position;

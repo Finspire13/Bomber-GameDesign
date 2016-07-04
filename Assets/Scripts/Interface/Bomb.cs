@@ -20,7 +20,7 @@ public interface Bomb
 		get;
 		set;
 	}
-	BombFire Fire {
+	GameObject Fire {
 		get;
 		set;
 	}

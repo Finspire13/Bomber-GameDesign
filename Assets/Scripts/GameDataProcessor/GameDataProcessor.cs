@@ -220,7 +220,7 @@ public class GameDataProcessor : MonoBehaviour,RhythmObservable {
 //		int ran = this.getRandom (10);
 //		Debug.Log ("random:"+ran);
 		if (this.getRandom (10) == 0) {
-			Debug.Log ("refresh danger map");
+//			Debug.Log ("refresh danger map");
 			refreshDangerMap ();
 		}
 		if (this.getRandom(15) == 0){
@@ -402,7 +402,7 @@ public class GameDataProcessor : MonoBehaviour,RhythmObservable {
 			for (int i = 0; i < benefitMap.GetLength (0); ++i) {
 				for (int j = 0; j < benefitMap.GetLength (1); ++j) {
 					if (benefitMap [i, j] > 0) {
-						--benefitMap [i, j];
+						benefitMap [i, j] -= 0.5f;
 					}
 				}
 			}
@@ -410,7 +410,8 @@ public class GameDataProcessor : MonoBehaviour,RhythmObservable {
 		updatePlayerValue ();
 	}
 
-	public int getRandom (int max){
+	//提供小于count的随机数字
+	public static int getRandom (int max){
 		return new System.Random ().Next (max);
 	}
 
