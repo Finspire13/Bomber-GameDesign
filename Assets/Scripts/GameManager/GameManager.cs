@@ -78,12 +78,12 @@ public class GameManager : MonoBehaviour {
 		case GameState.playing:
 			Destroy (currentCanvas);
 			currentCanvas = Instantiate (playingCanvas) as GameObject;
-			MapDataHelper.instance.createMapModel();
+			MapDataHelper.instance.loadMap(1);
 			break;
 		case GameState.levelEnd:
 			Destroy (currentCanvas);
 			currentCanvas = Instantiate (levelEndCanvas) as GameObject;
-			MapDataHelper.instance.deleteMapModel ();
+			MapDataHelper.instance.deleteMap ();
 			break;
 		case GameState.end:
 			Destroy (currentCanvas);
