@@ -15,7 +15,7 @@ public class MapUnityEditorHelper: Editor {
         }
         if (GUILayout.Button("Delete Map Model"))
         {
-            helper.deleteMapModel();
+            helper.deleteMap();
         }
     }
 }

@@ -1,9 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.IO;
 
 public class MapDataHelper : MonoBehaviour {
 
-    public TextAsset DEFAULT_MAP_DATA;
+	public TextAsset[] LEVEL_MAP_DATA;
 
     public GameObject NORMAL_CUBE;
     public GameObject WALL_CUBE;
@@ -13,14 +14,6 @@ public class MapDataHelper : MonoBehaviour {
 
     [HideInInspector]
 	public static MapDataHelper instance = null;
-    //public static string MAP_COMPONET_TAG = "MapComponent";
-
-    //Const Char represent MapData componet
-    private const int C_NORMAL_CUBE = 3;
-    private const int C_WALL_CUBE = 4;
-    private const int C_EMPTY = 0;
-    private const int C_PLAYER = 1;
-    private const int C_ENEMY = 2;
 
     public struct MapData
     {
@@ -45,41 +38,39 @@ public class MapDataHelper : MonoBehaviour {
 
 		mMapData.isCreatable = false;
 	}
-
-    void Start()
-    {
-        
-    }
-
+		
 	public void setMapData(MapData mapData){
 		this.mMapData = mapData;
 	}
+		
 
-	/*
-    public static MapDataHelper GetInstance()
+	public void loadMap(int levelNum){
+		deleteMap ();
+		loadFromAsset (LEVEL_MAP_DATA[levelNum-1]);
+		createMap ();
+	}
+
+	public void loadMap(string fileName){
+		deleteMap ();
+		loadFromFile (fileName);
+		createMap ();
+	}
+
+    void loadFromAsset(TextAsset textAsset)
     {
-        return mHelper;
-    }*/
-
-    public void loadFromAsset(TextAsset textAsset)
-    {
-
         if (textAsset != null)
         {
 
             string txtMapData = textAsset.text;
 
-            // Remove whiteSpace
-            System.StringSplitOptions option = System.StringSplitOptions.RemoveEmptyEntries;
-
             // Split to lines
-            string[] lines = txtMapData.Split(new char[] { '\r', '\n' }, option);
+			string[] lines = txtMapData.Split(new char[] { '\r', '\n' }, System.StringSplitOptions.RemoveEmptyEntries);
 
             // Split with ','
             char[] spliter = new char[1] { ',' };
 
             // Get row and length from first line
-            string[] sizewh = lines[0].Split(spliter, option);
+			string[] sizewh = lines[0].Split(spliter, System.StringSplitOptions.RemoveEmptyEntries);
             mMapData.row = int.Parse(sizewh[0]);
             mMapData.column = int.Parse(sizewh[1]);
 
@@ -87,7 +78,7 @@ public class MapDataHelper : MonoBehaviour {
 
             for (int lineNum = 1; lineNum <= mMapData.row; lineNum++)
             {
-                string[] data = lines[lineNum].Split(spliter, option);
+				string[] data = lines[lineNum].Split(spliter, System.StringSplitOptions.RemoveEmptyEntries);
 
                 for (int col = 0; col < mMapData.column; col++)
                 {
@@ -102,10 +93,43 @@ public class MapDataHelper : MonoBehaviour {
             mMapData.isCreatable = false;
             Debug.LogWarning("Map data asset is null");
         }
-
     }
 
-    public void createMap()
+	void loadFromFile(string fileName){
+		if (fileName != "")
+		{
+			string[] lines = File.ReadAllLines(Application.persistentDataPath+"/"+fileName);
+
+			// Split with ','
+			char[] spliter = new char[1] { ',' };
+
+			// Get row and length from first line
+			string[] sizewh = lines[0].Split(spliter,  System.StringSplitOptions.RemoveEmptyEntries);
+			mMapData.row = int.Parse(sizewh[0]);
+			mMapData.column = int.Parse(sizewh[1]);
+
+			int[,] mapdata = new int[mMapData.row, mMapData.column];
+
+			for (int lineNum = 1; lineNum <= mMapData.row; lineNum++)
+			{
+				string[] data = lines[lineNum].Split(spliter, System.StringSplitOptions.RemoveEmptyEntries);
+
+				for (int col = 0; col < mMapData.column; col++)
+				{
+					mapdata[lineNum-1, col] = int.Parse(data[col]);
+				}
+			}
+			mMapData.data = mapdata;
+			mMapData.isCreatable = true;
+		}
+		else
+		{
+			mMapData.isCreatable = false;
+			Debug.LogWarning("Map data asset is null");
+		}
+	}
+
+    void createMap()
     {
         if (mMapData.isCreatable)
         {
@@ -152,26 +176,26 @@ public class MapDataHelper : MonoBehaviour {
         GameObject mapComponent;
         switch (componetChar)
         {
-		case C_EMPTY:
+		case (int)MapDataEncoder.MapDataCodeEnum.EMPTY:
 			break;
-		case C_NORMAL_CUBE:
+		case (int)MapDataEncoder.MapDataCodeEnum.NORMAL_CUBE:
 			mapComponent = (GameObject)Instantiate (NORMAL_CUBE, position, Quaternion.identity);
 			mapComponent.transform.parent = mMapModel.transform;
 			GameDataProcessor.instance.addObject (mapComponent.GetComponent<NormalCube>());
             break;
-		case C_WALL_CUBE:
+		case (int)MapDataEncoder.MapDataCodeEnum.WALL_CUBE:
 			mapComponent = (GameObject)Instantiate (WALL_CUBE, position, Quaternion.identity);
 			mapComponent.transform.parent = mMapModel.transform;
 			GameDataProcessor.instance.addObject (mapComponent.GetComponent<WallCube>());
 			break;
-		case C_PLAYER:
+		case (int)MapDataEncoder.MapDataCodeEnum.PLAYER:
 			mapComponent = (GameObject)Instantiate (PLAYER, position, Quaternion.identity);
 			mapComponent.transform.parent = mMapModel.transform;
 			mapComponent.transform.Rotate (0, -90, 0);
 			GameDataProcessor.instance.addObject (mapComponent.GetComponentInChildren<PlayerConrol> ());
 			mapComponent.tag = "Player";
 			break;
-		case C_ENEMY:
+		case (int)MapDataEncoder.MapDataCodeEnum.ENEMY:
 			mapComponent = (GameObject)Instantiate (ENEMY, position, Quaternion.identity);
 			mapComponent.transform.parent = mMapModel.transform;
 			mapComponent.transform.Rotate (0, -90, 0);
@@ -190,23 +214,15 @@ public class MapDataHelper : MonoBehaviour {
 
     public void createMapModel()
     {
-        loadFromAsset(DEFAULT_MAP_DATA);
-        createMap();
+		loadMap (1);
+//		loadMap("ss.txt");
     }
 
-    public void deleteMapModel()
+    public void deleteMap()
     {
 		if (mMapModel != null) {
 			Destroy (mMapModel,0);
+			mMapModel = null;
 		}
-    }
-
-    public int[,] getMapData()
-    {
-        if (mMapData.isCreatable)
-        {
-            return mMapData.data;
-        }
-        return null;
     }
 }
