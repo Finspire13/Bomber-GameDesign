@@ -22,7 +22,7 @@ public class MapDataHelper : MonoBehaviour {
     private const int C_PLAYER = 1;
     private const int C_ENEMY = 2;
 
-    struct MapData
+    public struct MapData
     {
         public int row;
         public int column;
@@ -50,6 +50,10 @@ public class MapDataHelper : MonoBehaviour {
     {
         
     }
+
+	public void setMapData(MapData mapData){
+		this.mMapData = mapData;
+	}
 
 	/*
     public static MapDataHelper GetInstance()
@@ -108,7 +112,7 @@ public class MapDataHelper : MonoBehaviour {
             if (mMapModel == null)
             {
                 mMapModel = new GameObject("MapModel");
-                mMapModel.transform.position = new Vector3(0, 0, 0);
+				mMapModel.transform.position = new Vector3(0, 0, 0);
 
                 //Assign mapSize to GameDataProcessor 
                 if (GameDataProcessor.instance != null)
@@ -140,33 +144,37 @@ public class MapDataHelper : MonoBehaviour {
 
     }
 
-    public void createMapComponent(int componetChar, Vector3 position)
+    void createMapComponent(int componetChar, Vector3 position)
     {
         GameObject mapComponent;
         switch (componetChar)
         {
-            case C_EMPTY:
-                break;
-            case C_NORMAL_CUBE:
-                mapComponent = (GameObject)Instantiate(NORMAL_CUBE, position, Quaternion.identity);
-                mapComponent.transform.parent = mMapModel.transform;
-                break;
-            case C_WALL_CUBE:
-                mapComponent = (GameObject)Instantiate(WALL_CUBE, position, Quaternion.identity);
-                mapComponent.transform.parent = mMapModel.transform;
-                break;
-            case C_PLAYER:
-                mapComponent = (GameObject)Instantiate(PLAYER, position, Quaternion.identity);
-                mapComponent.transform.parent = mMapModel.transform;
-			    mapComponent.transform.Rotate(0, -90, 0);
-                break;
-            case C_ENEMY:
-                mapComponent = (GameObject)Instantiate(ENEMY, position, Quaternion.identity);
-                mapComponent.transform.parent = mMapModel.transform;
-			    mapComponent.transform.Rotate(0, -90, 0);
-                break;
-            default:
-                break;
+		case C_EMPTY:
+			break;
+		case C_NORMAL_CUBE:
+			mapComponent = (GameObject)Instantiate (NORMAL_CUBE, position, Quaternion.identity);
+			mapComponent.transform.parent = mMapModel.transform;
+			GameDataProcessor.instance.addObject (mapComponent.GetComponent<NormalCube>());
+            break;
+		case C_WALL_CUBE:
+			mapComponent = (GameObject)Instantiate (WALL_CUBE, position, Quaternion.identity);
+			mapComponent.transform.parent = mMapModel.transform;
+			GameDataProcessor.instance.addObject (mapComponent.GetComponent<WallCube>());
+			break;
+		case C_PLAYER:
+			mapComponent = (GameObject)Instantiate (PLAYER, position, Quaternion.identity);
+			mapComponent.transform.parent = mMapModel.transform;
+			mapComponent.transform.Rotate (0, -90, 0);
+			GameDataProcessor.instance.addObject (mapComponent.GetComponentInChildren<PlayerConrol>());
+			break;
+		case C_ENEMY:
+			mapComponent = (GameObject)Instantiate (ENEMY, position, Quaternion.identity);
+			mapComponent.transform.parent = mMapModel.transform;
+			mapComponent.transform.Rotate (0, -90, 0);
+			//leave blank
+			break;
+		default:
+			break;
         }
         
         position.y = 0f;
@@ -183,8 +191,9 @@ public class MapDataHelper : MonoBehaviour {
 
     public void deleteMapModel()
     {
-        if (mMapModel != null) { }
-        DestroyImmediate(mMapModel);
+		if (mMapModel != null) {
+			Destroy (mMapModel,0);
+		}
     }
 
     public int[,] getMapData()

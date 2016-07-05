@@ -8,7 +8,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 400170}
-  - 114: {fileID: 11450870}
+  - 114: {fileID: 11495062}
   m_Layer: 0
   m_Name: LoadGame
   m_TagString: Untagged
@@ -25,10 +25,11 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0.1438246, y: 0, z: -0.14382459}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
---- !u!114 &11450870
+--- !u!114 &11495062
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -42,6 +43,7 @@ MonoBehaviour:
   rhythmRecorder: {fileID: 108866, guid: 4574ec2f9d974f54cae0cfa8de130406, type: 2}
   mapDataHelper: {fileID: 141286, guid: d24b905db2995e64f8736d53b96739fa, type: 2}
   gameDataProcessor: {fileID: 124456, guid: 5381da89662054e80841d0e451b35813, type: 2}
+  gameManager: {fileID: 165880, guid: ed8254bd0715f4b7e906f38b7bbdbc88, type: 2}
   ui: {fileID: 124172, guid: 2f262031525184b3bbdc050952e0248f, type: 2}
 --- !u!1001 &100100000
 Prefab:

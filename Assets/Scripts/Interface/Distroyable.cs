@@ -16,6 +16,13 @@ public interface Distroyable:RhythmObservable
 		get;
 		set;
 	}
+
+	//add for invincible
+//	bool isDistoryalbe {
+//		get;
+//		set;
+//	}
+
 	void attackBy(Attackable source);
 	void distroy();
 }

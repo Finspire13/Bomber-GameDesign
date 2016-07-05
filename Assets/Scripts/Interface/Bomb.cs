@@ -20,7 +20,11 @@ public interface Bomb
 		get;
 		set;
 	}
-	BombFire Fire {
+	GameObject Fire {
+		get;
+		set;
+	}
+	int FireTime {
 		get;
 		set;
 	}
@@ -29,7 +33,12 @@ public interface Bomb
 		get;
 		set;
 	}
-	void setProperties(SetBomb owner,int power,int lifeTime);
+
+	bool IsActive {
+		get;
+		set;
+	}
+	void setProperties(SetBomb owner,int power,int lifeTime,int fireTime);
 }
 
 

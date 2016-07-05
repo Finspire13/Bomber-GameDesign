@@ -3,8 +3,9 @@ using System.Collections;
 
 public class NormalBombFire : MonoBehaviour,Distroyable,BombFire,Locatable
 {
-	private int lifeTime;
-	private int damge;
+	private bool fireSwitch = false;
+	private int lifeTime = 1;
+	private int damge = 10;
 	private SetBomb owner;
 	public SetBomb Owner {
 		get{return this.owner;}
@@ -27,7 +28,8 @@ public class NormalBombFire : MonoBehaviour,Distroyable,BombFire,Locatable
 	{
 		GameDataProcessor.instance.addObject (this);
 		RhythmRecorder.instance.addObservedSubject (this);
-		lifeTime = 1;
+		fireSwitch = true;
+//		lifeTime = 1;
 	}
 	
 	// Update is called once per frame
@@ -35,6 +37,12 @@ public class NormalBombFire : MonoBehaviour,Distroyable,BombFire,Locatable
 	{
 		if (lifeTime <= 0) {
 			distroy();
+			return;
+		}
+		if (fireSwitch) {
+			fireSwitch = false;
+			attack ();
+//			Debug.Log ("x="+this.position.x+",y="+this.position.y);
 		}
 	}
 
@@ -61,18 +69,32 @@ public class NormalBombFire : MonoBehaviour,Distroyable,BombFire,Locatable
 
 	public void actionOnBeat (){
 		--lifeTime;
+		fireSwitch = true;
 //		Debug.Log ("--lifeTime");
 	}
 
 	public void distroy(){
 
 		GameDataProcessor.instance.removeObject (this);
+		GameDataProcessor.instance.removeFromDangerMap (this);
 		RhythmRecorder.instance.removeObserver (this);
 		Destroy(this.gameObject,0);
 	}
 
 	public void attack(){
+		ArrayList objs = GameDataProcessor.instance.getObjectAtPostion (this.pos);
+//		Debug.Log ("x="+this.pos.x+",y="+this.pos.y);
 
+		if (objs != null) {
+			for (int i = 0; i < objs.Count; ++i) {
+				if (objs [i] is Distroyable) {
+					
+//					Debug.Log (".....5,0");
+//					Debug.Log ("x="+((Locatable)objs [i]).pos.x+",y="+((Locatable)objs [i]).pos.y);
+					((Distroyable)objs [i]).attackBy (this);
+				}
+			}
+		}
 	}
 }
 

@@ -7,7 +7,7 @@ public interface RhythmObservable{
 }
 
 public interface RhythmFlagOwner{
-	bool rhythmFlag{ get; set;}
+	int rhythmFlag{ get; set;}
 }
 
 public class RhythmRecorder: MonoBehaviour{
@@ -66,6 +66,7 @@ public class RhythmRecorder: MonoBehaviour{
 		observedSubjects.Add (newSubject);
 		timeOffsets.Add (timeOffset);
 		currentBeatIndice.Add (standardBeatIndex);
+//		newSubject.actionOnBeat ();
 	}
 
 	public void removeAllRhythmFlagOwners(){
@@ -110,7 +111,11 @@ public class RhythmRecorder: MonoBehaviour{
 			for (int i = 0; i < rhythmFlagOwners.Count; i++) {
 				if ((bool)isFlagsChangable [i]) {
 					RhythmFlagOwner owner = (RhythmFlagOwner)rhythmFlagOwners [i];
-					owner.rhythmFlag = true;
+					if (owner is MoveAble) {
+						owner.rhythmFlag = ((MoveAble)owner).Speed;
+					} else {
+						owner.rhythmFlag = 1;
+					}
 					isFlagsChangable [i] = false;
 				}
 			}
@@ -118,7 +123,7 @@ public class RhythmRecorder: MonoBehaviour{
 		else {
 			for (int i = 0; i < rhythmFlagOwners.Count; i++) {
 				RhythmFlagOwner owner = (RhythmFlagOwner)rhythmFlagOwners [i];
-				owner.rhythmFlag = false;
+				owner.rhythmFlag = 0;
 			}
 		}
 	}
@@ -183,7 +188,7 @@ public class RhythmRecorder: MonoBehaviour{
 		updateFlagInOwners ();
 
 		if (isPlaying&&!isFinished()) {
-
+//			Debug.Log ("random:" + GameDataProcessor.instance.getRandom (6));
 			for (int i = 0; i < observedSubjects.Count; i++) {
 				int tempBeatIndex = (int)currentBeatIndice [i];
 				if (tempBeatIndex < beats.Count) {
@@ -199,7 +204,7 @@ public class RhythmRecorder: MonoBehaviour{
 			float currentStandardBeat = (float)beats [standardBeatIndex];
 			if ((Time.time - startTime) - currentStandardBeat > onBeatThreshold) {
 
-				Debug.Log("OnBeats");
+//				Debug.Log("OnBeats");
 				standardBeatIndex++;
 				for (int i = 0; i < isFlagsChangable.Count; i++) {
 					isFlagsChangable [i] = true;
@@ -207,10 +212,20 @@ public class RhythmRecorder: MonoBehaviour{
 			}
 		}
 	}
-		
 
 	public bool isFinished(){
 		return standardBeatIndex >= beats.Count;
+	}
+
+	public ArrayList getPlayersPosition(){
+		ArrayList result = new ArrayList ();
+		for (int i = 0; i < rhythmFlagOwners.Count; ++i) {
+			if (rhythmFlagOwners [i] is Controlable && rhythmFlagOwners [i] is Locatable) {
+				result.Add (rhythmFlagOwners [i]);
+			}
+		}
+
+		return result;
 	}
 
 	/*public void testPrint()
