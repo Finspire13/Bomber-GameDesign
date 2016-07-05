@@ -120,13 +120,27 @@ public class PlayerConrol : MonoBehaviour,Controlable,Locatable,SetBomb,Distroya
 
 	private GameObject followCamera;
 
+	void Awake(){
+		rhmFlag = 0;
+		RhythmRecorder.instance.addRhythmFlagOwner (this);
+
+		this.maxNum = 10;
+		this.currNum = 0;
+		this.bombLifeTime = 30;
+		this.bombPower = 1;
+		this.bombFireTime = 1;
+		this.canSetBomb = true;
+		this.isGhost = false;
+		this.blood = 50;
+	}
 	// Use this for initialization
 	void Start ()
 	{
 		BombTriggleTool tool = new BombTriggleTool (this);
+//		this.obtainTools (tool);
 		this.obtainTools (tool);
-		this.obtainTools (tool);
-
+		BombPushTool pushTool = new BombPushTool (this);
+		this.obtainTools (pushTool);
 
 		this.position = new Position(Mathf.CeilToInt(transform.localPosition.z),Mathf.CeilToInt(transform.localPosition.x));
 
@@ -138,20 +152,8 @@ public class PlayerConrol : MonoBehaviour,Controlable,Locatable,SetBomb,Distroya
 
 		this.bombType = Resources.Load("NormalBomb") as GameObject;
 //		GameDataProcessor.instance.addObject (this);
-		rhmFlag = 0;
-		RhythmRecorder.instance.addRhythmFlagOwner (this);
 
 		idleMovementPosition = 0;
-
-		this.maxNum = 10;
-		this.currNum = 0;
-		this.bombLifeTime = 30;
-		this.bombPower = 1;
-		this.bombFireTime = 1;
-		this.canSetBomb = true;
-		this.isGhost = false;
-		this.blood = 50;
-
 
 //		Debug.Log("PlayerControl Done..");
 	}
@@ -362,10 +364,10 @@ public class PlayerConrol : MonoBehaviour,Controlable,Locatable,SetBomb,Distroya
 
 	public bool obtainTools (BombTool tool){
 		
-		foreach(BombTool temp in playerTools){
-			Debug.Log (temp.getToolName()+"has already existed");
-			return false;
-		}
+//		foreach(BombTool temp in playerTools){
+//			Debug.Log (temp.getToolName()+"has already existed");
+//			return false;
+//		}
 		playerTools.Add (tool);
 		return true;
 	}

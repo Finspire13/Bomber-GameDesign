@@ -51,8 +51,9 @@ public class SlowDown : MonoBehaviour,Buff,Locatable,RhythmObservable,ScoreCount
 			ArrayList objs = GameDataProcessor.instance.getObjectAtPostion (this.position);
 			for (int i = 0; i < objs.Count; ++i) {
 				if (objs[i] is MoveAble) {
-					if (((MoveAble)objs [i]).Speed >= 1 + effectValue) {
+					if (((MoveAble)objs [i]).Speed >= 1 + effectValue && GameManager.instance.isBuffValid (objs [i])) {
 						((MoveAble)objs [i]).Speed -= effectValue;
+	
 					}
 					Debug.Log ("Slow down!");
 					lifeTime = 0;

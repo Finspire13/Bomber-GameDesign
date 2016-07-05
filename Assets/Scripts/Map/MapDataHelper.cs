@@ -142,6 +142,9 @@ public class MapDataHelper : MonoBehaviour {
             Debug.LogWarning("Map can't be created. Please load MapData first.");
         }
 
+		//add game level info here
+		GameManager.instance.levelSetting ();
+
     }
 
     void createMapComponent(int componetChar, Vector3 position)
@@ -165,12 +168,14 @@ public class MapDataHelper : MonoBehaviour {
 			mapComponent = (GameObject)Instantiate (PLAYER, position, Quaternion.identity);
 			mapComponent.transform.parent = mMapModel.transform;
 			mapComponent.transform.Rotate (0, -90, 0);
-			GameDataProcessor.instance.addObject (mapComponent.GetComponentInChildren<PlayerConrol>());
+			GameDataProcessor.instance.addObject (mapComponent.GetComponentInChildren<PlayerConrol> ());
+			mapComponent.tag = "Player";
 			break;
 		case C_ENEMY:
 			mapComponent = (GameObject)Instantiate (ENEMY, position, Quaternion.identity);
 			mapComponent.transform.parent = mMapModel.transform;
 			mapComponent.transform.Rotate (0, -90, 0);
+			mapComponent.tag = "Enemy";
 			//leave blank
 			break;
 		default:

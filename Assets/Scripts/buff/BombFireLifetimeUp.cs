@@ -51,7 +51,9 @@ public class BombFireLifetimeUp : MonoBehaviour,Buff,Locatable,RhythmObservable,
 			ArrayList objs = GameDataProcessor.instance.getObjectAtPostion (this.position);
 			for (int i = 0; i < objs.Count; ++i) {
 				if (objs[i] is SetBomb) {
-					((SetBomb)objs[i]).BombFireTime += 1;
+					if(GameManager.instance.isBuffValid(objs[i])){
+						((SetBomb)objs[i]).BombFireTime += 1;
+					}
 					Debug.Log ("player power up !");
 					lifeTime = 0;
 					if (objs [i] is PlayerConrol) {

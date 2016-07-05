@@ -15,7 +15,8 @@ public class GameManager : MonoBehaviour {
 	public GameObject endCanvas;
 	private GameObject currentCanvas;
 	private int playerBlood;
-	private int level;
+	public int level = 4;
+	private bool canPlayerBuffed = true;
 
 //	private float playerScore;
 	public ArrayList playerScoreList = new ArrayList();
@@ -42,6 +43,46 @@ public class GameManager : MonoBehaviour {
 		}
 		return scoreMap;
 	}
+	public void levelSetting(){
+		GameObject[] enemys = GameObject.FindGameObjectsWithTag ("Enemy");
+		GameObject[] players = GameObject.FindGameObjectsWithTag ("Player");
+		switch (level) {
+		case 1:
+			break;
+		case 2:
+			break;
+		case 3:
+			for (int i = 0; i < enemys.GetLength (0); ++i) {
+				EnemyBomber enemy = enemys [i].GetComponent (typeof(EnemyBomber)) as EnemyBomber;
+				enemy.Blood = 2 * enemy.Blood;
+				enemy.MaxNum = 9999;
+			}
+			break;
+		case 4:
+			for (int i = 0;i < enemys.GetLength (0); ++i) {
+				EnemyBomber enemy = enemys [i].GetComponent (typeof(EnemyBomber)) as EnemyBomber;
+				enemy.Blood = 10 * enemy.Blood;
+				enemy.MaxNum = 9999;
+				enemy.Speed += 1;
+			}
+			for(int i = 0;i < players.GetLength(0);++i){
+				PlayerConrol player = players [i].GetComponent (typeof(PlayerConrol)) as PlayerConrol;
+				player.Blood = 1;
+			}
+			canPlayerBuffed = false;
+			break;		
+		default:
+			break;
+		}
+	}
+
+	public bool isBuffValid(System.Object gatherer){
+		if (gatherer is PlayerConrol) {
+			Debug.Log ("canPlayerBuffed:"+canPlayerBuffed);
+			return canPlayerBuffed;
+		}
+		return true;
+	}
 
 	public int PlayerBlood
 	{
@@ -58,6 +99,8 @@ public class GameManager : MonoBehaviour {
 
 		DontDestroyOnLoad (gameObject);
 		currentCanvas = null;
+
+		this.level = 3;
 	}
 
 	void Start () {

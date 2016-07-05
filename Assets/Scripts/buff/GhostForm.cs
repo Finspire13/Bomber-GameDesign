@@ -50,7 +50,9 @@ public class GhostForm : MonoBehaviour,Buff,Locatable,RhythmObservable,ScoreCoun
 			ArrayList objs = GameDataProcessor.instance.getObjectAtPostion (this.position);
 			for (int i = 0; i < objs.Count; ++i) {
 				if (objs[i] is PlayerConrol) {
-					((PlayerConrol)objs[i]).IsGhost =true;
+					if (GameManager.instance.isBuffValid (objs [i])) {
+						((PlayerConrol)objs [i]).IsGhost = true;
+					}
 					Debug.Log ("Ghost Player!");
 					lifeTime = 0;
 					if (objs [i] is PlayerConrol) {

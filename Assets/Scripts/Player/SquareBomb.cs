@@ -145,5 +145,9 @@ public class SquareBomb :MonoBehaviour,Bomb,Distroyable,Locatable
 			}
 	}
 
+	public void pushTo (Position finalPos){
+
+
+	}
 }
 

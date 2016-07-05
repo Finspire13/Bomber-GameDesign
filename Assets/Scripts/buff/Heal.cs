@@ -51,7 +51,9 @@ public class Heal : MonoBehaviour,Buff,Locatable,RhythmObservable,ScoreCount {
 			ArrayList objs = GameDataProcessor.instance.getObjectAtPostion (this.position);
 			for (int i = 0; i < objs.Count; ++i) {
 				if (objs[i] is CanBuffed) {
-					((Distroyable)objs[i]).Blood +=effectValue;
+					if (GameManager.instance.isBuffValid (objs [i])) {
+						((Distroyable)objs [i]).Blood += effectValue;
+					}
 					Debug.Log ("Heal!");
 					lifeTime = 0;
 					if (objs [i] is PlayerConrol) {

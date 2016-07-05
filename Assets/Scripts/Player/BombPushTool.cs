@@ -36,6 +36,35 @@ public class BombPushTool: BombTool,ScoreCount
 //			}
 //		}
 //		bombList.Clear ();
+		if (user is Locatable) {
+			Position userPos = (user as Locatable).pos;
+			Position[] dirs = {new Position (userPos.x+1,userPos.y),new Position (userPos.x-1,userPos.y),
+				new Position (userPos.x,userPos.y+1),new Position (userPos.x,userPos.y-1) };
+			for (int i = 0; i < dirs.GetLength (0); ++i) {
+				ArrayList objs = GameDataProcessor.instance.getObjectAtPostion (dirs[i]);
+				for (int j = 0; j < objs.Count; ++j) {
+					if (objs [j] is Bomb && objs [j] is Locatable) {
+						Locatable bomb = objs [j] as Locatable;
+						Position finalPos = new Position(bomb.pos.x,bomb.pos.y);
+
+						int deltaX = bomb.pos.x - userPos.x;
+						int deltaY = bomb.pos.y - userPos.y;
+						bool isFinalPosition = false;
+						while (!isFinalPosition) {
+							finalPos.x += deltaX;
+							finalPos.y += deltaY;
+							ArrayList obstacles = GameDataProcessor.instance.getObjectAtPostion (finalPos);
+							foreach (Locatable obs in obstacles) {
+								finalPos = new Position (obs.pos.x, obs.pos.y);
+								isFinalPosition = true;
+								break;
+							}
+						}
+						((Bomb)bomb).pushTo (new Position(finalPos.x-deltaX,finalPos.y-deltaY));
+					}
+				}
+			}
+		}
 		Debug.Log("Push bomb......");
 	}
 
@@ -47,7 +76,6 @@ public class BombPushTool: BombTool,ScoreCount
 		get{ return owner;}
 		set{ this.owner = value;}
 	}
-
 }
 
 

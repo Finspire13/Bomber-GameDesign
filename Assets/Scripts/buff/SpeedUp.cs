@@ -51,7 +51,9 @@ public class SpeedUp : MonoBehaviour,Buff,Locatable,RhythmObservable,ScoreCount
 			ArrayList objs = GameDataProcessor.instance.getObjectAtPostion (this.position);
 			for (int i = 0; i < objs.Count; ++i) {
 				if (objs[i] is MoveAble) {
-					((MoveAble)objs[i]).Speed +=effectValue;
+					if(GameManager.instance.isBuffValid (objs [i])){
+						((MoveAble)objs[i]).Speed +=effectValue;
+					}
 //					Debug.Log ("Speed Up!");
 					lifeTime = 0;
 					if (objs [i] is PlayerConrol) {

@@ -50,7 +50,9 @@ public class BombPowerUp : MonoBehaviour,Buff,Locatable,RhythmObservable,ScoreCo
 			ArrayList objs = GameDataProcessor.instance.getObjectAtPostion (this.position);
 			for (int i = 0; i < objs.Count; ++i) {
 				if (objs[i] is SetBomb) {
-					((SetBomb)objs[i]).BombPower += 1;
+					if (GameManager.instance.isBuffValid (objs [i])) {
+						((SetBomb)objs [i]).BombPower += 1;
+					}
 					Debug.Log ("player power up !");
 					lifeTime = 0;
 					if (objs [i] is PlayerConrol) {

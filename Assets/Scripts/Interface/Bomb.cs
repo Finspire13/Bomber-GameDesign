@@ -38,6 +38,7 @@ public interface Bomb
 		get;
 		set;
 	}
+	void pushTo (Position finalPos);
 	void setProperties(SetBomb owner,int power,int lifeTime,int fireTime);
 }
 
