@@ -56,6 +56,16 @@ public class MapDataHelper : MonoBehaviour {
 		createMap ();
 	}
 
+	public string[] getCustomMapList(){
+		string filter = "*.cmap";
+		string[] maps = Directory.GetFiles(Application.persistentDataPath, filter); 
+
+		for (int i = 0, len = maps.Length; i < len; i++) {
+			maps [i] = Path.GetFileName (maps[i]);
+		}
+		return maps;
+	}
+
     void loadFromAsset(TextAsset textAsset)
     {
         if (textAsset != null)
