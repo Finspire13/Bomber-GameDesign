@@ -146,8 +146,22 @@ public class SquareBomb :MonoBehaviour,Bomb,Distroyable,Locatable
 	}
 
 	public void pushTo (Position finalPos){
+		float diffX = finalPos.x - this.position.x;
+		float diffY = finalPos.y - this.position.y;
+		StartCoroutine (MoveOffset(diffX,diffY));
+		this.position.x= finalPos.x;
+		this.position.y = finalPos.y;
+	}
 
-
+	IEnumerator MoveOffset(float diffX,float diffY){
+		int frameCount = 10;
+		for (int i = 0; i < frameCount; ++i) {
+			//			this.transform.position +diffX / frameCount;
+			//			this.transform.position.z -= diffY / frameCount;
+			this.transform.position += (diffX/frameCount)*Vector3.right;
+			this.transform.position += (diffY/frameCount)*Vector3.back;
+			yield return null;
+		}
 	}
 }
 

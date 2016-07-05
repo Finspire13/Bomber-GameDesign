@@ -41,7 +41,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   LEVEL_MAP_DATA:
-  - {fileID: 4900000, guid: 2cffdf08d5e62884cabf1a052827b282, type: 3}
+  - {fileID: 4900000, guid: fd0362d69282bf04cb9881f31831da0d, type: 3}
   NORMAL_CUBE: {fileID: 161954, guid: e2f88a73d1525e940a68d219ced51dcd, type: 2}
   WALL_CUBE: {fileID: 126182, guid: 75343584647a70744b37912787af319e, type: 2}
   PLANE: {fileID: 144210, guid: 6fff3f814493e7246831701856d5cb85, type: 2}

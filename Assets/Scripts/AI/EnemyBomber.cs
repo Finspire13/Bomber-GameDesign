@@ -162,7 +162,6 @@ public class EnemyBomber : MonoBehaviour,Distroyable,SetBomb,Locatable,CanBuffed
 	private int getRandom(int count)
 	{
 		return new System.Random().Next(count);
-
 	}
 
 	public void actionOnBeat (){
