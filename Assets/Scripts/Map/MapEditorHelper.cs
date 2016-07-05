@@ -79,7 +79,7 @@ public class MapEditorHelper : MonoBehaviour {
 	public void saveMapDatatoFile(){
 		if (fileName != "") {
 			getMapData ();
-			using (StreamWriter sw = new StreamWriter (Application.persistentDataPath + "/" + fileName + ".txt")) {
+			using (StreamWriter sw = new StreamWriter (Application.persistentDataPath + "/" + fileName + ".cmap")) {
 				sw.WriteLine (mMapData.row + "," + mMapData.column);
 				string s;
 				for (int r = 0; r < mMapData.row; r++) {
