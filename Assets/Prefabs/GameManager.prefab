@@ -42,8 +42,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startCanvas: {fileID: 101906, guid: 6e3a2efdca6e840d3ae700ff709cf2e9, type: 2}
   playingCanvas: {fileID: 124172, guid: 2f262031525184b3bbdc050952e0248f, type: 2}
+  levelSelectCanvas: {fileID: 187852, guid: 9d8868bd4d411a040877afcaf82649a5, type: 2}
+  mapEditCanvas: {fileID: 146012, guid: afe304ffa06d82542b89cbccaa71457d, type: 2}
   levelEndCanvas: {fileID: 182120, guid: 18068ea0eb31f4b45999e473b40041df, type: 2}
   endCanvas: {fileID: 114846, guid: 319641007350140758b47b5fc089d18e, type: 2}
+  level: 4
+  playerBombCount: 0
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

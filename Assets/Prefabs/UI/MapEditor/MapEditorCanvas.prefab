@@ -4384,7 +4384,7 @@ GameObject:
   - 114: {fileID: 11410430}
   - 114: {fileID: 11469938}
   m_Layer: 5
-  m_Name: StartButton
+  m_Name: BackButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5029,6 +5029,22 @@ GameObject:
   - 114: {fileID: 11456934}
   m_Layer: 5
   m_Name: MapGirdCard (25)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!1 &196962
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 224: {fileID: 22440908}
+  - 114: {fileID: 11496700}
+  m_Layer: 5
+  m_Name: MapEditorHelper
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -17853,7 +17869,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Start Game
+  m_Text: Exit Edit
 --- !u!114 &11450144
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -19889,7 +19905,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 11496700}
         m_MethodName: showDialogPanel
         m_Mode: 1
         m_Arguments:
@@ -20065,7 +20081,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 11496700}
         m_MethodName: hideDialogPanel
         m_Mode: 1
         m_Arguments:
@@ -23135,7 +23151,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 11410430}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 11496700}
+        m_MethodName: exitMapEditor
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &11469942
@@ -27963,7 +27990,7 @@ MonoBehaviour:
   m_ChildAlignment: 0
   m_StartCorner: 0
   m_StartAxis: 0
-  m_CellSize: {x: 20.533333, y: 20.533333}
+  m_CellSize: {x: 29.6, y: 29.6}
   m_Spacing: {x: 1, y: 1}
   m_Constraint: 0
   m_ConstraintCount: 2
@@ -28355,7 +28382,7 @@ MonoBehaviour:
   m_OnEndEdit:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 11496700}
         m_MethodName: setSavedFileName
         m_Mode: 0
         m_Arguments:
@@ -30204,6 +30231,20 @@ MonoBehaviour:
   m_EffectColor: {r: 0.9485294, g: 0.6758993, b: 0.188311, a: 1}
   m_EffectDistance: {x: 1, y: 1}
   m_UseGraphicAlpha: 1
+--- !u!114 &11496700
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 196962}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2c253339a7799644ba3b6474efb82ce3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MapGirdLayout: {fileID: 22431460}
+  DefaultColor: {r: 0.46666667, g: 0.2784314, b: 0.039215688, a: 1}
+  DialogPanel: {fileID: 182920}
 --- !u!114 &11496866
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -30694,7 +30735,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 11496700}
         m_MethodName: saveMapDatatoFile
         m_Mode: 1
         m_Arguments:
@@ -30705,7 +30746,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 11496700}
         m_MethodName: hideDialogPanel
         m_Mode: 1
         m_Arguments:
@@ -32974,7 +33015,7 @@ RectTransform:
   - {fileID: 22450116}
   - {fileID: 22452486}
   m_Father: {fileID: 22464016}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 54.25, y: 0}
@@ -34663,7 +34704,7 @@ RectTransform:
   - {fileID: 22404542}
   - {fileID: 22492456}
   m_Father: {fileID: 22464016}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 1}
   m_AnchoredPosition: {x: 60, y: 0}
@@ -35028,6 +35069,24 @@ RectTransform:
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!224 &22440908
+RectTransform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 196962}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_Children: []
+  m_Father: {fileID: 22464016}
+  m_RootOrder: 0
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &22441152
 RectTransform:
@@ -36097,6 +36156,7 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children:
+  - {fileID: 22440908}
   - {fileID: 22431460}
   - {fileID: 22404086}
   - {fileID: 22495514}
@@ -37553,7 +37613,7 @@ RectTransform:
   m_Children:
   - {fileID: 22443230}
   m_Father: {fileID: 22464016}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}

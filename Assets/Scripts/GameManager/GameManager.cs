@@ -2,7 +2,9 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public enum GameState{start,playing,levelEnd,end};
+public enum GameState{start,levelSelect,mapEdit,playing,levelEnd,end};
+
+public enum PlayMode{presetMap, customMap};
 
 public class GameManager : MonoBehaviour {
 
@@ -11,12 +13,18 @@ public class GameManager : MonoBehaviour {
 
 	public GameObject startCanvas;
 	public GameObject playingCanvas;
+	public GameObject levelSelectCanvas;
+	public GameObject mapEditCanvas;
 	public GameObject levelEndCanvas;
 	public GameObject endCanvas;
 	private GameObject currentCanvas;
 	private int playerBlood;
 	public int level = 4;
 	private bool canPlayerBuffed = true;
+
+	public PlayMode playMode;
+	public int presetMap = 1;
+	public string customMap = "";
 
 //	private float playerScore;
 	public ArrayList playerScoreList = new ArrayList();
@@ -118,10 +126,21 @@ public class GameManager : MonoBehaviour {
 			Destroy (currentCanvas);
 			currentCanvas = Instantiate (startCanvas) as GameObject;
 			break;
+		case GameState.levelSelect:
+			Destroy (currentCanvas);
+			currentCanvas = Instantiate (levelSelectCanvas) as GameObject;
+			break;
+		case GameState.mapEdit:
+			Destroy (currentCanvas);
+			currentCanvas = Instantiate (mapEditCanvas) as GameObject;
+			break;
 		case GameState.playing:
 			Destroy (currentCanvas);
 			currentCanvas = Instantiate (playingCanvas) as GameObject;
-			MapDataHelper.instance.loadMap(1);
+			if (playMode == PlayMode.presetMap)
+				MapDataHelper.instance.loadMap (presetMap);
+			else if (playMode ==PlayMode.customMap)
+				MapDataHelper.instance.loadMap (customMap);
 			break;
 		case GameState.levelEnd:
 			Destroy (currentCanvas);

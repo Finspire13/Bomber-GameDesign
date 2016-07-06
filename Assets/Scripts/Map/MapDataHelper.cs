@@ -66,6 +66,14 @@ public class MapDataHelper : MonoBehaviour {
 		return maps;
 	}
 
+	public string[] getPresetMapList(){
+		string[] maps = new string[LEVEL_MAP_DATA.Length];
+		for (int i = 0, len = maps.Length; i < len; i++) {
+			maps [i] = "Level " + (i+1);
+		}
+		return maps;
+	}
+
     void loadFromAsset(TextAsset textAsset)
     {
         if (textAsset != null)

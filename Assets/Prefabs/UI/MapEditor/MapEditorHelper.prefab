@@ -27,8 +27,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c253339a7799644ba3b6474efb82ce3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MapGirdLayout: {fileID: 22456010, guid: a58f462588aeeae41aa4d6d4eab127e5, type: 2}
-  DefaultColor: {r: 0, g: 0, b: 0, a: 0}
+  MapGirdLayout: {fileID: 0}
+  DefaultColor: {r: 0.46666667, g: 0.2784314, b: 0.039215688, a: 1}
   DialogPanel: {fileID: 0}
 --- !u!224 &22414642
 RectTransform:
