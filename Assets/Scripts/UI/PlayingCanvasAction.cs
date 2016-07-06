@@ -6,6 +6,7 @@ public class PlayingCanvasAction : MonoBehaviour,RhythmObservable  {
 
 	public GameObject leftSlider;
 	public GameObject rightSlider;
+	public GameObject SliderPosition;
 	public Button levelEndButton;
 	public Text bloodText;
 	// Use this for initialization
@@ -22,13 +23,15 @@ public class PlayingCanvasAction : MonoBehaviour,RhythmObservable  {
 	public void actionOnBeat(){
 		//StartCoroutine(BeatIt());
 		GameObject leftSliderInstance = Instantiate (leftSlider) as GameObject;
-		leftSliderInstance.transform.SetParent(gameObject.transform);
-		leftSliderInstance.GetComponent<RectTransform>().localPosition = new Vector3 (-152f, 125f, 0f);
+		//leftSliderInstance.transform.SetParent(gameObject.transform);
+		leftSliderInstance.transform.SetParent(SliderPosition.transform);
+		leftSliderInstance.GetComponent<RectTransform>().localPosition = new Vector3 (-304f, 0f, 0f);
 		leftSliderInstance.GetComponent<RectTransform> ().SetAsFirstSibling ();
 
 		GameObject rightSliderInstance = Instantiate (rightSlider) as GameObject;
-		rightSliderInstance.transform.SetParent(gameObject.transform);
-		rightSliderInstance.GetComponent<RectTransform>().localPosition = new Vector3 (152f, 125f, 0f);
+		//rightSliderInstance.transform.SetParent(gameObject.transform);
+		rightSliderInstance.transform.SetParent(SliderPosition.transform);
+		rightSliderInstance.GetComponent<RectTransform>().localPosition = new Vector3 (304f, 0f, 0f);
 		rightSliderInstance.GetComponent<RectTransform> ().SetAsFirstSibling ();
 	}
 
