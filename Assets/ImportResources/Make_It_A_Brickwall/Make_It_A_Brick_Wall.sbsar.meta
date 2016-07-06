@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 8cb1ded7b0fd6e74fbd141488f5c3a59
-timeCreated: 1467702450
+timeCreated: 1467791203
 licenseType: Free
 SubstanceImporter:
   serializedVersion: 5
@@ -454,7 +454,7 @@ SubstanceImporter:
         data:
           first:
             name: _Glossiness
-          second: 0.34
+          second: 0.126
         data:
           first:
             name: _BumpScale
@@ -478,7 +478,7 @@ SubstanceImporter:
         data:
           first:
             name: _Metallic
-          second: 0.5
+          second: 0.274
       colors:
         data:
           first:
