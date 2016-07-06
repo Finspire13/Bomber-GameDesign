@@ -13,7 +13,7 @@ public class MonsterControl : MonoBehaviour,Distroyable,Attackable,Locatable,Mov
 
 	Queue<Position> currPath = new Queue<Position>();
 
-	int blood = 50;
+	int blood = 30;
 	public int Blood 
 	{
 		get{return blood;}
@@ -29,6 +29,11 @@ public class MonsterControl : MonoBehaviour,Distroyable,Attackable,Locatable,Mov
 		}
 	}
 	public void distroy(){
+		
+		Debug.Log ("Monster died");
+		GameDataProcessor.instance.removeObject (this);
+		RhythmRecorder.instance.removeObserver (this);
+		Destroy (this.gameObject, 0);
 	}
 	int damage = 20;
 	public int Damage 
@@ -39,10 +44,15 @@ public class MonsterControl : MonoBehaviour,Distroyable,Attackable,Locatable,Mov
 	public void attack(){
 		int dirIndx = getRandom (3);
 		int range = 2;
+		Position[] dirs = {new Position (this.position.x + 1, this.position.y), new Position (this.position.x - 1, this.position.y),
+			new Position (this.position.x, this.position.y + 1), new Position (this.position.x, this.position.y - 1)};
+		
 		for (int i = 0; i < range; ++i) {
 			ArrayList objs = GameDataProcessor.instance.getObjectAtPostion (dirs [dirIndx]);
-			foreach (Distroyable obj in objs) {
-				obj.attackBy (this);
+			for(int indx = 0;indx < objs.Count;++indx){
+				if(objs[indx] is Distroyable){
+					((Distroyable)objs[indx]).attackBy (this);
+				}
 			}
 			dirIndx = (dirIndx + 1) % 4;
 		}
@@ -104,22 +114,29 @@ public class MonsterControl : MonoBehaviour,Distroyable,Attackable,Locatable,Mov
 				return MonsterState.MON_ATTACK;
 			}
 			if (distance <= 2) {
+				this.currPath.Clear();
+				this.currPath = this.findPathTo (goal.pos);
 				return MonsterState.MON_PRE_ATTACK;
 			}
-			if (distance < 3 ) {
+			if (distance <= 3 ) {
+				this.currPath.Clear();
 				this.currPath = this.findPathTo (goal.pos);
 				return MonsterState.MON_PURCHASE;
 			}
 		}
-//		Position[] dirs = {new Position (this.position.x + 1, this.position.y), new Position (this.position.x - 1, this.position.y),
-//			new Position (this.position.x, this.position.y + 1), new Position (this.position.x, this.position.y - 1)};
+		Position[] dirs = {new Position (this.position.x + 1, this.position.y), new Position (this.position.x, this.position.y - 1),
+			new Position (this.position.x - 1, this.position.y ), new Position (this.position.x, this.position.y + 1)};
 
 		int dirIndx = 0;
+		int ranCout = 0;
 		do {
 			dirIndx = getRandom (3);
-		} while (!isWall (dirs [dirIndx]));
+			ranCout++;
+		} while (isWall (dirs [dirIndx]) && ranCout < 100);
 		this.currPath.Clear ();
-		this.currPath.Enqueue (dirs [dirIndx]);
+		if (ranCout < 100) {
+			this.currPath.Enqueue (dirs [dirIndx]);
+		}
 		return MonsterState.MON_IDLE;
 	}
 		
@@ -157,18 +174,21 @@ public class MonsterControl : MonoBehaviour,Distroyable,Attackable,Locatable,Mov
 			StartCoroutine (MoveTo(temp));
 			this.position.x = temp.x;
 			this.position.y = temp.y;
+//			Debug.Log ("Move to ->("+temp.x+","+temp.y+")");
 		}
 	}
 	protected void MonsterPurchase(){
 		MonsterMove ();
 	}
 	protected void MonsterPreAttack(){
+		MonsterMove ();
 		Debug.Log ("Monster prepare to attack");
 	}
 	protected void MonsterAttack(){
 		this.attack ();
 	}
 	protected void MonsterBack(){
+		Debug.Log ("Monster back");
 		MonsterMove ();
 	}
 
@@ -215,7 +235,7 @@ public class MonsterControl : MonoBehaviour,Distroyable,Attackable,Locatable,Mov
 
 		if (canReach) {
 			Stack<Position> pathStack = new Stack<Position>();
-			pathStack.Push (dest);
+//			pathStack.Push (dest);
 			this.createPath (dest, floodMark [dest.y, dest.x],ref floodMark, ref pathStack);
 
 			while(pathStack.Count > 0){
@@ -245,6 +265,9 @@ public class MonsterControl : MonoBehaviour,Distroyable,Attackable,Locatable,Mov
 						floodMark [curr.y, curr.x + 1] = pathLen;
 						queSearch.Enqueue (temp);
 					}
+					if (temp.x == dest.x && temp.y == dest.y) {
+						break;
+					}
 				}
 
 				if (floodMark [curr.y, curr.x - 1] < 0) {
@@ -255,6 +278,9 @@ public class MonsterControl : MonoBehaviour,Distroyable,Attackable,Locatable,Mov
 					} else {
 						floodMark [curr.y, curr.x - 1] = pathLen;
 						queSearch.Enqueue (temp);
+					}
+					if (temp.x == dest.x && temp.y == dest.y) {
+						break;
 					}
 				}
 
@@ -267,6 +293,9 @@ public class MonsterControl : MonoBehaviour,Distroyable,Attackable,Locatable,Mov
 						floodMark [curr.y + 1, curr.x] = pathLen;
 						queSearch.Enqueue (temp);
 					}
+					if (temp.x == dest.x && temp.y == dest.y) {
+						break;
+					}
 				}
 
 				if (floodMark [curr.y - 1, curr.x] < 0) {
@@ -277,6 +306,9 @@ public class MonsterControl : MonoBehaviour,Distroyable,Attackable,Locatable,Mov
 					} else {
 						floodMark [curr.y - 1, curr.x] = pathLen;
 						queSearch.Enqueue (temp);
+					}
+					if (temp.x == dest.x && temp.y == dest.y) {
+						break;
 					}
 				}
 			}
@@ -295,13 +327,14 @@ public class MonsterControl : MonoBehaviour,Distroyable,Attackable,Locatable,Mov
 
 	protected void createPath(Position target, int distance, ref int[,] floodMark, ref Stack<Position> pathStatck){
 		//		Stack<Position> pathStatck = new Stack<Position>();
-//		Position[] dirs = {new Position (target.x + 1, target.y), new Position (target.x - 1, target.y),
-//			new Position (target.x, target.y + 1), new Position (target.x, target.y - 1)};
 		Position currSearchPos = new Position (target.x,target.y);
 
 		while (distance > 1) {
+			Position[] dirs = {new Position (currSearchPos.x + 1, currSearchPos.y), new Position (currSearchPos.x - 1, currSearchPos.y),
+				new Position (currSearchPos.x, currSearchPos.y + 1), new Position (currSearchPos.x, currSearchPos.y - 1)};
+	
 			for (int i = 0; i < dirs.GetLength (0); ++i) {
-				if (floodMark [dirs [i].y, dirs [i].x] == distance-1) {
+				if (floodMark[dirs [i].y, dirs [i].x] == distance-1) {
 					pathStatck.Push (dirs [i]);
 					currSearchPos.x = dirs [i].x;
 					currSearchPos.y = dirs [i].y;
@@ -316,23 +349,40 @@ public class MonsterControl : MonoBehaviour,Distroyable,Attackable,Locatable,Mov
 	{
 		return new System.Random().Next(count);
 	}
-
-	void Awake(){
-		this.dirs = new Position[] {new Position (this.position.x + 1, this.position.y), new Position (this.position.x - 1, this.position.y),
-			new Position (this.position.x, this.position.y + 1), new Position (this.position.x, this.position.y - 1)};
-	}
+		
 	// Use this for initialization
 	void Start ()
 	{
 		this.position = new Position(Mathf.RoundToInt(transform.localPosition.z),Mathf.RoundToInt(transform.localPosition.x));
 		this.initialPos = new Position(Mathf.RoundToInt(transform.localPosition.z),Mathf.RoundToInt(transform.localPosition.x));
+		GameDataProcessor.instance.addObject (this);
+		RhythmRecorder.instance.addObservedSubject (this);
 	}
 
 	// Update is called once per frame
 	void Update ()
 	{
 		if (blood <= 0) {
+			this.currPath.Clear ();
+			createBuff ();
 			this.distroy ();
+		}
+	}
+
+	void createBuff(){
+		string[] buffList = {"FireLifeTimeUp"};
+		int buffIndex=UnityEngine.Random.Range (0, buffList.Length);
+
+		GameObject buff = Resources.Load(buffList[buffIndex]) as GameObject;
+		GameObject obj = (GameObject)Instantiate(buff,this.gameObject.transform.position,this.gameObject.transform.rotation);
+		Buff script = (Buff)obj.GetComponent("Buff");
+		if (script == null) {
+			Debug.Log ("not script");
+		} else {
+			if (script is Locatable) {
+				//				Debug.Log ("script is Locatable");
+				((Locatable)script).pos = new Position (this.pos.x,this.pos.y);
+			}
 		}
 	}
 }

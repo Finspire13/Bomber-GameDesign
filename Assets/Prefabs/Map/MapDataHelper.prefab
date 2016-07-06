@@ -47,6 +47,13 @@ MonoBehaviour:
   PLANE: {fileID: 144210, guid: 6fff3f814493e7246831701856d5cb85, type: 2}
   PLAYER: {fileID: 172252, guid: 89691ad1759e2443784b3bc99a6dcdb4, type: 2}
   ENEMY: {fileID: 152766, guid: 7e4be36a955034293ab9a5d187b94b83, type: 2}
+  Objects:
+  - {fileID: 0}
+  - {fileID: 172252, guid: 89691ad1759e2443784b3bc99a6dcdb4, type: 2}
+  - {fileID: 152766, guid: 7e4be36a955034293ab9a5d187b94b83, type: 2}
+  - {fileID: 161954, guid: e2f88a73d1525e940a68d219ced51dcd, type: 2}
+  - {fileID: 126182, guid: 75343584647a70744b37912787af319e, type: 2}
+  - {fileID: 150314, guid: 416797bac35394785a1e6086df103e8b, type: 2}
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

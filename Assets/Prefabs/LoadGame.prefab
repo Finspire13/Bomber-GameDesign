@@ -44,7 +44,6 @@ MonoBehaviour:
   mapDataHelper: {fileID: 141286, guid: d24b905db2995e64f8736d53b96739fa, type: 2}
   gameDataProcessor: {fileID: 124456, guid: 5381da89662054e80841d0e451b35813, type: 2}
   gameManager: {fileID: 165880, guid: ed8254bd0715f4b7e906f38b7bbdbc88, type: 2}
-  ui: {fileID: 124172, guid: 2f262031525184b3bbdc050952e0248f, type: 2}
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

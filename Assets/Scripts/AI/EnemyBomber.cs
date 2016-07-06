@@ -87,6 +87,8 @@ public class EnemyBomber : MonoBehaviour,Distroyable,SetBomb,Locatable,CanBuffed
 		}
 	}
 	public void distroy(){
+		GameDataProcessor.instance.removeObject (this);
+		RhythmRecorder.instance.removeObserver (this);
 		Destroy (this.gameObject, 0);
 	}
 
@@ -567,6 +569,9 @@ public class EnemyBomber : MonoBehaviour,Distroyable,SetBomb,Locatable,CanBuffed
 						floodMark [curr.y, curr.x + 1] = pathLen;
 						queSearch.Enqueue (temp);
 					}
+					if (temp.x == dest.x && temp.y == dest.y) {
+						break;
+					}
 				}
 			
 				if (floodMark [curr.y, curr.x - 1] < 0) {
@@ -577,6 +582,9 @@ public class EnemyBomber : MonoBehaviour,Distroyable,SetBomb,Locatable,CanBuffed
 					} else {
 						floodMark [curr.y, curr.x - 1] = pathLen;
 						queSearch.Enqueue (temp);
+					}
+					if (temp.x == dest.x && temp.y == dest.y) {
+						break;
 					}
 				}
 					
@@ -589,6 +597,9 @@ public class EnemyBomber : MonoBehaviour,Distroyable,SetBomb,Locatable,CanBuffed
 						floodMark [curr.y + 1, curr.x] = pathLen;
 						queSearch.Enqueue (temp);
 					}
+					if (temp.x == dest.x && temp.y == dest.y) {
+						break;
+					}
 				}
 
 				if (floodMark [curr.y - 1, curr.x] < 0) {
@@ -599,6 +610,9 @@ public class EnemyBomber : MonoBehaviour,Distroyable,SetBomb,Locatable,CanBuffed
 					} else {
 						floodMark [curr.y - 1, curr.x] = pathLen;
 						queSearch.Enqueue (temp);
+					}
+					if (temp.x == dest.x && temp.y == dest.y) {
+						break;
 					}
 				}
 			}

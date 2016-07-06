@@ -9,12 +9,14 @@ public class MapDataEncoder{
 	public static int C_EMPTY = 0;
 	public static int C_PLAYER = 1;
 	public static int C_ENEMY = 2;
+	public static int C_MONSTER = 5;
 
 	public enum MapDataCodeEnum{
 		EMPTY = 0, 
 		PLAYER = 1, 
 		ENEMY = 2, 
 		NORMAL_CUBE = 3, 
-		WALL_CUBE = 4
+		WALL_CUBE = 4,
+		MONSTER = 5
 	};
 }

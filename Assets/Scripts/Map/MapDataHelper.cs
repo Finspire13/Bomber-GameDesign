@@ -11,6 +11,7 @@ public class MapDataHelper : MonoBehaviour {
     public GameObject PLANE;
     public GameObject PLAYER;
     public GameObject ENEMY;
+	public GameObject[] Objects;
 
     [HideInInspector]
 	public static MapDataHelper instance = null;
@@ -189,28 +190,34 @@ public class MapDataHelper : MonoBehaviour {
 		case (int)MapDataEncoder.MapDataCodeEnum.EMPTY:
 			break;
 		case (int)MapDataEncoder.MapDataCodeEnum.NORMAL_CUBE:
-			mapComponent = (GameObject)Instantiate (NORMAL_CUBE, position, Quaternion.identity);
+			mapComponent = (GameObject)Instantiate (Objects[3], position, Quaternion.identity);
 			mapComponent.transform.parent = mMapModel.transform;
 			GameDataProcessor.instance.addObject (mapComponent.GetComponent<NormalCube>());
             break;
 		case (int)MapDataEncoder.MapDataCodeEnum.WALL_CUBE:
-			mapComponent = (GameObject)Instantiate (WALL_CUBE, position, Quaternion.identity);
+			mapComponent = (GameObject)Instantiate (Objects[4], position, Quaternion.identity);
 			mapComponent.transform.parent = mMapModel.transform;
 			GameDataProcessor.instance.addObject (mapComponent.GetComponent<WallCube>());
 			break;
 		case (int)MapDataEncoder.MapDataCodeEnum.PLAYER:
-			mapComponent = (GameObject)Instantiate (PLAYER, position, Quaternion.identity);
+			mapComponent = (GameObject)Instantiate (Objects[1], position, Quaternion.identity);
 			mapComponent.transform.parent = mMapModel.transform;
 			mapComponent.transform.Rotate (0, -90, 0);
 			GameDataProcessor.instance.addObject (mapComponent.GetComponentInChildren<PlayerConrol> ());
 			mapComponent.tag = "Player";
 			break;
 		case (int)MapDataEncoder.MapDataCodeEnum.ENEMY:
-			mapComponent = (GameObject)Instantiate (ENEMY, position, Quaternion.identity);
+			mapComponent = (GameObject)Instantiate (Objects[2], position, Quaternion.identity);
 			mapComponent.transform.parent = mMapModel.transform;
 			mapComponent.transform.Rotate (0, -90, 0);
 			mapComponent.tag = "Enemy";
 			//leave blank
+			break;
+		case (int)MapDataEncoder.MapDataCodeEnum.MONSTER:
+			mapComponent = (GameObject)Instantiate (Objects[5], position, Quaternion.identity);
+			mapComponent.transform.parent = mMapModel.transform;
+			mapComponent.transform.Rotate (0, -90, 0);
+			mapComponent.tag = "Monster";
 			break;
 		default:
 			break;

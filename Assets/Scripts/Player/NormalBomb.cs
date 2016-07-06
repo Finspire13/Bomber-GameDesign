@@ -49,7 +49,6 @@ public class NormalBomb :MonoBehaviour,Bomb,Distroyable,Locatable
 	// Update is called once per frame
 	void Update () {
 		if (lifeTime <= 0 && isActive) {
-			this.createFire();
 			isActive = false;
 			this.distroy();
 		}
@@ -107,14 +106,15 @@ public class NormalBomb :MonoBehaviour,Bomb,Distroyable,Locatable
 //			isActive = false;
 //			this.distroy ();
 //		}
-//		lifeTime = 0;
-		this.distroy ();
+		lifeTime = 0;
+//		this.distroy ();
 	}
 
 	public void distroy(){
 //		if (owner.CurrNum > 0) {
 //			owner.CurrNum -= 1;
 //		}
+		this.createFire();
 		GameManager.instance.increaseBombCount(owner);
 		owner.notifyExplosion(this);
 		GameDataProcessor.instance.removeObject (this);
