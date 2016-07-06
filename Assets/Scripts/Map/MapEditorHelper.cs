@@ -114,4 +114,8 @@ public class MapEditorHelper : MonoBehaviour {
 	public void setSavedFileName(string name){
 		fileName = name;
 	}
+
+	public void exitMapEditor(){
+		GameManager.instance.changeGameState (GameState.start);
+	}
 }
