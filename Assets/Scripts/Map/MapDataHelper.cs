@@ -70,7 +70,7 @@ public class MapDataHelper : MonoBehaviour {
 	public string[] getPresetMapList(){
 		string[] maps = new string[LEVEL_MAP_DATA.Length];
 		for (int i = 0, len = maps.Length; i < len; i++) {
-			maps [i] = "Level " + (i+1);
+			maps [i] = "Preset Map " + (i+1);
 		}
 		return maps;
 	}

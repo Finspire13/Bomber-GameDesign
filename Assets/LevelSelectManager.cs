@@ -30,4 +30,9 @@ public class LevelSelectManager : MonoBehaviour {
 		GameManager.instance.customMap = mapName;
 		GameManager.instance.changeGameState (GameState.playing);
 	}
+
+	public void backToMenu(){
+		GameManager.instance.changeGameState (GameState.start);
+	}
+
 }
