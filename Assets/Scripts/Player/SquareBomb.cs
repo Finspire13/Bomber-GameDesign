@@ -39,6 +39,9 @@ public class SquareBomb :MonoBehaviour,Bomb,Distroyable,Locatable
 		if (lifeTime <= 0 && isActive) {
 			this.createFire();
 			isActive = false;
+			this.createFire();
+			GameManager.instance.increaseBombCount(owner);
+			owner.notifyExplosion(this);
 			this.distroy();
 		}
 	}
@@ -102,9 +105,9 @@ public class SquareBomb :MonoBehaviour,Bomb,Distroyable,Locatable
 //		if (owner.CurrNum > 0) {
 //			owner.CurrNum -= 1;
 //		}
-		this.createFire();
-		GameManager.instance.increaseBombCount(owner);
-		owner.notifyExplosion(this);
+//		this.createFire();
+//		GameManager.instance.increaseBombCount(owner);
+//		owner.notifyExplosion(this);
 		GameDataProcessor.instance.removeObject (this);
 		RhythmRecorder.instance.removeObserver (this);
 		Destroy(this.gameObject,0);
@@ -163,6 +166,10 @@ public class SquareBomb :MonoBehaviour,Bomb,Distroyable,Locatable
 			this.transform.position += (diffY/frameCount)*Vector3.back;
 			yield return null;
 		}
+	}
+
+	void OnDestroy(){
+		this.distroy ();
 	}
 }
 

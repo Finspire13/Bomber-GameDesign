@@ -31,6 +31,7 @@ public class MonsterControl : MonoBehaviour,Distroyable,Attackable,Locatable,Mov
 	public void distroy(){
 		
 		Debug.Log ("Monster died");
+		this.currPath.Clear ();
 		GameDataProcessor.instance.removeObject (this);
 		RhythmRecorder.instance.removeObserver (this);
 		Destroy (this.gameObject, 0);
@@ -363,7 +364,6 @@ public class MonsterControl : MonoBehaviour,Distroyable,Attackable,Locatable,Mov
 	void Update ()
 	{
 		if (blood <= 0) {
-			this.currPath.Clear ();
 			createBuff ();
 			this.distroy ();
 		}
@@ -385,5 +385,10 @@ public class MonsterControl : MonoBehaviour,Distroyable,Attackable,Locatable,Mov
 			}
 		}
 	}
+
+	void OnDestroy(){
+		this.distroy ();
+	}
+
 }
 

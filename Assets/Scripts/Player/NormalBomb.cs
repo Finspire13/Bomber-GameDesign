@@ -50,6 +50,9 @@ public class NormalBomb :MonoBehaviour,Bomb,Distroyable,Locatable
 	void Update () {
 		if (lifeTime <= 0 && isActive) {
 			isActive = false;
+			this.createFire();
+			GameManager.instance.increaseBombCount(owner);
+			owner.notifyExplosion(this);
 			this.distroy();
 		}
 	}
@@ -111,12 +114,9 @@ public class NormalBomb :MonoBehaviour,Bomb,Distroyable,Locatable
 	}
 
 	public void distroy(){
-//		if (owner.CurrNum > 0) {
-//			owner.CurrNum -= 1;
-//		}
-		this.createFire();
-		GameManager.instance.increaseBombCount(owner);
-		owner.notifyExplosion(this);
+//		this.createFire();
+//		GameManager.instance.increaseBombCount(owner);
+//		owner.notifyExplosion(this);
 		GameDataProcessor.instance.removeObject (this);
 		RhythmRecorder.instance.removeObserver (this);
 		Destroy(this.gameObject,0);
@@ -277,6 +277,10 @@ public class NormalBomb :MonoBehaviour,Bomb,Distroyable,Locatable
 			this.transform.position += (diffY/frameCount)*Vector3.back;
 			yield return null;
 		}
+	}
+
+	void OnDestroy(){
+		this.distroy ();
 	}
 }
 

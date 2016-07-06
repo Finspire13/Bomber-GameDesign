@@ -233,4 +233,6 @@ public class RhythmRecorder: MonoBehaviour{
 		Debug.Log (beats);
 	}*/
 
+	public void resetGame(){
+	}
 }

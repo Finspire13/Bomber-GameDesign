@@ -36,6 +36,7 @@ public class NormalBombFire : MonoBehaviour,Distroyable,BombFire,Locatable
 	void Update ()
 	{
 		if (lifeTime <= 0) {
+			GameDataProcessor.instance.removeFromDangerMap (this);
 			distroy();
 			return;
 		}
@@ -76,7 +77,6 @@ public class NormalBombFire : MonoBehaviour,Distroyable,BombFire,Locatable
 	public void distroy(){
 
 		GameDataProcessor.instance.removeObject (this);
-		GameDataProcessor.instance.removeFromDangerMap (this);
 		RhythmRecorder.instance.removeObserver (this);
 		Destroy(this.gameObject,0);
 	}
@@ -95,6 +95,10 @@ public class NormalBombFire : MonoBehaviour,Distroyable,BombFire,Locatable
 				}
 			}
 		}
+	}
+
+	void OnDestroy(){
+		this.distroy ();
 	}
 }
 

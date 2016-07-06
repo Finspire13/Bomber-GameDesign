@@ -39,7 +39,7 @@ public class NormalCube : MonoBehaviour, Locatable,Distroyable,ScoreCount {
 	}
 	public void distroy()
 	{
-
+		GameDataProcessor.instance.removeObject (this);
 		Destroy(this.gameObject, 0);
 	}
     // Use this for initialization
@@ -59,9 +59,7 @@ public class NormalCube : MonoBehaviour, Locatable,Distroyable,ScoreCount {
 		{
 //			Debug.Log("cube died!!!");
 			createBuff ();
-
 			distroy();
-			GameDataProcessor.instance.removeObject (this);
 		}
 	}
 
@@ -82,6 +80,10 @@ public class NormalCube : MonoBehaviour, Locatable,Distroyable,ScoreCount {
 				((Locatable)script).pos = new Position (this.pos.x,this.pos.y);
 			}
 		}
+	}
+
+	void OnDestroy(){
+		this.distroy ();
 	}
 
 }

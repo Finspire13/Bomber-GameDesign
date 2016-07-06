@@ -80,18 +80,24 @@ public class GameDataProcessor : MonoBehaviour,RhythmObservable {
 	
 	// Update is called once per frame
 	void Update () {
-//		Debug.Log ("game data");
-//		Debug.Log (gameObjects.Count);
-//		Debug.Log ("mapSizeX:"+mapSizeX+",mapSizeY:"+mapSizeY);
-		if (mapInitClock && mapSizeX*mapSizeY != 0 ) {
-			dangerMap = new int[mapSizeX, mapSizeY];
-			benefitMap = new float[mapSizeX, mapSizeY];
-			initizeMap ();
-			mapInitClock = false;
-			int temp = mapSizeX;
-			mapSizeX = mapSizeY;
-			mapSizeY = temp;
-		}
+//		if (mapInitClock && mapSizeX*mapSizeY != 0 ) {
+//			dangerMap = new int[mapSizeX, mapSizeY];
+//			benefitMap = new float[mapSizeX, mapSizeY];
+//			initizeMap ();
+//			mapInitClock = false;
+//			int temp = mapSizeX;
+//			mapSizeX = mapSizeY;
+//			mapSizeY = temp;
+//		}
+	}
+
+	public void resetGame(){
+		dangerMap = new int[mapSizeX, mapSizeY];
+		benefitMap = new float[mapSizeX, mapSizeY];
+		initizeMap ();
+		int temp = mapSizeX;
+		mapSizeX = mapSizeY;
+		mapSizeY = temp;
 	}
 
 	public bool isInitialized(){

@@ -65,10 +65,18 @@ public class BombNumberUp : MonoBehaviour,Buff,Locatable,RhythmObservable,ScoreC
 			Debug.Log ("buff positon is null!!!");
 		}
 		if (lifeTime <= 0) {
-			RhythmRecorder.instance.removeObserver (this);
-			GameDataProcessor.instance.removeFromBenefitMap (this);
-			Destroy (this.gameObject, 0);
+			distroy ();
 		}	
+	}
+
+	void distroy(){
+		RhythmRecorder.instance.removeObserver (this);
+		GameDataProcessor.instance.removeFromBenefitMap (this);
+		Destroy (this.gameObject, 0);
+	}
+
+	void OnDestroy(){
+		this.distroy ();
 	}
 }
 

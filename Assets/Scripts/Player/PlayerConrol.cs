@@ -13,6 +13,8 @@ public class PlayerConrol : MonoBehaviour,Controlable,Locatable,SetBomb,Distroya
 		blood -= source.Damage;
 	}
 	public void distroy(){
+		GameDataProcessor.instance.removeObject (this);
+		RhythmRecorder.instance.removeFlagOwner (this);
 		Destroy (this.gameObject, 0);
 	}
 
@@ -370,6 +372,10 @@ public class PlayerConrol : MonoBehaviour,Controlable,Locatable,SetBomb,Distroya
 //		}
 		playerTools.Add (tool);
 		return true;
+	}
+
+	void OnDestroy(){
+		this.distroy ();
 	}
 }
 

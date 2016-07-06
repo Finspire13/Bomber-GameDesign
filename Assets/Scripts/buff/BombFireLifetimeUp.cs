@@ -66,10 +66,18 @@ public class BombFireLifetimeUp : MonoBehaviour,Buff,Locatable,RhythmObservable,
 			Debug.Log ("buff positon is null!!!");
 		}
 		if (lifeTime <= 0) {
-			RhythmRecorder.instance.removeObserver (this);
-			GameDataProcessor.instance.removeFromBenefitMap (this);
-			Destroy (this.gameObject, 0);
-		}	
+			this.distroy ();
+		}
+	}
+
+	void distroy(){
+		RhythmRecorder.instance.removeObserver (this);
+		GameDataProcessor.instance.removeFromBenefitMap (this);
+		Destroy (this.gameObject, 0);
+	}
+
+	void OnDestroy(){
+		this.distroy ();
 	}
 }
 

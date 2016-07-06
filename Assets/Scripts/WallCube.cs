@@ -22,6 +22,4 @@ public class WallCube : MonoBehaviour, Locatable {
 
     }
 
-    // Update is called once per frame
-
 }

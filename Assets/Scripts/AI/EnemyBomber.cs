@@ -753,4 +753,8 @@ public class EnemyBomber : MonoBehaviour,Distroyable,SetBomb,Locatable,CanBuffed
 	public bool obtainTools (BombTool tool){
 		return false;
 	}
+
+	void OnDestroy(){
+		this.distroy ();
+	}
 }

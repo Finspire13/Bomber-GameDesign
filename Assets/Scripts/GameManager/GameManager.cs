@@ -17,6 +17,13 @@ public class GameManager : MonoBehaviour {
 	public GameObject mapEditCanvas;
 	public GameObject levelEndCanvas;
 	public GameObject endCanvas;
+
+	private int enemyNum;
+	public int EnemyNum{
+		get{return enemyNum;}
+		set{enemyNum = value;}
+	}
+
 	private GameObject currentCanvas;
 	private int playerBlood;
 	public int level = 4;
@@ -136,11 +143,14 @@ public class GameManager : MonoBehaviour {
 			break;
 		case GameState.playing:
 			Destroy (currentCanvas);
+			//coupling
+			GameDataProcessor.instance.gameObjects.Clear ();
 			currentCanvas = Instantiate (playingCanvas) as GameObject;
 			if (playMode == PlayMode.presetMap)
 				MapDataHelper.instance.loadMap (presetMap);
 			else if (playMode ==PlayMode.customMap)
 				MapDataHelper.instance.loadMap (customMap);
+			this.resetGame ();
 			break;
 		case GameState.levelEnd:
 			Destroy (currentCanvas);
@@ -154,5 +164,10 @@ public class GameManager : MonoBehaviour {
 		default:
 			break;
 		}
+	}
+
+	public void resetGame(){
+		GameDataProcessor.instance.resetGame ();
+		RhythmRecorder.instance.resetGame ();
 	}
 }
