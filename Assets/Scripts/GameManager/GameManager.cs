@@ -50,7 +50,7 @@ public class GameManager : MonoBehaviour {
 
 	private GameObject currentCanvas;
 	private int playerBlood;
-	public int level = 4;
+	public int level = 3;
 	private bool canPlayerBuffed = true;
 
 	public PlayMode playMode;

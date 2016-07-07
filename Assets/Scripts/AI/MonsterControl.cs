@@ -103,6 +103,9 @@ public class MonsterControl : MonoBehaviour,Distroyable,Attackable,Locatable,Mov
 			+Mathf.Abs(initialPos.y - this.position.y);
 	}
 	protected MonsterState think(){
+		if (GameManager.instance.level <= 2) {
+			return MonsterState.MON_IDLE;
+		}
 		int distance = leastDistToPlayer ();
 		int distInitial = distToInitalPos ();
 	
@@ -375,6 +378,7 @@ public class MonsterControl : MonoBehaviour,Distroyable,Attackable,Locatable,Mov
 
 		GameObject buff = Resources.Load(buffList[buffIndex]) as GameObject;
 		GameObject obj = (GameObject)Instantiate(buff,this.gameObject.transform.position,this.gameObject.transform.rotation);
+		obj.transform.SetParent (MapDataHelper.instance.getMapModel().transform);
 		Buff script = (Buff)obj.GetComponent("Buff");
 		if (script == null) {
 			Debug.Log ("not script");
