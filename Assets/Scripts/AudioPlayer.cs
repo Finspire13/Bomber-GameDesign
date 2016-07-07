@@ -1,6 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+public enum SFX
+{
+	Explosion,Buff,PlayerDamaged,EnermyDamaged,Debuff,PlayerKilled,EnermyKilled,SetBomb
+}
+
 public class AudioPlayer : MonoBehaviour {
 
 	public static AudioPlayer instance = null;
@@ -13,6 +18,17 @@ public class AudioPlayer : MonoBehaviour {
 	public AudioClip bgm2;
 	public AudioClip bgm3;
 
+	public AudioClip explosion;
+	public AudioClip buff;
+	public AudioClip playerDamaged;
+	public AudioClip enermyDamaged;
+	public AudioClip debuff;
+	public AudioClip playerKilled;
+	public AudioClip enermyKilled;
+	public AudioClip setBomb;
+
+
+
 	void Awake()
 	{
 		if (instance == null)
@@ -23,11 +39,13 @@ public class AudioPlayer : MonoBehaviour {
 		DontDestroyOnLoad (gameObject);
 
 		BGMSource.loop = true;
+		BGMSource.volume = 0.55f;
 		BGMSource.playOnAwake = false;
 		BGMSource.Pause ();
 
 		SFXSource.loop = false;
 		SFXSource.playOnAwake = false;
+		SFXSource.volume = 1f;
 		SFXSource.Pause ();
 	}
 	// Use this for initialization
@@ -67,9 +85,60 @@ public class AudioPlayer : MonoBehaviour {
 	{
 		BGMSource.Pause ();
 	}
+
+	public void playSFX(SFX sfx)
+	{
+		switch (sfx) {
+		case SFX.Buff:
+			SFXSource.Pause ();
+			SFXSource.volume = 0.6f;
+			SFXSource.clip = buff;
+			SFXSource.Play ();
+			SFXSource.volume = 1f;
+			break;
+		case SFX.Debuff:
+			SFXSource.Pause ();
+			SFXSource.clip = debuff;
+			SFXSource.Play ();
+			break;
+		case SFX.EnermyDamaged:
+			SFXSource.Pause ();
+			SFXSource.clip = enermyDamaged;
+			SFXSource.Play ();
+			break;
+		case SFX.EnermyKilled:
+			SFXSource.Pause ();
+			SFXSource.clip = enermyKilled;
+			SFXSource.Play ();
+			break;
+		case SFX.Explosion:
+			SFXSource.Pause ();
+			SFXSource.volume = 0.9f;
+			SFXSource.clip = explosion;
+			SFXSource.Play ();
+			SFXSource.volume = 1f;
+			break;
+		case SFX.PlayerDamaged:
+			SFXSource.Pause ();
+			SFXSource.clip = playerDamaged;
+			SFXSource.Play ();
+			break;
+		case SFX.PlayerKilled:
+			SFXSource.Pause ();
+			SFXSource.clip = playerKilled;
+			SFXSource.Play ();
+			break;
+		case SFX.SetBomb:
+			SFXSource.Pause ();
+			SFXSource.clip = setBomb;
+			SFXSource.Play ();
+			break;
+		default:
+			break;
+		}
+	}
 	
 	// Update is called once per frame
 	void Update () {
-	
 	}
 }

@@ -54,8 +54,10 @@ public class BombNumberUp : MonoBehaviour,Buff,Locatable,RhythmObservable,ScoreC
 						((SetBomb)objs [i]).MaxNum += 1;
 					}
 					Debug.Log ("player bomb number up !");
+
 					lifeTime = 0;
 					if (objs [i] is PlayerConrol) {
+						AudioPlayer.instance.playSFX (SFX.Buff);
 						this.addToScore ();
 					}
 				}

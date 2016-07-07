@@ -54,8 +54,10 @@ public class BombPowerUp : MonoBehaviour,Buff,Locatable,RhythmObservable,ScoreCo
 						((SetBomb)objs [i]).BombPower += 1;
 					}
 					Debug.Log ("player power up !");
+
 					lifeTime = 0;
 					if (objs [i] is PlayerConrol) {
+						AudioPlayer.instance.playSFX (SFX.Buff);
 						this.addToScore ();
 					}
 				}

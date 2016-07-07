@@ -22,8 +22,10 @@ public class MonsterControl : MonoBehaviour,Distroyable,Attackable,Locatable,Mov
 
 	public void attackBy(Attackable source){
 		this.blood -= source.Damage;
+		AudioPlayer.instance.playSFX (SFX.EnermyDamaged);
 		if (blood <= 0) {
 			if (source is BombFire && ((BombFire)source).Owner is PlayerConrol) {
+				AudioPlayer.instance.playSFX (SFX.EnermyKilled);
 				this.addToScore ();
 			}
 		}

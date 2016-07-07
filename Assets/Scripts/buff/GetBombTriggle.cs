@@ -29,8 +29,10 @@ public class GetBombTriggle : BaseBuff
 						((SetBomb)objs [i]).BombLifeTime = 10;
 					}
 					Debug.Log ("player get triggle");
+
 					lifeTime = 0;
 					if (objs [i] is PlayerConrol) {
+						AudioPlayer.instance.playSFX (SFX.Buff);
 						this.addToScore ();
 					}
 				}

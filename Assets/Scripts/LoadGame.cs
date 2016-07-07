@@ -32,12 +32,12 @@ public class LoadGame : MonoBehaviour {
 	void Start () {
 //		Debug.Log ("Start:");
 //		Debug.Log (Time.time);
-		if (!RhythmRecorder.instance.setRhythm (RhythmList.Test)) {
-			Debug.Log ("error");
-		}
-		if (!RhythmRecorder.instance.startRhythm ()) {
-			Debug.Log ("error");
-		}
+		//if (!RhythmRecorder.instance.setRhythm (RhythmList.Test)) {
+		//	Debug.Log ("error");
+		//}
+		//if (!RhythmRecorder.instance.startRhythm ()) {
+		//	Debug.Log ("error");
+		//}
 
 		GameManager.instance.changeGameState (GameState.start);
 	}

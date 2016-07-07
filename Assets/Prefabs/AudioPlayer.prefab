@@ -251,6 +251,14 @@ MonoBehaviour:
   bgm1: {fileID: 8300000, guid: 6d9c53e501a2040a2b210718493abb73, type: 3}
   bgm2: {fileID: 8300000, guid: 0079881dbc293489ba50e3f494ec3e7e, type: 3}
   bgm3: {fileID: 8300000, guid: 42d108264ddde4a838372d76594369c4, type: 3}
+  explosion: {fileID: 8300000, guid: 43a0f578feb0f46dab076824458dcaed, type: 3}
+  buff: {fileID: 8300000, guid: ff867101d33494ca7a9e5a8f542744c6, type: 3}
+  playerDamaged: {fileID: 8300000, guid: df234746173204cb4bf19e7e743280b5, type: 3}
+  enermyDamaged: {fileID: 8300000, guid: 68014e3d6c7f947d0b35a9814fc99e47, type: 3}
+  debuff: {fileID: 8300000, guid: 161ae152253a141d1807bd0df7e4d5a4, type: 3}
+  playerKilled: {fileID: 8300000, guid: 8fff57d33d57748afa1ccf60a0cbafe1, type: 3}
+  enermyKilled: {fileID: 8300000, guid: 64c2e6990e2654c178089940fb0fe6a0, type: 3}
+  setBomb: {fileID: 8300000, guid: 6e2a0e91b1b7247d8a72a0c4d9d29ffa, type: 3}
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

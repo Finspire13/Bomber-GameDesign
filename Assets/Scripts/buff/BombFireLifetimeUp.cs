@@ -55,8 +55,10 @@ public class BombFireLifetimeUp : MonoBehaviour,Buff,Locatable,RhythmObservable,
 						((SetBomb)objs[i]).BombFireTime += 1;
 					}
 					Debug.Log ("player fireLifeTimeUp !");
+
 					lifeTime = 0;
 					if (objs [i] is PlayerConrol) {
+						AudioPlayer.instance.playSFX (SFX.Buff);
 						this.addToScore ();
 					}
 				}

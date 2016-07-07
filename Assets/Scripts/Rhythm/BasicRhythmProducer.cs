@@ -94,6 +94,8 @@ public class BasicRhythmProducer
 
 		beats = new ArrayList ();
 		foreach (string i in sArray) {
+			Debug.Log ("!!!@@@");
+			Debug.Log (i);
 			beats.Add (float.Parse (i));
 		}
 		return true;

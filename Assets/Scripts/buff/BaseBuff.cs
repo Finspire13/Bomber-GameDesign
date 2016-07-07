@@ -57,6 +57,7 @@ public class BaseBuff : MonoBehaviour,Buff,Locatable,RhythmObservable,ScoreCount
 					}
 					lifeTime = 0;
 					if (objs [i] is PlayerConrol) {
+						
 						this.addToScore ();
 					}
 				}

@@ -5,9 +5,9 @@ public class RhythmList {
 
 	public static string Default = "default";
 	public static string Test = Application.dataPath+"/Rhythm/TestRhythm.txt";
-	public static string Tombtorial = Application.dataPath+"/Rhythm/TestRhythm.txt";
-	public static string Rhythmortis = Application.dataPath+"/Rhythm/TestRhythm.txt";
-	public static string WatchYourStep = Application.dataPath+"/Rhythm/TestRhythm.txt";
+	public static string Tombtorial = Application.dataPath+"/Rhythm/rhythm2.txt";
+	public static string Rhythmortis = Application.dataPath+"/Rhythm/rhythm1.txt";
+	public static string WatchYourStep = Application.dataPath+"/Rhythm/rhythm3.txt";
 }
 
 public class MusicList{

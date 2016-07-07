@@ -67,7 +67,7 @@ public class PersonRhythmProducer:BasicRhythmProducer
 //		rhythmFlagOwners.Remove (owner);
 //	}
 
-	public override bool setRhythm(string newRhythm){
+	//public override bool setRhythm(string newRhythm){
 
 //		currentRhythm = newRhythm;
 //		resetRhythm ();
@@ -84,8 +84,8 @@ public class PersonRhythmProducer:BasicRhythmProducer
 //			beats.Add (float.Parse (i));
 //		}
 //		return true;
-		return true;
-	}
+	//	return true;
+	//}
 
 //	public bool startRhythm()
 //	{

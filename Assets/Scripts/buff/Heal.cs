@@ -55,8 +55,10 @@ public class Heal : MonoBehaviour,Buff,Locatable,RhythmObservable,ScoreCount {
 						((Distroyable)objs [i]).Blood += effectValue;
 					}
 					Debug.Log ("Heal!");
+
 					lifeTime = 0;
 					if (objs [i] is PlayerConrol) {
+						AudioPlayer.instance.playSFX (SFX.Buff);
 						this.addToScore ();
 					}
 				}

@@ -54,9 +54,11 @@ public class SpeedUp : MonoBehaviour,Buff,Locatable,RhythmObservable,ScoreCount
 					if(GameManager.instance.isBuffValid (objs [i])){
 						((MoveAble)objs[i]).Speed +=effectValue;
 					}
-//					Debug.Log ("Speed Up!");
+					Debug.Log ("Speed Up!");
+
 					lifeTime = 0;
 					if (objs [i] is PlayerConrol) {
+						AudioPlayer.instance.playSFX (SFX.Buff);
 						this.addToScore ();
 					}
 				}

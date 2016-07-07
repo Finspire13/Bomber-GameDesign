@@ -56,8 +56,10 @@ public class SlowDown : MonoBehaviour,Buff,Locatable,RhythmObservable,ScoreCount
 	
 					}
 					Debug.Log ("Slow down!");
+
 					lifeTime = 0;
 					if (objs [i] is PlayerConrol) {
+						AudioPlayer.instance.playSFX (SFX.Debuff);
 						this.addToScore ();
 					}
 				}

@@ -11,6 +11,7 @@ public class PlayerConrol : MonoBehaviour,Controlable,Locatable,SetBomb,Distroya
 	}
 	public void attackBy(Attackable source){
 		blood -= source.Damage;
+		AudioPlayer.instance.playSFX (SFX.PlayerDamaged);
 	}
 	public void distroy(){
 		GameDataProcessor.instance.removeObject (this);
@@ -82,6 +83,7 @@ public class PlayerConrol : MonoBehaviour,Controlable,Locatable,SetBomb,Distroya
 					//script.LifeTime = bomblifeTime;
 					//script.isActive = true;
 //					script.LifeTime = 3;
+					AudioPlayer.instance.playSFX(SFX.SetBomb);
 					script.setProperties(this,bombPower,bombLifeTime,bombFireTime);
 					this.registerBomb (script);
 					GameDataProcessor.instance.addToDangerMap (script);
@@ -176,6 +178,7 @@ public class PlayerConrol : MonoBehaviour,Controlable,Locatable,SetBomb,Distroya
 		GameManager.instance.PlayerBlood = this.blood;
 		if (blood <= 0) {
 			Debug.Log("you lose!!");
+			AudioPlayer.instance.playSFX (SFX.PlayerKilled);
 			distroy();
 		}
 

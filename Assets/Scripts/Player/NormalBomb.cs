@@ -117,6 +117,7 @@ public class NormalBomb :MonoBehaviour,Bomb,Distroyable,Locatable
 //		this.createFire();
 //		GameManager.instance.increaseBombCount(owner);
 //		owner.notifyExplosion(this);
+		AudioPlayer.instance.playSFX(SFX.Explosion);
 		GameDataProcessor.instance.removeObject (this);
 		RhythmRecorder.instance.removeObserver (this);
 		Destroy(this.gameObject,0);

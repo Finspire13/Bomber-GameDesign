@@ -110,6 +110,7 @@ public class SquareBomb :MonoBehaviour,Bomb,Distroyable,Locatable
 //		owner.notifyExplosion(this);
 		GameDataProcessor.instance.removeObject (this);
 		RhythmRecorder.instance.removeObserver (this);
+		AudioPlayer.instance.playSFX(SFX.Explosion);
 		Destroy(this.gameObject,0);
 	}
 

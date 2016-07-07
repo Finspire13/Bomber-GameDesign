@@ -28,8 +28,10 @@ public class GetSquareBomb : BaseBuff
 						((SetBomb)objs [i]).setBomb (squareBomb);
 					}
 					Debug.Log ("player get SquareBomb!");
+
 					lifeTime = 0;
 					if (objs [i] is PlayerConrol) {
+						AudioPlayer.instance.playSFX (SFX.Buff);
 						this.addToScore ();
 					}
 				}

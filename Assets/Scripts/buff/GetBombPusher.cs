@@ -27,8 +27,10 @@ public class GetBombPusher : BaseBuff
 						((SetBomb)objs [i]).obtainTools (pusher);
 					}
 					Debug.Log ("player get pusher");
+
 					lifeTime = 0;
 					if (objs [i] is PlayerConrol) {
+						AudioPlayer.instance.playSFX (SFX.Buff);
 						this.addToScore ();
 					}
 				}

@@ -82,7 +82,7 @@ public class GameManager : MonoBehaviour {
 		}
 		return scoreMap;
 	}
-	public void rhythmSetting (){
+	public void rhythmSetting (string rhythm){
 		switch (level) {
 		case 1:
 			RhythmRecorder.instance.setProducer (new PersonRhythmProducer());
@@ -99,7 +99,8 @@ public class GameManager : MonoBehaviour {
 		default:
 			break;
 		}
-		RhythmRecorder.instance.setRhythm (RhythmList.Test);
+		RhythmRecorder.instance.resetRhythm ();
+		RhythmRecorder.instance.setRhythm (rhythm);
 		RhythmRecorder.instance.startRhythm ();
 	}
 	public void levelSetting(){
@@ -204,12 +205,20 @@ public class GameManager : MonoBehaviour {
 			//coupling
 			GameDataProcessor.instance.gameObjects.Clear ();
 			currentCanvas = Instantiate (playingCanvas) as GameObject;
+
+			string[] rhythmList = { RhythmList.Rhythmortis, RhythmList.Tombtorial, RhythmList.WatchYourStep };
+			int index=UnityEngine.Random.Range (0, rhythmList.Length);
+
+
+			GameManager.instance.rhythmSetting (rhythmList[index]);
+			AudioPlayer.instance.playBGM (index%3+1);
+
 			if (playMode == PlayMode.presetMap)
 				MapDataHelper.instance.loadMap (presetMap);
 			else if (playMode == PlayMode.customMap)
 				MapDataHelper.instance.loadMap (customMap);
 			this.resetGame ();
-			AudioPlayer.instance.playBGM (level%3+1);
+
 			break;
 		case GameState.levelEnd:
 			Destroy (currentCanvas);

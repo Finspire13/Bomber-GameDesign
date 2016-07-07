@@ -54,8 +54,10 @@ public class GhostForm : MonoBehaviour,Buff,Locatable,RhythmObservable,ScoreCoun
 						((PlayerConrol)objs [i]).IsGhost = true;
 					}
 					Debug.Log ("Ghost Player!");
+
 					lifeTime = 0;
 					if (objs [i] is PlayerConrol) {
+						AudioPlayer.instance.playSFX (SFX.Buff);
 						this.addToScore ();
 					}
 				}
