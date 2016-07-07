@@ -21,6 +21,14 @@ public class GameManager : MonoBehaviour {
 	public GameState currState;
 
 	public ArrayList playerList;
+	public ArrayList enemyList;
+
+	public void addToEnemyList(EnemyBomber enemy){
+		enemyList.Add (enemy);
+	}
+	public void removeFromEnemyList(EnemyBomber enemy){
+		enemyList.Remove(enemy);
+	}
 
 	public void addToPlayerList(PlayerConrol player){
 		playerList.Add (player);
@@ -130,6 +138,7 @@ public class GameManager : MonoBehaviour {
 
 		this.level = 3;
 		playerList = new ArrayList ();
+		enemyList = new ArrayList ();
 	}
 
 	void Start () {
@@ -138,13 +147,13 @@ public class GameManager : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if (GameState.playing == currState && enemyNumber <= 0 && gameVictoryClock) {
-			gameVictoryClock = false;
-			gameVictory ();
-		}
 		if (GameState.playing == currState && playerList.Count <= 0 && gameVictoryClock) {
 			gameVictoryClock = false;
 			gameOver ();
+		}
+		if (GameState.playing == currState && enemyList.Count <= 0 && gameVictoryClock) {
+			gameVictoryClock = false;
+			gameVictory ();
 		}
 	}
 

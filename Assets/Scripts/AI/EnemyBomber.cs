@@ -14,7 +14,7 @@ public class EnemyBomber : MonoBehaviour,Distroyable,SetBomb,Locatable,CanBuffed
 		set{speed = value; }
 	}
 	private bool rhmFlag;
-	private int blood;
+	private int blood = 10;
 
 	private int maxNum;
 	private int currNum;
@@ -37,17 +37,15 @@ public class EnemyBomber : MonoBehaviour,Distroyable,SetBomb,Locatable,CanBuffed
 		set{ position=value;}
 	}
 
-	// Use this for initialization
-	void Start ()
-	{
+	void Awake(){
 		this.bombType = Resources.Load("NormalBomb") as GameObject;
 		RhythmRecorder.instance.addObservedSubject (this);
 		this.position = new Position(Mathf.RoundToInt(transform.localPosition.z),Mathf.RoundToInt(transform.localPosition.x));
 
 		GameDataProcessor.instance.addObject (this);
+		GameManager.instance.addToEnemyList (this);
 
-
-//		Debug.Log ("enemy pos:x="+position.x+",y="+position.y);
+		//		Debug.Log ("enemy pos:x="+position.x+",y="+position.y);
 
 		this.maxNum = 3;
 		this.currNum = 0;
@@ -55,7 +53,14 @@ public class EnemyBomber : MonoBehaviour,Distroyable,SetBomb,Locatable,CanBuffed
 		this.bombLifeTime = 3;
 		this.bombPower = 2;
 		this.bombFireTime = 1;
+		this.blood = 10;
 		this.currPath = new Queue<Position>();
+	
+	}
+	// Use this for initialization
+	void Start ()
+	{
+		
 	}
 	
 	// Update is called once per frame
@@ -66,6 +71,9 @@ public class EnemyBomber : MonoBehaviour,Distroyable,SetBomb,Locatable,CanBuffed
 		//			decisionMap = new int[GameDataProcessor.mapSizeY, GameDataProcessor.mapSizeX];
 //			mapInitClock = false;
 //		}
+		if (blood <= 0) {
+			this.distroy();
+		}
 	}
 
 	public bool rhythmFlag{ 
@@ -80,6 +88,7 @@ public class EnemyBomber : MonoBehaviour,Distroyable,SetBomb,Locatable,CanBuffed
 	}
 	public void attackBy(Attackable source){
 		Debug.Log ("AI was attacked by"+source.ToString());
+		this.blood -= source.Damage;
 		if (blood <= 0) {
 			if (source is BombFire && ((BombFire)source).Owner is PlayerConrol) {
 				this.addToScore ();
@@ -87,6 +96,7 @@ public class EnemyBomber : MonoBehaviour,Distroyable,SetBomb,Locatable,CanBuffed
 		}
 	}
 	public void distroy(){
+		GameManager.instance.removeFromEnemyList (this);
 		GameDataProcessor.instance.removeObject (this);
 		RhythmRecorder.instance.removeObserver (this);
 		Destroy (this.gameObject, 0);

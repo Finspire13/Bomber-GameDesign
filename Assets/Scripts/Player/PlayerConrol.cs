@@ -3,7 +3,7 @@ using System.Collections;
 
 public class PlayerConrol : MonoBehaviour,Controlable,Locatable,SetBomb,Distroyable,CanBuffed,MoveAble
 {
-	private int blood;
+	private int blood = 20;
 	public int Blood 
 	{
 		get{return blood;}
@@ -140,7 +140,7 @@ public class PlayerConrol : MonoBehaviour,Controlable,Locatable,SetBomb,Distroya
 		this.bombFireTime = 1;
 		this.canSetBomb = true;
 		this.isGhost = false;
-		this.blood = 50;
+		this.blood = 20;
 	}
 	// Use this for initialization
 	void Start ()
