@@ -1,47 +1,16 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class BombFireLifetimeUp : MonoBehaviour,Buff,Locatable,RhythmObservable,ScoreCount
+public class GetBombPusher : BaseBuff
 {
-	private Position position;
-	public Position pos{ 
-		get{return position; }
-		set{position = value; }
-	}
-	private int lifeTime = 25;
-	public int LifeTime{
-		get{return lifeTime; }
-		set{lifeTime = value; }
-	}
-	public int buffValue = 50;
-	public int Value {
-		get{return buffValue; }
-		set{buffValue = value; }
-	}
-	private string gameName = "Buff-FireTimeUp";
-	private float gameValue = 10f;
-
-	public string getName(){
-		return this.gameName;
-	}
-	public float getValue(){
-		return this.gameValue;
-	}
-	public void addToScore(){
-		GameManager.instance.addToPlayerScoreList (this);
-	}
-
-	public void actionOnBeat (){
-		--lifeTime;
-	}
 
 	// Use this for initialization
 	void Start ()
 	{
 		RhythmRecorder.instance.addObservedSubject (this,0.1f);
 		GameDataProcessor.instance.addToBenefitMap (this);
-		//		this.lifeTime = 200;
-		//		this.buffValue = 5;
+		this.gameName = "Tool-triggle";
+		this.gameValue = 100f;
 	}
 
 	// Update is called once per frame
@@ -50,11 +19,14 @@ public class BombFireLifetimeUp : MonoBehaviour,Buff,Locatable,RhythmObservable,
 		if (!this.position.Equals(null)) {
 			ArrayList objs = GameDataProcessor.instance.getObjectAtPostion (this.position);
 			for (int i = 0; i < objs.Count; ++i) {
-				if (objs[i] is SetBomb) {
+				if (objs[i] is SetBomb && objs[i] is PlayerConrol) {
+
 					if(GameManager.instance.isBuffValid(objs[i])){
-						((SetBomb)objs[i]).BombFireTime += 1;
+						//your effect;
+						BombPushTool pusher = new BombPushTool ((SetBomb)objs[i]);
+						((SetBomb)objs [i]).obtainTools (pusher);
 					}
-					Debug.Log ("player fireLifeTimeUp !");
+					Debug.Log ("player get pusher");
 					lifeTime = 0;
 					if (objs [i] is PlayerConrol) {
 						this.addToScore ();

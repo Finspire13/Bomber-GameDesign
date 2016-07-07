@@ -16,7 +16,7 @@ public class BombPushTool: BombTool,ScoreCount
 		return this.gameValue;
 	}
 	public void addToScore(){
-		GameManager.instance.addToPlayerScoreList (this);
+//		GameManager.instance.addToPlayerScoreList (this);
 	}
 
 	public BombPushTool (SetBomb owner)

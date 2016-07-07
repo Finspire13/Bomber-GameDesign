@@ -91,7 +91,10 @@ public class PlayerConrol : MonoBehaviour,Controlable,Locatable,SetBomb,Distroya
 	private int bombPower = 2;
 	public int BombPower {
 		get{return bombPower; }
-		set{bombPower = value; }
+		set{
+			bombPower = value; 
+//			(this.bombType.GetComponent (typeof(Bomb)) as Bomb).Power = bombPower;
+		}
 	}
 	private int bombLifeTime = 3;
 	public int BombLifeTime {
@@ -101,7 +104,9 @@ public class PlayerConrol : MonoBehaviour,Controlable,Locatable,SetBomb,Distroya
 	private int bombFireTime = 1;
 	public int BombFireTime {
 		get{return bombFireTime; }
-		set{bombFireTime = value; }
+		set{
+			bombFireTime = value; 
+		}
 	}
 
 	public void notifyExplosion (Bomb bomb){
@@ -128,7 +133,7 @@ public class PlayerConrol : MonoBehaviour,Controlable,Locatable,SetBomb,Distroya
 
 		this.maxNum = 10;
 		this.currNum = 0;
-		this.bombLifeTime = 30;
+		this.bombLifeTime = 3;
 		this.bombPower = 1;
 		this.bombFireTime = 1;
 		this.canSetBomb = true;
@@ -138,11 +143,11 @@ public class PlayerConrol : MonoBehaviour,Controlable,Locatable,SetBomb,Distroya
 	// Use this for initialization
 	void Start ()
 	{
-		BombTriggleTool tool = new BombTriggleTool (this);
+//		BombTriggleTool tool = new BombTriggleTool (this);
+////		this.obtainTools (tool);
 //		this.obtainTools (tool);
-		this.obtainTools (tool);
-		BombPushTool pushTool = new BombPushTool (this);
-		this.obtainTools (pushTool);
+//		BombPushTool pushTool = new BombPushTool (this);
+//		this.obtainTools (pushTool);
 
 		this.position = new Position(Mathf.CeilToInt(transform.localPosition.z),Mathf.CeilToInt(transform.localPosition.x));
 
@@ -370,6 +375,12 @@ public class PlayerConrol : MonoBehaviour,Controlable,Locatable,SetBomb,Distroya
 //			Debug.Log (temp.getToolName()+"has already existed");
 //			return false;
 //		}
+		for (int i = 0; i < playerTools.Count; ++i) {
+			if(playerTools[i].GetType() == tool.GetType()){
+				Debug.Log ("already own this tool");
+				return false;
+			}
+		}
 		playerTools.Add (tool);
 		return true;
 	}

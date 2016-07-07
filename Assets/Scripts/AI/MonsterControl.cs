@@ -370,7 +370,7 @@ public class MonsterControl : MonoBehaviour,Distroyable,Attackable,Locatable,Mov
 	}
 
 	void createBuff(){
-		string[] buffList = {"FireLifeTimeUp"};
+		string[] buffList = {"GetBombTriggle","GetBombPusher"};
 		int buffIndex=UnityEngine.Random.Range (0, buffList.Length);
 
 		GameObject buff = Resources.Load(buffList[buffIndex]) as GameObject;

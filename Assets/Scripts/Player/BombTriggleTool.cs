@@ -15,7 +15,7 @@ public class BombTriggleTool: BombTool,ScoreCount
 		return this.gameValue;
 	}
 	public void addToScore(){
-		GameManager.instance.addToPlayerScoreList (this);
+//		GameManager.instance.addToPlayerScoreList (this);
 	}
 
 	public BombTriggleTool (SetBomb owner)

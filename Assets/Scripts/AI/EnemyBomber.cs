@@ -106,7 +106,10 @@ public class EnemyBomber : MonoBehaviour,Distroyable,SetBomb,Locatable,CanBuffed
 	private int bombPower = 4;
 	public int BombPower {
 		get{return bombPower; }
-		set{bombPower = value; }
+		set{
+			bombPower = value; 
+			(this.bombType.GetComponent (typeof(Bomb)) as Bomb).Power = bombPower;
+		}
 	}
 	private int bombLifeTime = 5;
 	public int BombLifeTime {
