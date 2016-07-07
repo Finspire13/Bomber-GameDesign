@@ -189,6 +189,7 @@ public class GameManager : MonoBehaviour {
 		case GameState.start:
 			Destroy (currentCanvas);
 			currentCanvas = Instantiate (startCanvas) as GameObject;
+			AudioPlayer.instance.playBGM (0);
 			break;
 		case GameState.levelSelect:
 			Destroy (currentCanvas);
@@ -205,18 +206,21 @@ public class GameManager : MonoBehaviour {
 			currentCanvas = Instantiate (playingCanvas) as GameObject;
 			if (playMode == PlayMode.presetMap)
 				MapDataHelper.instance.loadMap (presetMap);
-			else if (playMode ==PlayMode.customMap)
+			else if (playMode == PlayMode.customMap)
 				MapDataHelper.instance.loadMap (customMap);
 			this.resetGame ();
+			AudioPlayer.instance.playBGM (level%3+1);
 			break;
 		case GameState.levelEnd:
 			Destroy (currentCanvas);
 			currentCanvas = Instantiate (levelEndCanvas) as GameObject;
 			MapDataHelper.instance.deleteMap ();
+			//AudioPlayer.instance.stopBGM ();
 			break;
 		case GameState.end:
 			Destroy (currentCanvas);
 			currentCanvas = Instantiate (endCanvas) as GameObject;
+			AudioPlayer.instance.playBGM (0);
 			break;
 		default:
 			break;

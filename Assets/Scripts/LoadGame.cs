@@ -7,6 +7,7 @@ public class LoadGame : MonoBehaviour {
 	public GameObject mapDataHelper;
 	public GameObject gameDataProcessor;
 	public GameObject gameManager;
+	public GameObject audioPlayer;
 //	public GameObject ui;
 
 	void Awake(){
@@ -21,6 +22,9 @@ public class LoadGame : MonoBehaviour {
 		}
 		if (GameManager.instance == null) {
 			Instantiate (gameManager);
+		}
+		if (AudioPlayer.instance == null) {
+			Instantiate (audioPlayer);
 		}
 	}
 
