@@ -207,17 +207,19 @@ public class GameManager : MonoBehaviour {
 			currentCanvas = Instantiate (playingCanvas) as GameObject;
 
 			string[] rhythmList = { RhythmList.Rhythmortis, RhythmList.Tombtorial, RhythmList.WatchYourStep };
-			int index=UnityEngine.Random.Range (0, rhythmList.Length);
+			int index = UnityEngine.Random.Range (0, rhythmList.Length);
 
 
-			GameManager.instance.rhythmSetting (rhythmList[index]);
-			AudioPlayer.instance.playBGM (index%3+1);
+			GameManager.instance.rhythmSetting (rhythmList [index]);
+			AudioPlayer.instance.playBGM (index % 3 + 1);
 
 			if (playMode == PlayMode.presetMap)
 				MapDataHelper.instance.loadMap (presetMap);
 			else if (playMode == PlayMode.customMap)
 				MapDataHelper.instance.loadMap (customMap);
 			this.resetGame ();
+
+			AudioPlayer.instance.playSFX (SFX.Start);
 
 			break;
 		case GameState.levelEnd:
@@ -240,10 +242,13 @@ public class GameManager : MonoBehaviour {
 	public void gameVictory(){
 		this.levelState = LevelState.win;
 		PlayingCanvasAction action = currentCanvas.GetComponent<PlayingCanvasAction> ();
+		AudioPlayer.instance.playSFX (SFX.Victory);
+		AudioPlayer.instance.playBGM (0);
 		action.showDialog ();
 	}
 	public void gameOver(){
 		this.levelState = LevelState.lose;
+		AudioPlayer.instance.playBGM (0);
 		PlayingCanvasAction action = currentCanvas.GetComponent<PlayingCanvasAction> ();
 		action.showDialog ();
 	}

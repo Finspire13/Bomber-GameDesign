@@ -3,7 +3,7 @@ using System.Collections;
 
 public enum SFX
 {
-	Explosion,Buff,PlayerDamaged,EnermyDamaged,Debuff,PlayerKilled,EnermyKilled,SetBomb
+	Explosion,Buff,PlayerDamaged,EnermyDamaged,Debuff,PlayerKilled,EnermyKilled,SetBomb,Start,Victory
 }
 
 public class AudioPlayer : MonoBehaviour {
@@ -26,7 +26,8 @@ public class AudioPlayer : MonoBehaviour {
 	public AudioClip playerKilled;
 	public AudioClip enermyKilled;
 	public AudioClip setBomb;
-
+	public AudioClip start;
+	public AudioClip victory;
 
 
 	void Awake()
@@ -131,6 +132,16 @@ public class AudioPlayer : MonoBehaviour {
 		case SFX.SetBomb:
 			SFXSource.Pause ();
 			SFXSource.clip = setBomb;
+			SFXSource.Play ();
+			break;
+		case SFX.Victory:
+			SFXSource.Pause ();
+			SFXSource.clip = victory;
+			SFXSource.Play ();
+			break;
+		case SFX.Start:
+			SFXSource.Pause ();
+			SFXSource.clip = start;
 			SFXSource.Play ();
 			break;
 		default:

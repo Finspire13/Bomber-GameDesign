@@ -259,6 +259,8 @@ MonoBehaviour:
   playerKilled: {fileID: 8300000, guid: 8fff57d33d57748afa1ccf60a0cbafe1, type: 3}
   enermyKilled: {fileID: 8300000, guid: 64c2e6990e2654c178089940fb0fe6a0, type: 3}
   setBomb: {fileID: 8300000, guid: 6e2a0e91b1b7247d8a72a0c4d9d29ffa, type: 3}
+  start: {fileID: 8300000, guid: 236bda5d988f342169b5c2953f800ba2, type: 3}
+  victory: {fileID: 8300000, guid: 65d52b0a3134d4749a8053ef32ecd92f, type: 3}
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1
