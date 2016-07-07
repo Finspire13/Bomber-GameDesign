@@ -14,7 +14,7 @@ public class EnemyBomber : MonoBehaviour,Distroyable,SetBomb,Locatable,CanBuffed
 		set{speed = value; }
 	}
 	private bool rhmFlag;
-	private int blood = 10;
+	private int blood = 50;
 
 	private int maxNum;
 	private int currNum;
@@ -53,7 +53,7 @@ public class EnemyBomber : MonoBehaviour,Distroyable,SetBomb,Locatable,CanBuffed
 		this.bombLifeTime = 3;
 		this.bombPower = 2;
 		this.bombFireTime = 1;
-		this.blood = 10;
+		this.blood = 50;
 		this.currPath = new Queue<Position>();
 	
 	}

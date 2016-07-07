@@ -82,6 +82,26 @@ public class GameManager : MonoBehaviour {
 		}
 		return scoreMap;
 	}
+	public void rhythmSetting (){
+		switch (level) {
+		case 1:
+			RhythmRecorder.instance.setProducer (new PersonRhythmProducer());
+			break;
+		case 2:
+			RhythmRecorder.instance.setProducer (new BasicRhythmProducer ());
+			break;
+		case 3:
+			RhythmRecorder.instance.setProducer (new BasicRhythmProducer ());
+			break;
+		case 4:
+			RhythmRecorder.instance.setProducer (new BasicRhythmProducer ());
+			break;		
+		default:
+			break;
+		}
+		RhythmRecorder.instance.setRhythm (RhythmList.Test);
+		RhythmRecorder.instance.startRhythm ();
+	}
 	public void levelSetting(){
 		GameObject[] enemys = GameObject.FindGameObjectsWithTag ("Enemy");
 		GameObject[] players = GameObject.FindGameObjectsWithTag ("Player");
@@ -202,13 +222,11 @@ public class GameManager : MonoBehaviour {
 
 	public void gameVictory(){
 		this.levelState = LevelState.win;
-		PlayingCanvasAction action =  currentCanvas.GetComponent<PlayingCanvasAction> ();
-		action.showDialog ();
+		changeGameState (GameState.levelEnd);
 	}
 	public void gameOver(){
 		this.levelState = LevelState.lose;
-		PlayingCanvasAction action =  currentCanvas.GetComponent<PlayingCanvasAction> ();
-		action.showDialog ();
+		changeGameState (GameState.levelEnd);
 	}
 
 	public void resetGame(){

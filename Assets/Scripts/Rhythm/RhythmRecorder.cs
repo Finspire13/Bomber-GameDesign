@@ -59,8 +59,8 @@ public class RhythmRecorder: MonoBehaviour{
 			Destroy (gameObject);    
 
 		DontDestroyOnLoad (gameObject);
-//		producer = new BasicRhythmProducer ();
-		producer = new PersonRhythmProducer();
+		producer = new BasicRhythmProducer ();
+//		producer = new PersonRhythmProducer();
 	}
 
 	void Start(){
@@ -68,7 +68,9 @@ public class RhythmRecorder: MonoBehaviour{
 	}
 
 	public void setProducer(BasicRhythmProducer producer){
-		this.producer = producer;
+		if (producer.GetType () != this.producer.GetType ()) {
+			this.producer = producer;
+		}
 	}
 
 	public void removeAllObservedSubjects(){

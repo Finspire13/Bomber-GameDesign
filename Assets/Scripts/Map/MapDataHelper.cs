@@ -161,6 +161,7 @@ public class MapDataHelper : MonoBehaviour {
 
     void createMap()
     {
+		GameManager.instance.rhythmSetting ();
         if (mMapData.isCreatable)
         {
             if (mMapModel == null)
