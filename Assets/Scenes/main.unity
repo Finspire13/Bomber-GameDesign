@@ -143,6 +143,7 @@ Transform:
   m_LocalRotation: {x: 0.40821794, y: -0.23456973, z: 0.109381676, w: 0.87542605}
   m_LocalPosition: {x: 0, y: 3, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 2
@@ -159,7 +160,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 437410, guid: b92f49745482afc479dcdeaacd21d465, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 30
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 437410, guid: b92f49745482afc479dcdeaacd21d465, type: 2}
       propertyPath: m_LocalPosition.z
@@ -167,7 +168,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 437410, guid: b92f49745482afc479dcdeaacd21d465, type: 2}
       propertyPath: m_LocalRotation.x
-      value: 0.7071068
+      value: 0.5735765
       objectReference: {fileID: 0}
     - target: {fileID: 437410, guid: b92f49745482afc479dcdeaacd21d465, type: 2}
       propertyPath: m_LocalRotation.y
@@ -179,7 +180,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 437410, guid: b92f49745482afc479dcdeaacd21d465, type: 2}
       propertyPath: m_LocalRotation.w
-      value: 0.7071067
+      value: 0.819152
       objectReference: {fileID: 0}
     - target: {fileID: 437410, guid: b92f49745482afc479dcdeaacd21d465, type: 2}
       propertyPath: m_RootOrder
@@ -196,6 +197,10 @@ Prefab:
     - target: {fileID: 2046680, guid: b92f49745482afc479dcdeaacd21d465, type: 2}
       propertyPath: m_BackGroundColor.b
       value: 0.2647059
+      objectReference: {fileID: 0}
+    - target: {fileID: 437410, guid: b92f49745482afc479dcdeaacd21d465, type: 2}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 70
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: b92f49745482afc479dcdeaacd21d465, type: 2}
@@ -300,6 +305,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 3
