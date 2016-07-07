@@ -13,6 +13,11 @@ public class MapDataHelper : MonoBehaviour {
     public GameObject ENEMY;
 	public GameObject[] Objects;
 
+	private int enemyCount = 0;
+	public int getEnemyNumber(){
+		return enemyCount;
+	}
+
     [HideInInspector]
 	public static MapDataHelper instance = null;
 
@@ -47,12 +52,14 @@ public class MapDataHelper : MonoBehaviour {
 
 	public void loadMap(int levelNum){
 		deleteMap ();
+		enemyCount = 0;
 		loadFromAsset (LEVEL_MAP_DATA[levelNum-1]);
 		createMap ();
 	}
 
 	public void loadMap(string fileName){
 		deleteMap ();
+		enemyCount = 0;
 		loadFromFile (fileName);
 		createMap ();
 	}
@@ -215,10 +222,11 @@ public class MapDataHelper : MonoBehaviour {
 			mapComponent.tag = "Player";
 			break;
 		case (int)MapDataEncoder.MapDataCodeEnum.ENEMY:
-			mapComponent = (GameObject)Instantiate (Objects[2], position, Quaternion.identity);
+			mapComponent = (GameObject)Instantiate (Objects [2], position, Quaternion.identity);
 			mapComponent.transform.parent = mMapModel.transform;
 			mapComponent.transform.Rotate (0, -90, 0);
 			mapComponent.tag = "Enemy";
+			++enemyCount;
 			//leave blank
 			break;
 		case (int)MapDataEncoder.MapDataCodeEnum.MONSTER:
@@ -250,4 +258,5 @@ public class MapDataHelper : MonoBehaviour {
 			mMapModel = null;
 		}
     }
+
 }

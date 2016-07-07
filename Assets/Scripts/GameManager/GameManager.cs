@@ -8,6 +8,7 @@ public enum PlayMode{presetMap, customMap};
 
 public class GameManager : MonoBehaviour {
 
+	private bool gameVictoryClock = true; //确保游戏胜利或失败只触发一次
 
 	public static GameManager instance = null;
 
@@ -17,6 +18,18 @@ public class GameManager : MonoBehaviour {
 	public GameObject mapEditCanvas;
 	public GameObject levelEndCanvas;
 	public GameObject endCanvas;
+	public GameState currState;
+
+	public ArrayList playerList;
+
+	public void addToPlayerList(PlayerConrol player){
+		playerList.Add (player);
+	}
+	public void removeFromPlayerList(PlayerConrol player){
+		playerList.Remove (player);
+	}
+
+	public int enemyNumber = 0;
 
 	private int enemyNum;
 	public int EnemyNum{
@@ -33,7 +46,7 @@ public class GameManager : MonoBehaviour {
 	public int presetMap = 1;
 	public string customMap = "";
 
-//	private float playerScore;
+	private float playerScore;
 	public ArrayList playerScoreList = new ArrayList();
 	public void addToPlayerScoreList(ScoreCount item){
 		playerScoreList.Add (item);
@@ -116,6 +129,7 @@ public class GameManager : MonoBehaviour {
 		currentCanvas = null;
 
 		this.level = 3;
+		playerList = new ArrayList ();
 	}
 
 	void Start () {
@@ -124,7 +138,14 @@ public class GameManager : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-	
+		if (GameState.playing == currState && enemyNumber <= 0 && gameVictoryClock) {
+			gameVictoryClock = false;
+			gameVictory ();
+		}
+		if (GameState.playing == currState && playerList.Count <= 0 && gameVictoryClock) {
+			gameVictoryClock = false;
+			gameOver ();
+		}
 	}
 
 	public void changeGameState(GameState gameState){
@@ -164,10 +185,20 @@ public class GameManager : MonoBehaviour {
 		default:
 			break;
 		}
+		currState = gameState;
+	}
+
+	public void gameVictory(){
+		Debug.Log ("You Win !!!");
+	}
+	public void gameOver(){
+		Debug.Log ("Game over !!!");
 	}
 
 	public void resetGame(){
+		gameVictoryClock = true;
 		GameDataProcessor.instance.resetGame ();
 		RhythmRecorder.instance.resetGame ();
+		enemyNumber = MapDataHelper.instance.getEnemyNumber ();
 	}
 }

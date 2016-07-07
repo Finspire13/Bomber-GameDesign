@@ -182,7 +182,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec2ce4a078d2b44698e8e27b753b9e7d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  buffValue: 10
+  buffValue: 100
 --- !u!135 &13555140
 SphereCollider:
   m_ObjectHideFlags: 1

@@ -19,9 +19,9 @@ public class GetBombTriggle : BaseBuff
 		if (!this.position.Equals(null)) {
 			ArrayList objs = GameDataProcessor.instance.getObjectAtPostion (this.position);
 			for (int i = 0; i < objs.Count; ++i) {
-				if (objs[i] is SetBomb && objs[i] is PlayerConrol) {
+				if (objs[i] is SetBomb) {
 
-					if(GameManager.instance.isBuffValid(objs[i])){
+					if(GameManager.instance.isBuffValid(objs[i]) && objs[i] is PlayerConrol){
 						//your effect;
 						BombTriggleTool triggle = new BombTriggleTool ((SetBomb)objs[i]);
 						((SetBomb)objs [i]).obtainTools (triggle);

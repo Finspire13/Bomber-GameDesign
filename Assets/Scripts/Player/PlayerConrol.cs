@@ -15,6 +15,7 @@ public class PlayerConrol : MonoBehaviour,Controlable,Locatable,SetBomb,Distroya
 	public void distroy(){
 		GameDataProcessor.instance.removeObject (this);
 		RhythmRecorder.instance.removeFlagOwner (this);
+		GameManager.instance.removeFromPlayerList (this);
 		Destroy (this.gameObject, 0);
 	}
 
@@ -130,6 +131,7 @@ public class PlayerConrol : MonoBehaviour,Controlable,Locatable,SetBomb,Distroya
 	void Awake(){
 		rhmFlag = 0;
 		RhythmRecorder.instance.addRhythmFlagOwner (this);
+		GameManager.instance.addToPlayerList (this);
 
 		this.maxNum = 10;
 		this.currNum = 0;
@@ -173,7 +175,7 @@ public class PlayerConrol : MonoBehaviour,Controlable,Locatable,SetBomb,Distroya
 
 		GameManager.instance.PlayerBlood = this.blood;
 		if (blood <= 0) {
-			Debug.Log("game over!!!");
+			Debug.Log("you lose!!");
 			distroy();
 		}
 
