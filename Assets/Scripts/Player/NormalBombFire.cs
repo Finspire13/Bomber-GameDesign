@@ -35,15 +35,15 @@ public class NormalBombFire : MonoBehaviour,Distroyable,BombFire,Locatable
 	// Update is called once per frame
 	void Update ()
 	{
-		if (lifeTime <= 0) {
-			GameDataProcessor.instance.removeFromDangerMap (this);
-			distroy();
-			return;
-		}
 		if (fireSwitch) {
 			fireSwitch = false;
 			attack ();
-//			Debug.Log ("x="+this.position.x+",y="+this.position.y);
+			//			Debug.Log ("x="+this.position.x+",y="+this.position.y);
+		}
+		if (lifeTime <= 1) {
+			GameDataProcessor.instance.removeFromDangerMap (this);
+			distroy();
+			return;
 		}
 	}
 
@@ -78,7 +78,7 @@ public class NormalBombFire : MonoBehaviour,Distroyable,BombFire,Locatable
 
 		GameDataProcessor.instance.removeObject (this);
 		RhythmRecorder.instance.removeObserver (this);
-		Destroy(this.gameObject,0);
+		Destroy(this.gameObject,0.5f);
 	}
 
 	public void attack(){
