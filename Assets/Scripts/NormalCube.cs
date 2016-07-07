@@ -72,6 +72,7 @@ public class NormalCube : MonoBehaviour, Locatable,Distroyable,ScoreCount {
 
 		GameObject buff = Resources.Load(buffList[buffIndex]) as GameObject;
 		GameObject obj = (GameObject)Instantiate(buff,this.gameObject.transform.position,this.gameObject.transform.rotation);
+		obj.transform.SetParent (MapDataHelper.instance.getMapModel().transform);
 		Buff script = (Buff)obj.GetComponent("Buff");
 		if (script == null) {
 			Debug.Log ("not script");

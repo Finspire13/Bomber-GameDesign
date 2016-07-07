@@ -4,11 +4,13 @@ using System.Collections.Generic;
 
 public enum GameState{start,levelSelect,mapEdit,playing,levelEnd,end};
 
+public enum LevelState{lose, win};
+
 public enum PlayMode{presetMap, customMap};
 
 public class GameManager : MonoBehaviour {
 
-	private bool gameVictoryClock = true; //确保游戏胜利或失败只触发一次
+	private bool gameVictoryClock = false; //确保游戏胜利或失败只触发一次
 
 	public static GameManager instance = null;
 
@@ -19,6 +21,7 @@ public class GameManager : MonoBehaviour {
 	public GameObject levelEndCanvas;
 	public GameObject endCanvas;
 	public GameState currState;
+	public LevelState levelState;
 
 	public ArrayList playerList;
 	public ArrayList enemyList;
@@ -198,14 +201,17 @@ public class GameManager : MonoBehaviour {
 	}
 
 	public void gameVictory(){
-		Debug.Log ("You Win !!!");
+		this.levelState = LevelState.win;
+		changeGameState (GameState.levelEnd);
 	}
 	public void gameOver(){
-		Debug.Log ("Game over !!!");
+		this.levelState = LevelState.lose;
+		changeGameState (GameState.levelEnd);
 	}
 
 	public void resetGame(){
 		gameVictoryClock = true;
+		levelState = LevelState.lose;
 		GameDataProcessor.instance.resetGame ();
 		RhythmRecorder.instance.resetGame ();
 		enemyNumber = MapDataHelper.instance.getEnemyNumber ();

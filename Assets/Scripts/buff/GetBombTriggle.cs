@@ -9,6 +9,7 @@ public class GetBombTriggle : BaseBuff
 	{
 		RhythmRecorder.instance.addObservedSubject (this,0.1f);
 		GameDataProcessor.instance.addToBenefitMap (this);
+		transform.SetParent (MapDataHelper.instance.getMapModel().transform);
 		this.gameName = "Tool-Pusher";
 		this.gameValue = 100f;
 	}
