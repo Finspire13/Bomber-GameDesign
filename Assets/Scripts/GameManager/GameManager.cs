@@ -107,6 +107,10 @@ public class GameManager : MonoBehaviour {
 		GameObject[] players = GameObject.FindGameObjectsWithTag ("Player");
 		switch (level) {
 		case 1:
+			for(int i = 0;i < players.GetLength(0);++i){
+				PlayerConrol player = players [i].GetComponent (typeof(PlayerConrol)) as PlayerConrol;
+				player.Blood = 100;
+			}
 			break;
 		case 2:
 			break;
