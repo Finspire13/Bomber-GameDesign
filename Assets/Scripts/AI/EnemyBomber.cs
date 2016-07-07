@@ -272,11 +272,15 @@ public class EnemyBomber : MonoBehaviour,Distroyable,SetBomb,Locatable,CanBuffed
 				currPath.Clear ();
 				if (!isWall (new Position (this.pos.x + 1, this.pos.y)) && this.pos.x < maxX-1) {
 					currPath.Enqueue (new Position (this.pos.x + 1, this.pos.y));
+					currPath.Enqueue (new Position (this.pos.x + 1, this.pos.y));
 				} else if (!isWall (new Position (this.pos.x - 1, this.pos.y)) && this.pos.x >= 1) {
+					currPath.Enqueue (new Position (this.pos.x - 1, this.pos.y));
 					currPath.Enqueue (new Position (this.pos.x - 1, this.pos.y));
 				} else if (!isWall (new Position (this.pos.x, this.pos.y + 1)) && this.pos.y < maxY-1) {
 					currPath.Enqueue (new Position (this.pos.x, this.pos.y + 1));
+					currPath.Enqueue (new Position (this.pos.x, this.pos.y + 1));
 				} else if (!isWall (new Position (this.pos.x, this.pos.y - 1)) && this.pos.y >= 1) {
+					currPath.Enqueue (new Position (this.pos.x, this.pos.y - 1));
 					currPath.Enqueue (new Position (this.pos.x, this.pos.y - 1));
 				}
 				return EnemyState.EMEMY_AVOID;
@@ -290,6 +294,7 @@ public class EnemyBomber : MonoBehaviour,Distroyable,SetBomb,Locatable,CanBuffed
 				currPath.Enqueue (queTemp.Dequeue ());
 			}
 
+//			Debug.Log ("EnemyState.EMEMY_AVOID:"+EnemyState.EMEMY_AVOID);
 			return EnemyState.EMEMY_AVOID;
 		}
 			
@@ -325,7 +330,10 @@ public class EnemyBomber : MonoBehaviour,Distroyable,SetBomb,Locatable,CanBuffed
 			}
 		}
 		if (currNum > 0) {
-			offset += 3;
+			offset -= 2;
+		}
+		if (lastState == EnemyState.EMEMY_AVOID) {
+			offset -= 5;
 		}
 
 		return offset;
