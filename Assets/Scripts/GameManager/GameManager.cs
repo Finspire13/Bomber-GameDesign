@@ -226,11 +226,13 @@ public class GameManager : MonoBehaviour {
 
 	public void gameVictory(){
 		this.levelState = LevelState.win;
-		changeGameState (GameState.levelEnd);
+		PlayingCanvasAction action = currentCanvas.GetComponent<PlayingCanvasAction> ();
+		action.showDialog ();
 	}
 	public void gameOver(){
 		this.levelState = LevelState.lose;
-		changeGameState (GameState.levelEnd);
+		PlayingCanvasAction action = currentCanvas.GetComponent<PlayingCanvasAction> ();
+		action.showDialog ();
 	}
 
 	public void resetGame(){
