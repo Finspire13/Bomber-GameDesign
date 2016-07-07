@@ -394,7 +394,8 @@ public class GameDataProcessor : MonoBehaviour,RhythmObservable {
 	}
 	//for benefitMap's value of player position
 	private void updatePlayerValue(){
-		ArrayList positions =  RhythmRecorder.instance.getPlayersPosition ();
+//		ArrayList positions =  RhythmRecorder.instance.getPlayersPosition ();
+		ArrayList positions = GameManager.instance.playerList;
 		for (int i = 0; i < positions.Count; ++i) {
 			if (positions [i] is Locatable) {
 				Position pos = ((Locatable)positions [i]).pos;

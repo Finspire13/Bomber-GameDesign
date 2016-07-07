@@ -14,20 +14,20 @@ public class RhythmRecorder: MonoBehaviour{
 
 	public static RhythmRecorder instance = null;
 
-	private string currentRhythm;
+	protected string currentRhythm;
 
-	private float startTime;
-	private ArrayList beats;
-	private bool isPlaying;
-	private float onBeatThreshold=0.1f;
+	protected float startTime;
+	protected ArrayList beats;
+	protected bool isPlaying;
+	protected float onBeatThreshold=0.1f;
 
-	private ArrayList currentBeatIndice;
-	private ArrayList observedSubjects;
-	private ArrayList timeOffsets;
-	private int standardBeatIndex;
+	protected ArrayList currentBeatIndice;
+	protected ArrayList observedSubjects;
+	protected ArrayList timeOffsets;
+	protected int standardBeatIndex;
 
-	private ArrayList rhythmFlagOwners;
-	private ArrayList isFlagsChangable;
+	protected ArrayList rhythmFlagOwners;
+	protected ArrayList isFlagsChangable;
 
 	void Awake()
 	{
@@ -54,6 +54,10 @@ public class RhythmRecorder: MonoBehaviour{
 
 	void Start(){
 
+	}
+
+	public void setRhythmRecord(RhythmRecorder record){
+		RhythmRecorder.instance = record;
 	}
 
 	public void removeAllObservedSubjects(){
@@ -106,7 +110,7 @@ public class RhythmRecorder: MonoBehaviour{
 	}*/
 		
 
-	private void updateFlagInOwners(){
+	protected void updateFlagInOwners(){
 		if (isOnBeat ()) {
 			for (int i = 0; i < rhythmFlagOwners.Count; i++) {
 				if ((bool)isFlagsChangable [i]) {
@@ -175,7 +179,7 @@ public class RhythmRecorder: MonoBehaviour{
 		standardBeatIndex = 0;
 	}
 
-	private bool isOnBeat()   
+	protected bool isOnBeat()   
 	{
 		if (isFinished()||!isPlaying)
 			return false;
