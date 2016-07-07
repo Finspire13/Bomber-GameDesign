@@ -9,6 +9,10 @@ public class PlayingCanvasAction : MonoBehaviour,RhythmObservable  {
 	public GameObject SliderPosition;
 	public Button levelEndButton;
 	public Text bloodText;
+	public GameObject dialog;
+	public Text dialogTitle;
+	public string gameLoseText = "You Lose";
+	public string gameWinText = "You Win";
 	// Use this for initialization
 	void Start () {
 		RhythmRecorder.instance.addObservedSubject (this,-2);
@@ -35,8 +39,26 @@ public class PlayingCanvasAction : MonoBehaviour,RhythmObservable  {
 		rightSliderInstance.GetComponent<RectTransform> ().SetAsFirstSibling ();
 	}
 
-	void clickLevelEndButton(){
+	public void clickLevelEndButton(){
 		GameManager.instance.changeGameState (GameState.levelEnd);
+	}
+
+	public void showDialog(){
+		switch (GameManager.instance.levelState) {
+		case LevelState.lose:
+			dialogTitle.text = gameLoseText;
+			break;
+		case LevelState.win:
+			dialogTitle.text = gameWinText;
+			break;
+		default:
+			break;
+		}
+		dialog.SetActive (true);
+	}
+
+	public void hideDialog(){
+		dialog.SetActive (false);
 	}
 
 	void OnDestroy() {
