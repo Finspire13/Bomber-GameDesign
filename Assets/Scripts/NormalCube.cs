@@ -65,8 +65,8 @@ public class NormalCube : MonoBehaviour, Locatable,Distroyable,ScoreCount {
 
 	void createBuff(){
 
-//		string[] buffList = {"Heal","GhostForm","BombPowerUp","BombNumberUp","FireLifeTimeUp","SpeedUp" };
-		string[] buffList = {"FireLifeTimeUp"};
+		string[] buffList = {"Heal","GhostForm","BombPowerUp","BombNumberUp","FireLifeTimeUp","SpeedUp","SlowDown" };
+		//string[] buffList = {"FireLifeTimeUp"};
 		int buffIndex=UnityEngine.Random.Range (0, buffList.Length);
 
 		GameObject buff = Resources.Load(buffList[buffIndex]) as GameObject;
