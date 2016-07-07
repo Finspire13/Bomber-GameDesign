@@ -47,14 +47,14 @@ MonoBehaviour:
   WALL_CUBE: {fileID: 126182, guid: 75343584647a70744b37912787af319e, type: 2}
   PLANE: {fileID: 156074, guid: 375acaeb72dbac242aefc87c319aa5c6, type: 2}
   PLAYER: {fileID: 172252, guid: 89691ad1759e2443784b3bc99a6dcdb4, type: 2}
-  ENEMY: {fileID: 152766, guid: 7e4be36a955034293ab9a5d187b94b83, type: 2}
+  ENEMY: {fileID: 190216, guid: 63393495057e8406d967394fd6bee8e8, type: 2}
   Objects:
   - {fileID: 0}
   - {fileID: 172252, guid: 89691ad1759e2443784b3bc99a6dcdb4, type: 2}
-  - {fileID: 152766, guid: 7e4be36a955034293ab9a5d187b94b83, type: 2}
+  - {fileID: 190216, guid: 63393495057e8406d967394fd6bee8e8, type: 2}
   - {fileID: 165320, guid: c7360d51804892a4f9ae1d2039765043, type: 2}
   - {fileID: 115488, guid: 7a99e8a4b1e469247a02a4d134e04644, type: 2}
-  - {fileID: 150314, guid: 416797bac35394785a1e6086df103e8b, type: 2}
+  - {fileID: 181994, guid: 416797bac35394785a1e6086df103e8b, type: 2}
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1
