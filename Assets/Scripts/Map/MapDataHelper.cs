@@ -32,6 +32,10 @@ public class MapDataHelper : MonoBehaviour {
 
     private GameObject mMapModel;
 
+	public GameObject getMapModel(){
+		return mMapModel;
+	}
+
 	void Awake()
 	{
 		if (instance == null)

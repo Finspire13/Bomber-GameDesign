@@ -4,12 +4,27 @@ using UnityEngine.UI;
 
 public class LevelEndCanvasAction : MonoBehaviour {
 
+	public Text gameStateText;
+	public string gameLoseText = "Oh... You Lose";
+	public string gameWinText = "Wow! You win";
 	public Button endButton;
-	public Button nextLevelButton;
+	public Button playAgainButton;
+	public Button selectLevelButton;
 	// Use this for initialization
 	void Start () {
 		endButton.onClick.AddListener (() => clickEndButton ());
-		nextLevelButton.onClick.AddListener (() => clickNextLevelButton ());
+		playAgainButton.onClick.AddListener (() => clickPlayAgainButton ());
+		selectLevelButton.onClick.AddListener (clickSelectLevelButton);
+		switch (GameManager.instance.levelState) {
+			case LevelState.lose:
+				gameStateText.text = gameLoseText;
+				break;
+			case LevelState.win:
+				gameStateText.text = gameWinText;
+				break;
+			default:
+				break;
+		}
 	}
 
 	// Update is called once per frame
@@ -21,7 +36,11 @@ public class LevelEndCanvasAction : MonoBehaviour {
 		GameManager.instance.changeGameState (GameState.end);
 	}
 
-	void clickNextLevelButton(){
+	void clickPlayAgainButton(){
 		GameManager.instance.changeGameState (GameState.playing);
+	}
+
+	void clickSelectLevelButton(){
+		GameManager.instance.changeGameState (GameState.levelSelect);
 	}
 }
