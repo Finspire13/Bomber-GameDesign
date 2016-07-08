@@ -9,6 +9,8 @@ public class PlayingCanvasAction : MonoBehaviour,RhythmObservable  {
 	public GameObject SliderPosition;
 	public Button levelEndButton;
 	public Text bloodText;
+	public Text bombNumText;
+	public Text bombPowerText;
 	public GameObject dialog;
 	public Text dialogTitle;
 	public string gameLoseText = "You Lose";
@@ -21,7 +23,12 @@ public class PlayingCanvasAction : MonoBehaviour,RhythmObservable  {
 	
 	// Update is called once per frame
 	void Update () {
-		bloodText.text = "HP: " + GameManager.instance.PlayerBlood;
+		if (GameManager.instance.playerList.Count != 0) {
+			bloodText.text = "HP: " + GameManager.instance.PlayerBlood;
+			PlayerConrol player = (PlayerConrol)GameManager.instance.playerList [0];
+			bombNumText.text = "Max Bomb: " + player.MaxNum;
+			bombPowerText.text = "Power: " + player.BombPower;
+		}
 	}
 
 	public void actionOnBeat(){
