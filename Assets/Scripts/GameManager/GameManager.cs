@@ -57,7 +57,7 @@ public class GameManager : MonoBehaviour {
 	public int presetMap = 1;
 	public string customMap = "";
 
-	private float playerScore;
+	public int totalGameScore;
 	public ArrayList playerScoreList = new ArrayList();
 	public void addToPlayerScoreList(ScoreCount item){
 		playerScoreList.Add (item);
@@ -232,6 +232,9 @@ public class GameManager : MonoBehaviour {
 			Destroy (currentCanvas);
 			currentCanvas = Instantiate (endCanvas) as GameObject;
 			AudioPlayer.instance.playBGM (0);
+			EndCanvasAction action = currentCanvas.GetComponent<EndCanvasAction> ();
+			action.setScoreText (totalGameScore);
+			totalGameScore = 0;
 			break;
 		default:
 			break;

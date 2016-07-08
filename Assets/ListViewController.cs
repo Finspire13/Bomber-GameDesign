@@ -16,4 +16,15 @@ public class ListViewController : MonoBehaviour {
 			listContent.transform.SetParent(ListView.transform, false);
 		}
 	}
+
+	public void addListContents(string[] contents){
+		GameObject listContent;
+		foreach (string content in contents) {
+			listContent = (GameObject)Instantiate (ListContentPrefab);
+			listContent.GetComponentInChildren<Text> ().text = content;
+			listContent.transform.SetParent(ListView.transform, false);
+		}
+	}
+
+
 }

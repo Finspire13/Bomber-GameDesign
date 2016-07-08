@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
+using System.Collections.Generic;
 
 public class PlayingCanvasAction : MonoBehaviour,RhythmObservable  {
 
@@ -11,6 +12,7 @@ public class PlayingCanvasAction : MonoBehaviour,RhythmObservable  {
 	public Text bloodText;
 	public Text bombNumText;
 	public Text bombPowerText;
+	public Text bombLifeText;
 	public GameObject dialog;
 	public Text dialogTitle;
 	public string gameLoseText = "You Lose";
@@ -28,6 +30,7 @@ public class PlayingCanvasAction : MonoBehaviour,RhythmObservable  {
 			PlayerConrol player = (PlayerConrol)GameManager.instance.playerList [0];
 			bombNumText.text = "Max Bomb: " + player.MaxNum;
 			bombPowerText.text = "Power: " + player.BombPower;
+			bombLifeText.text = "Explosion Time: " + player.BombLifeTime;
 		}
 	}
 
@@ -47,6 +50,10 @@ public class PlayingCanvasAction : MonoBehaviour,RhythmObservable  {
 	}
 
 	public void clickLevelEndButton(){
+		showDialog ();
+	}
+
+	public void endLevel(){
 		GameManager.instance.changeGameState (GameState.levelEnd);
 	}
 
@@ -61,6 +68,19 @@ public class PlayingCanvasAction : MonoBehaviour,RhythmObservable  {
 		default:
 			break;
 		}
+		ListViewController controller = dialog.GetComponentInChildren<ListViewController> ();
+		Dictionary<string,float> scoreMap = GameManager.instance.computeScore ();
+		int totalScore = 0;
+		string[] scores = new string[scoreMap.Count + 1];
+		int i = 0;
+		foreach(KeyValuePair<string, float> kv in scoreMap){
+			totalScore = totalScore + (int)kv.Value;
+			scores[i] = kv.Key + ": " + (int)kv.Value;
+			i++;
+		}
+		scores [i] = "Total Score: " + totalScore;
+		controller.addListContents (scores);
+		GameManager.instance.totalGameScore += totalScore;
 		dialog.SetActive (true);
 	}
 
