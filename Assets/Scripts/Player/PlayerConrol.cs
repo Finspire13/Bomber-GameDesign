@@ -1,6 +1,6 @@
 using UnityEngine;
 using System.Collections;
-
+ 
 public class PlayerConrol : MonoBehaviour,Controlable,Locatable,SetBomb,Distroyable,CanBuffed,MoveAble
 {
 	private int blood = 20;
@@ -75,6 +75,7 @@ public class PlayerConrol : MonoBehaviour,Controlable,Locatable,SetBomb,Distroya
 				Debug.Log("not bomb");
 			}else{
 				GameObject go = (GameObject)Instantiate(this.bombType,this.gameObject.transform.position,this.gameObject.transform.rotation);
+				go.transform.SetParent (MapDataHelper.instance.getMapModel().transform);
 				Bomb script = (Bomb)go.GetComponent("Bomb");
 				if(script == null){
 					Debug.Log("not script");

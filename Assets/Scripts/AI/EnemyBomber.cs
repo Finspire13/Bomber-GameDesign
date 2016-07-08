@@ -154,6 +154,7 @@ public class EnemyBomber : MonoBehaviour,Distroyable,SetBomb,Locatable,CanBuffed
 //				Debug.Log("not bomb");
 			}else{
 				GameObject go = (GameObject)Instantiate(this.bombType,this.gameObject.transform.position,this.gameObject.transform.rotation);
+				go.transform.SetParent (MapDataHelper.instance.getMapModel().transform);
 				Bomb script = (Bomb)go.GetComponent("Bomb");
 				if(script == null){
 //					Debug.Log("not script");
