@@ -807,6 +807,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   level: 3
+  manager: {fileID: 11471910}
 --- !u!114 &11415030
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1393,6 +1394,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   level: 1
+  manager: {fileID: 11471910}
 --- !u!114 &11442376
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1512,6 +1514,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   level: 2
+  manager: {fileID: 11471910}
 --- !u!114 &11452040
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1567,7 +1570,7 @@ MonoBehaviour:
         m_CallState: 2
     m_TypeName: UnityEngine.UI.Toggle+ToggleEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
-  m_IsOn: 1
+  m_IsOn: 0
 --- !u!114 &11454174
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1690,6 +1693,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   CustomMapList: {fileID: 11462708}
   PresetMapList: {fileID: 11470742}
+  LevelToggles:
+  - {fileID: 11472644}
+  - {fileID: 11456360}
+  - {fileID: 11452040}
+  - {fileID: 11442376}
+  DifficulityLevel: 1
 --- !u!114 &11472644
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2067,6 +2076,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   level: 4
+  manager: {fileID: 11471910}
 --- !u!114 &11490900
 MonoBehaviour:
   m_ObjectHideFlags: 1
