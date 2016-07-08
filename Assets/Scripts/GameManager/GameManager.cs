@@ -262,5 +262,6 @@ public class GameManager : MonoBehaviour {
 		GameDataProcessor.instance.resetGame ();
 		RhythmRecorder.instance.resetGame ();
 		enemyNumber = MapDataHelper.instance.getEnemyNumber ();
+		playerScoreList.Clear ();
 	}
 }

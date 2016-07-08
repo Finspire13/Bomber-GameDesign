@@ -8,6 +8,7 @@ public class PlayingCanvasAction : MonoBehaviour,RhythmObservable  {
 	public GameObject leftSlider;
 	public GameObject rightSlider;
 	public GameObject SliderPosition;
+	public ListViewController ListController;
 	public Button levelEndButton;
 	public Text bloodText;
 	public Text bombNumText;
@@ -31,6 +32,15 @@ public class PlayingCanvasAction : MonoBehaviour,RhythmObservable  {
 			bombNumText.text = "Max Bomb: " + player.MaxNum;
 			bombPowerText.text = "Power: " + player.BombPower;
 			bombLifeText.text = "Explosion Time: " + player.BombLifeTime;
+			ListController.deleteAllListContents ();
+			ArrayList toolList = player.playerTools;
+			string[] toolNames = new string[toolList.Count];
+			int i = 0;
+			foreach(BombTool tool in toolList){
+				toolNames [i] = tool.getToolName ();
+				i++;
+			}
+			ListController.addListContents (toolNames);
 		}
 	}
 

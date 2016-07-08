@@ -26,5 +26,13 @@ public class ListViewController : MonoBehaviour {
 		}
 	}
 
+	public void deleteAllListContents(){
+		for(int i = 0;i<ListView.transform.childCount;i++)
+		{
+			GameObject go = ListView.transform.GetChild(i).gameObject;
+			Destroy(go);
+		}
+	}
+
 
 }
