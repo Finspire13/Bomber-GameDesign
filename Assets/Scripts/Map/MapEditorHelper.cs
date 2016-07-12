@@ -95,6 +95,7 @@ public class MapEditorHelper : MonoBehaviour {
 			}
 			Debug.Log (Application.persistentDataPath);
 			fileName = "";
+			playerNum  = 1;
 		}
 	}
 
@@ -116,6 +117,7 @@ public class MapEditorHelper : MonoBehaviour {
 	}
 
 	public void exitMapEditor(){
+		playerNum  = 1;
 		GameManager.instance.changeGameState (GameState.start);
 	}
 }
